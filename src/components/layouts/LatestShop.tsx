@@ -5,16 +5,18 @@ export const LatestShop = () => {
 	return (
 		<div className='mt-[64px]'>
 			<Section title='Shop The Latest' postTitle='View All'>
-				<div className='grid grid-cols-3 gap-[57px]'>
-					{products.map((product, i) => (
-						<ProductCard
-							key={i}
-							propsKey={i}
-							img={product.img}
-							title={product.title}
-							price={product.price}
-						/>
-					))}
+				<div className='flex justify-center'>
+					<div className='flex flex-wrap gap-[16px] sm:gap-[46px] md::gap-[57px]'>
+						{products.map((product, i) => (
+							<ProductCard
+								key={i}
+								propsKey={i}
+								img={product.img}
+								title={product.title}
+								price={product.price}
+							/>
+						))}
+					</div>
 				</div>
 			</Section>
 		</div>

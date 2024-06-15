@@ -20,10 +20,15 @@ export const Banner = () => {
 				>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[646px]'>
-								<Image src={'/woman-banner.png'} fill alt='woman-banner' />
+							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+								<Image
+									className=''
+									src={'/woman-banner.png'}
+									fill
+									alt='woman-banner'
+								/>
 							</div>
-							<div className='flex flex-col justify-center ml-[39px] absolute top-0 w-full h-[646px] text-white'>
+							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
 								<div className='mb-[48px]'>
 									<h1 className='text-[33px] leading-[43px] font-medium'>
 										Gold big hoops
@@ -42,10 +47,15 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[646px]'>
-								<Image src={'/woman-banner.png'} fill alt='woman-banner' />
+							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+								<Image
+									className=''
+									src={'/woman-banner.png'}
+									fill
+									alt='woman-banner'
+								/>
 							</div>
-							<div className='flex flex-col justify-center ml-[39px] absolute top-0 w-full h-[646px] text-white'>
+							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
 								<div className='mb-[48px]'>
 									<h1 className='text-[33px] leading-[43px] font-medium'>
 										Gold big hoops
@@ -64,10 +74,15 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[646px]'>
-								<Image src={'/woman-banner.png'} fill alt='woman-banner' />
+							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+								<Image
+									className=''
+									src={'/woman-banner.png'}
+									fill
+									alt='woman-banner'
+								/>
 							</div>
-							<div className='flex flex-col justify-center ml-[39px] absolute top-0 w-full h-[646px] text-white'>
+							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
 								<div className='mb-[48px]'>
 									<h1 className='text-[33px] leading-[43px] font-medium'>
 										Gold big hoops
@@ -86,10 +101,15 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[646px]'>
-								<Image src={'/woman-banner.png'} fill alt='woman-banner' />
+							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+								<Image
+									className=''
+									src={'/woman-banner.png'}
+									fill
+									alt='woman-banner'
+								/>
 							</div>
-							<div className='flex flex-col justify-center ml-[39px] absolute top-0 w-full h-[646px] text-white'>
+							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
 								<div className='mb-[48px]'>
 									<h1 className='text-[33px] leading-[43px] font-medium'>
 										Gold big hoops
@@ -108,10 +128,15 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[646px]'>
-								<Image src={'/woman-banner.png'} fill alt='woman-banner' />
+							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+								<Image
+									className=''
+									src={'/woman-banner.png'}
+									fill
+									alt='woman-banner'
+								/>
 							</div>
-							<div className='flex flex-col justify-center ml-[39px] absolute top-0 w-full h-[646px] text-white'>
+							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
 								<div className='mb-[48px]'>
 									<h1 className='text-[33px] leading-[43px] font-medium'>
 										Gold big hoops

@@ -6,33 +6,41 @@ export const Footer = () => {
 	return (
 		<Section>
 			<div className='h-[159px] border-t-[1px] mb-[90px] border-t-[#D8D8D8]'>
-				<div className='flex justify-between items-center mt-[37px] mb-[47px]'>
-					<div className='flex gap-[41px]'>
+				<div className='flex flex-col-reverse items-start md:flex-row sm:justify-between sm:items-center mt-[37px] mb-[32px] sm:mb-[47px]'>
+					<div className='flex flex-col sm:flex-row gap-[8px] sm:gap-[25px] md:gap-[41px]'>
 						{links.map((link, i) => (
 							<Link key={i} href={link.href}>
-								<p className='text-[16px] text-[#707070] hover:text-[#393939] active:text-[#000000] font-normal duration-200'>
+								<p className='text-[12px] sm:text-[14px] md:text-[16px] text-[#707070] hover:text-[#393939] active:text-[#000000] font-normal duration-200'>
 									{link.title}
 								</p>
 							</Link>
 						))}
 					</div>
-					<div className='flex justify-between items-center w-[396px] border-b-[1px] border-b-black pb-[13px]'>
-						<input
-							className='w-full outline-none placeholder:text-[16px] leading-[27px] font-normal'
-							type='text'
-							placeholder='Give an email, get the newsletter.'
-						/>
-						<div className='relative w-[25px] h-[9px]'>
-							<Image src={'/input-arrow-footer.svg'} fill alt='arrow' />
+					<div>
+						<div className='flex justify-between items-center w-[288px] sm:w-[300px] md:w-[396px] border-b-[1px] border-b-black pb-[13px] sm:mb-[24px] md:mb-0'>
+							<input
+								className='w-full outline-none text-[14px] placeholder:text-[14px] md:text-[16px] md:placeholder:text-[16px] leading-[27px] font-normal'
+								type='text'
+								placeholder='Give an email, get the newsletter.'
+							/>
+							<div className='relative w-[25px] h-[9px]'>
+								<Image src={'/input-arrow-footer.svg'} fill alt='arrow' />
+							</div>
+						</div>
+						<div className='flex sm:hidden items-center mt-[11px] mb-[40px] gap-[4px]'>
+							<div className='size-[13px] border-[1px] rounded-[2px] border-[#707070]'></div>
+							<p className='text-[12px] font-normal'>
+								I agree to the website’s terms and conditions
+							</p>
 						</div>
 					</div>
 				</div>
-				<div className='flex justify-between items-center'>
-					<div className='flex gap-[3px] text-[]'>
+				<div className='flex flex-col-reverse sm:flex-row  justify-between items-center'>
+					<div className='flex gap-[3px] text-[12px] sm:text-[14px] md:text-[16px] w-full'>
 						© 2021 Shelly. <p className='text-[#707070]'>Terms of use</p> and
 						<p className='text-[#707070]'>privacy policy</p>.
 					</div>
-					<div className='flex items-center gap-[20px] cursor-pointer'>
+					<div className='hidden sm:flex items-center gap-[20px] cursor-pointer'>
 						{socialLinks.map((link, i) => (
 							<div
 								className=' flex justify-center items-center size-[32px] rounded-[50%] bg-transparent hover:bg-[#69696952] active:bg-[#35353552] duration-200'
@@ -45,6 +53,27 @@ export const Footer = () => {
 								</div>
 							</div>
 						))}
+					</div>
+					<div className='flex items-center gap-[15px] sm:hidden w-full mb-[36px] '>
+						<p className='text-[12px] font-normal leading-[20px]'>Follow us</p>
+						<div className='w-[47px] h-[1px] bg-black'></div>
+						<div className='flex sm:hidden items-center gap-[10px] cursor-pointer'>
+							{socialLinks.map(
+								(link, i) =>
+									i !== 0 && (
+										<div
+											className='flex justify-center items-center size-[22px] rounded-[50%] bg-transparent hover:bg-[#69696952] active:bg-[#35353552] duration-200'
+											key={i}
+										>
+											<div
+												className={`relative text-[#707070] hover:text-[#343434] ${link.size}`}
+											>
+												<Image src={link.img} fill alt={link.title} />
+											</div>
+										</div>
+									)
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -64,13 +93,18 @@ const socialLinks = [
 		title: 'facebook',
 		img: '/facebook.svg',
 		href: '#',
-		size: 'w-[10px] h-[18px]',
+		size: 'w-[7px] h-[12px] sm:w-[10px] sm:h-[18px]',
 	},
 	{
 		title: 'instagram',
 		img: '/instagram.svg',
 		href: '#',
-		size: 'w-[18px] h-[18px]',
+		size: 'size-[12px] sm:w-[18px] sm:h-[18px]',
 	},
-	{ title: 'x', img: '/x.svg', href: '#', size: 'w-[20px] h-[17px]' },
+	{
+		title: 'x',
+		img: '/x.svg',
+		href: '#',
+		size: 'w-[14px] h-[12px] sm:w-[20px] sm:h-[17px]',
+	},
 ]

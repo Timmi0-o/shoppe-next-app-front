@@ -10,7 +10,7 @@ export const Header = () => {
 	return (
 		<Section>
 			<div
-				className={`flex justify-between items-center h-[42px] mt-[64px] ${
+				className={`flex justify-between items-center h-[42px] mt-[5px] sm:mt-[64px] ${
 					isNawActive !== null &&
 					'pt-[17px] border-b-[1px] border-b-[#D8D8D8] pb-[24px]'
 				}`}
@@ -19,14 +19,15 @@ export const Header = () => {
 					<div
 						onClick={() => setIsNawActive(null)}
 						className={
-							'flex text-[35px] cursor-pointer ' + allertaStencil.className
+							'flex text-[20px] sm:text-[28px] md:text-[35px] cursor-pointer ' +
+							allertaStencil.className
 						}
 					>
 						<p className='text-[#A18A68]'>S</p>HOPPE
 					</div>
 				</Link>
 				<div
-					className={`flex ${
+					className={`hidden md:flex ${
 						isNawActive !== null ? ' items-start' : 'items-center'
 					}`}
 				>
@@ -55,6 +56,14 @@ export const Header = () => {
 						<div className='relative size-[20px]'>
 							<Image src={'/profile.svg'} fill alt='search' />
 						</div>
+					</div>
+				</div>
+				<div className='flex gap-[16px] md:hidden'>
+					<div className='relative size-[18px]'>
+						<Image src={'/shopping-cart.svg'} fill alt='search' />
+					</div>
+					<div className='relative w-[20px] h-[15px]'>
+						<Image src={'/burger.svg'} fill alt='burger' />
 					</div>
 				</div>
 			</div>
