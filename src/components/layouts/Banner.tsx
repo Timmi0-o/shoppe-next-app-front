@@ -20,7 +20,7 @@ export const Banner = () => {
 				>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+							<div className='relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
 								<Image
 									className=''
 									src={'/woman-banner.png'}
@@ -29,16 +29,16 @@ export const Banner = () => {
 								/>
 							</div>
 							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
-								<div className='mb-[48px]'>
-									<h1 className='text-[33px] leading-[43px] font-medium'>
+								<div className='mb-[22px] sm:mb-[48px]'>
+									<h1 className='text-[24px] sm:text-[33px] sm:leading-[43px] font-medium'>
 										Gold big hoops
 									</h1>
-									<p className='text-[26px] font-normal leading-[35px] mt-[16px]'>
+									<p className='text-[18px] sm:text-[26px] font-normal sm:leading-[35px] mt-[4px] sm:mt-[16px]'>
 										$ 68,00
 									</p>
 								</div>
-								<div className='flex items-center justify-center w-[193px] h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-									<p className='text-[20px] font-bold leading-[26px]'>
+								<div className='flex items-center justify-center w-[120px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+									<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
 										View Product
 									</p>
 								</div>
@@ -47,7 +47,7 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+							<div className='relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
 								<Image
 									className=''
 									src={'/woman-banner.png'}
@@ -56,16 +56,16 @@ export const Banner = () => {
 								/>
 							</div>
 							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
-								<div className='mb-[48px]'>
-									<h1 className='text-[33px] leading-[43px] font-medium'>
+								<div className='mb-[22px] sm:mb-[48px]'>
+									<h1 className='text-[24px] sm:text-[33px] sm:leading-[43px] font-medium'>
 										Gold big hoops
 									</h1>
-									<p className='text-[26px] font-normal leading-[35px] mt-[16px]'>
+									<p className='text-[18px] sm:text-[26px] font-normal sm:leading-[35px] mt-[4px] sm:mt-[16px]'>
 										$ 68,00
 									</p>
 								</div>
-								<div className='flex items-center justify-center w-[193px] h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-									<p className='text-[20px] font-bold leading-[26px]'>
+								<div className='flex items-center justify-center w-[120px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+									<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
 										View Product
 									</p>
 								</div>
@@ -74,7 +74,7 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+							<div className='relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
 								<Image
 									className=''
 									src={'/woman-banner.png'}
@@ -83,16 +83,16 @@ export const Banner = () => {
 								/>
 							</div>
 							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
-								<div className='mb-[48px]'>
-									<h1 className='text-[33px] leading-[43px] font-medium'>
+								<div className='mb-[22px] sm:mb-[48px]'>
+									<h1 className='text-[24px] sm:text-[33px] sm:leading-[43px] font-medium'>
 										Gold big hoops
 									</h1>
-									<p className='text-[26px] font-normal leading-[35px] mt-[16px]'>
+									<p className='text-[18px] sm:text-[26px] font-normal sm:leading-[35px] mt-[4px] sm:mt-[16px]'>
 										$ 68,00
 									</p>
 								</div>
-								<div className='flex items-center justify-center w-[193px] h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-									<p className='text-[20px] font-bold leading-[26px]'>
+								<div className='flex items-center justify-center w-[120px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+									<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
 										View Product
 									</p>
 								</div>
@@ -101,7 +101,7 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+							<div className='relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
 								<Image
 									className=''
 									src={'/woman-banner.png'}
@@ -110,16 +110,16 @@ export const Banner = () => {
 								/>
 							</div>
 							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
-								<div className='mb-[48px]'>
-									<h1 className='text-[33px] leading-[43px] font-medium'>
+								<div className='mb-[22px] sm:mb-[48px]'>
+									<h1 className='text-[24px] sm:text-[33px] sm:leading-[43px] font-medium'>
 										Gold big hoops
 									</h1>
-									<p className='text-[26px] font-normal leading-[35px] mt-[16px]'>
+									<p className='text-[18px] sm:text-[26px] font-normal sm:leading-[35px] mt-[4px] sm:mt-[16px]'>
 										$ 68,00
 									</p>
 								</div>
-								<div className='flex items-center justify-center w-[193px] h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-									<p className='text-[20px] font-bold leading-[26px]'>
+								<div className='flex items-center justify-center w-[120px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+									<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
 										View Product
 									</p>
 								</div>
@@ -128,7 +128,7 @@ export const Banner = () => {
 					</SwiperSlide>
 					<SwiperSlide>
 						<div className='active:scale-[0.99] duration-200'>
-							<div className='relative w-full h-[299px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
+							<div className='relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] xl:h-[646px]'>
 								<Image
 									className=''
 									src={'/woman-banner.png'}
@@ -137,16 +137,16 @@ export const Banner = () => {
 								/>
 							</div>
 							<div className='flex flex-col justify-center ml-[39px] absolute top-0 size-full text-white'>
-								<div className='mb-[48px]'>
-									<h1 className='text-[33px] leading-[43px] font-medium'>
+								<div className='mb-[22px] sm:mb-[48px]'>
+									<h1 className='text-[24px] sm:text-[33px] sm:leading-[43px] font-medium'>
 										Gold big hoops
 									</h1>
-									<p className='text-[26px] font-normal leading-[35px] mt-[16px]'>
+									<p className='text-[18px] sm:text-[26px] font-normal sm:leading-[35px] mt-[4px] sm:mt-[16px]'>
 										$ 68,00
 									</p>
 								</div>
-								<div className='flex items-center justify-center w-[193px] h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-									<p className='text-[20px] font-bold leading-[26px]'>
+								<div className='flex items-center justify-center w-[120px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+									<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
 										View Product
 									</p>
 								</div>
