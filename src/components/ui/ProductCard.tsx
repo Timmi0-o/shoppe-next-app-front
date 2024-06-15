@@ -21,10 +21,10 @@ export const ProductCard = ({
 			onMouseEnter={() => setIsItemsHover(true)}
 			onMouseLeave={() => setIsItemsHover(false)}
 			key={propsKey}
-			className={`w-[136px] h-[188px] lg:w-[377px] lg:h-[472px] mb-[31px]`}
+			className={`w-[150px] h-[200px] lg:w-[377px] lg:h-[472px] mb-[31px]`}
 		>
 			<div
-				className={`relative size-[136px] lg:w-full lg:h-[380px] mb-[6px] sm:mb-[24px] duration-200 ${
+				className={`relative size-[150px] lg:w-full lg:h-[380px] mb-[6px] sm:mb-[24px] duration-200 ${
 					isItemHover && 'opacity-50'
 				}`}
 			>

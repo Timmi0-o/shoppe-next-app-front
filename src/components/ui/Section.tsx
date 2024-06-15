@@ -9,7 +9,7 @@ interface SectionProps {
 export const Section = ({ children, title, postTitle }: SectionProps) => {
 	return (
 		<div className='w-full bg-white'>
-			<div className='relative max-w-[288px] sm:max-w-[500px]  md:max-w-[770px] lg:max-w-[960px]  xl:max-w-[1248px] mx-auto'>
+			<div className='relative max-w-[320px] sm:max-w-[500px]  md:max-w-[770px] lg:max-w-[960px]  xl:max-w-[1248px] mx-auto'>
 				{title && (
 					<div
 						className={`${
