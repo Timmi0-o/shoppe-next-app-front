@@ -32,6 +32,10 @@ body {
   border-radius: 50%;
   background-color: #ffffff !important;
   opacity: 1 !important;
+  @media (max-width: 640px) {
+      width: 4px !important;
+      height: 4px !important;
+    }
 }
 
 .swiper-pagination-bullet-active {
@@ -40,7 +44,13 @@ body {
   border-radius: 50%;
   border: 1px solid white;
   background-color: transparent !important;
+  @media (max-width: 640px) {
+      width: 8px !important;
+      height: 8px !important;
+    }
+
 }
+
 
 @layer utilities {
   .text-balance {

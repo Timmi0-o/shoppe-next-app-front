@@ -6,7 +6,7 @@ export const LatestShop = () => {
 		<div className='mt-[64px]'>
 			<Section title='Shop The Latest' postTitle='View All'>
 				<div className='flex justify-center'>
-					<div className='flex flex-wrap gap-[18px] sm:gap-[46px] md:gap-[57px]'>
+					<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[20px] md:gap-[30px] lg:gap-[52px] xl:gap-[57px]'>
 						{products.map((product, i) => (
 							<ProductCard
 								key={i}
