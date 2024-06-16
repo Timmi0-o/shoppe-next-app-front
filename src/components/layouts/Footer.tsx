@@ -16,6 +16,7 @@ export const Footer = () => {
 							</Link>
 						))}
 					</div>
+					{/* Подписка на рассылку через ввод почты */}
 					<div>
 						<div className='flex justify-between items-center w-[288px] sm:w-[300px] lg:w-[396px] border-b-[1px] border-b-black pb-[13px] sm:mb-[24px] md:mb-0'>
 							<input
@@ -27,6 +28,7 @@ export const Footer = () => {
 								<Image src={'/input-arrow-footer.svg'} fill alt='arrow' />
 							</div>
 						</div>
+						{/* Согласие с правами сайта (only mobile) */}
 						<div className='flex sm:hidden items-center mt-[11px] mb-[40px] gap-[4px]'>
 							<div className='size-[13px] border-[1px] rounded-[2px] border-[#707070]'></div>
 							<p className='text-[12px] font-normal'>
@@ -36,14 +38,16 @@ export const Footer = () => {
 					</div>
 				</div>
 				<div className='flex flex-col-reverse sm:flex-row  justify-between items-center'>
-					<div className='flex gap-[3px] text-[12px] sm:text-[14px] md:text-[16px] w-full mb-[24px]'>
+					{/* Все права защищены */}
+					<div className='flex gap-[3px] text-[12px] sm:text-[14px] md:text-[16px] w-full mb-[24px] sm:mb-0 lg:mb-[24px]'>
 						© 2021 Shelly. <p className='text-[#707070]'>Terms of use</p> and
 						<p className='text-[#707070]'>privacy policy</p>.
 					</div>
+					{/* follow us (ссылки на соц сети для ПК) */}
 					<div className='hidden sm:flex items-center gap-[20px] cursor-pointer'>
 						{socialLinks.map((link, i) => (
 							<div
-								className=' flex justify-center items-center size-[32px] rounded-[50%] bg-transparent hover:bg-[#69696952] active:bg-[#35353552] duration-200'
+								className=' flex justify-center items-center size-[32px] rounded-[50%] bg-transparent lg:hover:bg-[#f1f1f1] lg:active:bg-[#d9d9d9] active:bg-[#35353552] duration-200'
 								key={i}
 							>
 								<div
@@ -54,6 +58,7 @@ export const Footer = () => {
 							</div>
 						))}
 					</div>
+					{/* follow us (ссылки на соц сети для мобилок) */}
 					<div className='flex items-center gap-[15px] sm:hidden w-full mb-[36px] '>
 						<p className='text-[12px] font-normal leading-[20px]'>Follow us</p>
 						<div className='w-[47px] h-[1px] bg-black'></div>
@@ -62,7 +67,7 @@ export const Footer = () => {
 								(link, i) =>
 									i !== 0 && (
 										<div
-											className='flex justify-center items-center size-[22px] rounded-[50%] bg-transparent hover:bg-[#69696952] active:bg-[#35353552] duration-200'
+											className='flex justify-center items-center size-[22px] rounded-[50%] bg-transparent active:bg-[#35353552] duration-200'
 											key={i}
 										>
 											<div

@@ -4,11 +4,19 @@ interface SectionProps {
 	children: ReactNode
 	title?: string
 	postTitle?: string
+	bg?: string
+	height?: string
 }
 
-export const Section = ({ children, title, postTitle }: SectionProps) => {
+export const Section = ({
+	children,
+	title,
+	postTitle,
+	bg,
+	height,
+}: SectionProps) => {
 	return (
-		<div className='w-full bg-white'>
+		<div className={`w-full ${height && height} ${bg ? bg : 'bg-white'}`}>
 			<div className='relative max-w-[320px] sm:max-w-[500px]  md:max-w-[720px] lg:max-w-[960px]  xl:max-w-[1248px] mx-auto'>
 				{title && (
 					<div

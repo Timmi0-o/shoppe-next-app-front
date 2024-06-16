@@ -25,7 +25,7 @@ export const ProductCard = ({
 		>
 			<div
 				className={`relative size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[300px] xl:h-[370px] mb-[6px] sm:mb-[24px] duration-200 ${
-					isItemHover && 'opacity-50'
+					isItemHover && 'lg:opacity-50 active:opacity-50 lg:active:opacity-100'
 				}`}
 			>
 				<Image src={img} fill alt='ItemImg' />
