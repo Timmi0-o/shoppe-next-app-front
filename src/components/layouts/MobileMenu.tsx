@@ -81,7 +81,7 @@ export const MobileMenu = ({
 
 const links = [
 	{ title: 'Home', link: '/' },
-	{ title: 'Shop', link: '/' },
+	{ title: 'Shop', link: '/shop' },
 	{ title: 'About', link: '/' },
 	{ title: 'Blog', link: '/' },
 	{ title: 'Help', link: '/' },
