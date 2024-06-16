@@ -34,7 +34,7 @@ export const Header = () => {
 		<Section>
 			<div
 				className={`flex justify-between items-center h-[42px] mt-[5px] sm:mt-[64px] ${
-					path !== '/' && 'mb-[125px]'
+					path !== '/' && 'mb-[17px] lg:mb-[125px]'
 				} ${
 					isNawActive !== null &&
 					'pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] pb-[24px]'
@@ -106,9 +106,9 @@ export const Header = () => {
 					/>
 				</div>
 			</div>
-			<div className='block md:hidden'>
+			<div className={'block md:hidden'}>
 				<Input state={searchText} setState={setSearchText} />
-				<div className='mt-[16px]'>
+				<div className={`mt-[16px] ${path !== '/' && 'hidden'}`}>
 					<Swiper
 						slideToClickedSlide
 						className='rounded-[4px]'
