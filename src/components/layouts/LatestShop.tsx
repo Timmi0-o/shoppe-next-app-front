@@ -28,5 +28,5 @@ const products = [
 	{ img: '/Item2.png', title: 'Hal Earrings', price: 30 },
 	{ img: '/Item3.png', title: 'Kaede Hair Pin Set Of 3 ', price: 35 },
 	{ img: '/Item4.png', title: 'Hair Pin Set of 3', price: 25 },
-	{ img: '/Item5.png', title: 'Plaine Necklace', price: 15 },
+	{ img: '/Item5.png', title: 'Plaine Necklace', price: 75 },
 ]
