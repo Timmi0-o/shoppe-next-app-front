@@ -49,7 +49,11 @@ export const MobileMenu = ({
 					</div>
 					<div className='flex flex-col mt-[39px] gap-[24px] mb-[39px]'>
 						{links.map((link, i) => (
-							<Link href={link.link} key={i}>
+							<Link
+								onClick={() => setIsShowModal(!isShowModal)}
+								href={link.link}
+								key={i}
+							>
 								<p className='text-[20px] font-normal leading-[26px]'>
 									{link.title}
 								</p>
