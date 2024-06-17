@@ -7,6 +7,8 @@ interface ProductCardProps {
 	title: string
 	price: number
 	propsKey?: number
+	customSize?: string
+	customSizeImg?: string
 }
 
 export const ProductCard = ({
@@ -14,6 +16,8 @@ export const ProductCard = ({
 	title,
 	price,
 	propsKey,
+	customSize,
+	customSizeImg,
 }: ProductCardProps) => {
 	const [isItemHover, setIsItemsHover] = useState(false)
 	return (
@@ -21,10 +25,18 @@ export const ProductCard = ({
 			onMouseEnter={() => setIsItemsHover(true)}
 			onMouseLeave={() => setIsItemsHover(false)}
 			key={propsKey}
-			className={`w-[156px h-[208px]  sm:w-[180px] sm:h-[280px] md:w-[220px] md:h-[280px] lg:w-[285px] lg:h-[385px] xl:w-[377px] xl:h-[472px] mb-[31px]`}
+			className={`${
+				customSize
+					? customSize
+					: 'w-[156px h-[208px] sm:w-[180px] sm:h-[280px] md:w-[220px] md:h-[280px] lg:w-[285px] lg:h-[385px] xl:w-[377px] xl:h-[472px] mb-[31px]'
+			}`}
 		>
 			<div
-				className={`relative size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[300px] xl:h-[370px] mb-[6px] sm:mb-[24px] duration-200 ${
+				className={`relative ${
+					customSizeImg
+						? customSizeImg
+						: 'size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[300px] xl:h-[370px]'
+				} mb-[6px] sm:mb-[24px] duration-200 ${
 					isItemHover && 'lg:opacity-50 active:opacity-50 lg:active:opacity-100'
 				}`}
 			>
