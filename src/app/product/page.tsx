@@ -19,6 +19,7 @@ function Product() {
 				<div className='flex gap-[39px]'>
 					<div className='hidden lg:block h-[600px] w-[120px]'>
 						<Swiper
+							// @ts-ignore
 							onSwiper={setThumbsSwiper}
 							spaceBetween={10}
 							slidesPerView={4}
