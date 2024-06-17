@@ -8,7 +8,7 @@ export default function Shop() {
 	const [searchProduct, setSearchProduct] = useState('')
 	return (
 		<Section>
-			<div className='mt-[24px] mb-[60px] md:mb-[120px] md:mt-[150px]'>
+			<div className='mt-[24px] mb-[60px] md:mb-[120px]'>
 				<p className='hidden md:block text-[33px] font-medium leading-[43px]'>
 					Shop The Latest
 				</p>
@@ -47,6 +47,31 @@ export default function Shop() {
 								<div className='relative w-[12px] h-[18px]'>
 									<Image src={'/drop-arrow.svg'} fill alt='drop-arrow' />
 								</div>
+							</div>
+						</div>
+						{/* Ползунок с прайсом */}
+						<div>
+							<div className='w-full h-[2px] bg-black mb-[8px]'></div>
+							<div className='flex items-center justify-between'>
+								<p className='text-[14px] text-[#707070] font-normal leading-[22px]'>
+									Price: $40 - $180
+								</p>
+								<p className='text-[14px] text-[#A18A68] font-normal leading-[22px]'>
+									Filter
+								</p>
+							</div>
+						</div>
+						{/* НАСТРОЙКИ ПО ВЫСШИМ КАТЕГОРИЯМ */}
+						<div className='flex items-center justify-between'>
+							<p className='text-[16px] font-normal leading-[27px]'>On sale</p>
+							<div className='flex items-center justify-start w-[33px] h-[20px] bg-[#707070] rounded-full cursor-pointer'>
+								<div className='size-[14px] rounded-full bg-white mx-[2px]'></div>
+							</div>
+						</div>
+						<div className='flex items-center justify-between'>
+							<p className='text-[16px] font-normal leading-[27px]'>In stock</p>
+							<div className='flex items-center justify-start w-[33px] h-[20px] bg-[#707070] rounded-full cursor-pointer'>
+								<div className='size-[14px] rounded-full bg-white mx-[2px]'></div>
 							</div>
 						</div>
 					</div>

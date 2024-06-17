@@ -17,7 +17,6 @@ export const Header = () => {
 	const [searchText, setSearchText] = useState('')
 
 	const [isShowModal, setIsShowModal] = useState(false)
-	console.log('isShowModal', isShowModal)
 
 	let path = usePathname()
 	console.log('path', path)
@@ -30,14 +29,21 @@ export const Header = () => {
 		}
 	}, [isShowModal])
 
+	useEffect(() => {
+		if (path === '/product') {
+			setIsNawActive(0)
+		}
+	}, [path])
+
 	return (
 		<Section>
 			<div
-				className={`flex justify-between items-center h-[42px] mt-[5px] sm:mt-[64px] ${
-					path !== '/' && 'mb-[17px] lg:mb-[125px]'
+				className={`flex justify-between items-center ease-out mt-[15px] ${
+					path !== '/' ? 'mb-[17px] lg:mb-[96px]' : 'mb-[17px] md:mb-0'
 				} ${
-					isNawActive !== null &&
-					'pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] pb-[24px]'
+					isNawActive !== null
+						? 'pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] pb-[12px] sm:mt-[48px]'
+						: 'sm:mt-[64px] md:border-b-transparent'
 				}`}
 			>
 				{/* LOGO */}
@@ -55,16 +61,21 @@ export const Header = () => {
 				{/* ПК навигация (naw bar, search, shop cart & burger) */}
 				<div
 					className={`hidden md:flex ${
-						isNawActive !== null ? ' items-start' : 'items-center'
+						isNawActive !== null
+							? ' items-start translate-y-[12px]'
+							: 'items-center'
 					}`}
 				>
 					<div className='flex gap-[64px] mr-[48px]'>
 						{nawLink.map((link, i) => (
 							<Link onClick={() => setIsNawActive(i)} key={i} href={link.href}>
 								<p
-									className={`font-regular text-[16px] leading-[27px] cursor-pointer ${
-										isNawActive === i &&
-										'border-b-[2px] border-b-black pb-[24px]'
+									className={`relative font-regular before:w-full before:absolute before:h-[2px] before:left-0 before:top-[52px] before:bg-[#000000] before:px-[2px] before:ease-out text-[16px] leading-[27px] before:origin-left ${
+										isNawActive === i
+											? 'pb-[24px] before:scale-x-[1] before:duration-300'
+											: `before:scale-x-[0] ${
+													isNawActive !== null && 'before:duration-300'
+											  }`
 									}`}
 								>
 									{link.title}
@@ -107,7 +118,9 @@ export const Header = () => {
 				</div>
 			</div>
 			<div className={'block md:hidden'}>
-				<Input state={searchText} setState={setSearchText} />
+				<div className={`${path === '/product' ? 'hidden' : ''}`}>
+					<Input state={searchText} setState={setSearchText} />
+				</div>
 				<div className={`mt-[16px] ${path !== '/' && 'hidden'}`}>
 					<Swiper
 						slideToClickedSlide

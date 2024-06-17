@@ -20,7 +20,7 @@ export const MobileMenu = ({
 		<div>
 			<Section>
 				<div
-					className={`fixed z-20 h-[100vh] w-full pt-[5px] bg-white ${
+					className={`fixed z-20 h-[100vh] w-full pt-[15px] bg-white ${
 						isShowModal
 							? 'translate-y-0 opacity-100 '
 							: 'translate-y-[-100vh] opacity-0'
