@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Input } from '../ui/Input'
+import { InputSearch } from '../ui/Input'
 import { Section } from '../ui/Section'
 import { MobileMenu } from './MobileMenu'
 
@@ -60,7 +60,7 @@ export const Header = () => {
 				</Link>
 				{/* ПК навигация (naw bar, search, shop cart & burger) */}
 				<div
-					className={`hidden md:flex ${
+					className={`hidden lg:flex ${
 						isNawActive !== null
 							? ' items-start translate-y-[12px]'
 							: 'items-center'
@@ -99,7 +99,7 @@ export const Header = () => {
 					</div>
 				</div>
 				{/* Мобильная навигация (shop cart & burger) */}
-				<div className='flex gap-[16px] md:hidden'>
+				<div className='flex gap-[16px] lg:hidden'>
 					<div className='relative size-[18px]'>
 						<Image src={'/shopping-cart.svg'} fill alt='search' />
 					</div>
@@ -119,7 +119,7 @@ export const Header = () => {
 			</div>
 			<div className={'block md:hidden'}>
 				<div className={`${path === '/product' ? 'hidden' : ''}`}>
-					<Input state={searchText} setState={setSearchText} />
+					<InputSearch state={searchText} setState={setSearchText} />
 				</div>
 				<div className={`mt-[16px] ${path !== '/' && 'hidden'}`}>
 					<Swiper

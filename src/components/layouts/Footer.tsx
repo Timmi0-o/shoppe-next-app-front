@@ -5,7 +5,7 @@ import { Section } from '../ui/Section'
 export const Footer = () => {
 	return (
 		<Section>
-			<div className='h-[159px] border-t-[1px] mb-[90px] border-t-[#D8D8D8]'>
+			<div className='h-[159px] lg:border-t-[1px] mb-[90px] lg:border-t-[#D8D8D8]'>
 				<div className='flex flex-col-reverse items-start md:flex-row sm:justify-between sm:items-center mt-[37px] mb-[32px] sm:mb-[47px]'>
 					<div className='flex flex-col sm:flex-row gap-[8px] sm:gap-[25px] md:gap-[28px] lg:gap-[41px]'>
 						{links.map((link, i) => (
@@ -24,7 +24,7 @@ export const Footer = () => {
 								type='text'
 								placeholder='Give an email, get the newsletter.'
 							/>
-							<div className='relative w-[25px] h-[9px]'>
+							<div className='relative w-[25px] h-[9px] cursor-pointer'>
 								<Image src={'/input-arrow-footer.svg'} fill alt='arrow' />
 							</div>
 						</div>
