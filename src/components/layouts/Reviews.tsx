@@ -10,15 +10,15 @@ export const Reviews = () => {
 	const [email, setEmail] = useState('')
 	return (
 		<Section>
-			<div className='flex gap-[85px]'>
-				<div className='w-[580px]'>
-					<div className='flex justify-between text-[20px] font-normal leading-[26px] mb-[76px]'>
+			<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[85px]'>
+				<div className='w-full lg:w-[580px]'>
+					<div className='sticky top-0 flex justify-between text-[16px] lg:text-[20px] font-normal leading-[26px] mb-[20px] lg:mb-[76px]'>
 						<p>{comments.length} Reviews for lira earings</p>
-						<p className='text-[15px] text-[#a18a68] cursor-pointer'>
+						<p className=' text-[13px] lg:text-[15px] text-[#a18a68] cursor-pointer'>
 							All reviews
 						</p>
 					</div>
-					<div className='h-[500px] overflow-hidden'>
+					<div className='h-[450px] lg:h-[500px] overflow-scroll lg:overflow-hidden'>
 						{comments.slice(0, 2).map((comment, i) => (
 							<div
 								key={i}
@@ -28,15 +28,17 @@ export const Reviews = () => {
 										: ''
 								}`}
 							>
-								<div className='flex items-center gap-[16px] mb-[16px]'>
-									<p className='text-[20px]'>{comment.userName}</p>
+								<div className='flex items-center gap-[16px] mb-[8px] lg:mb-[16px]'>
+									<p className='text-[16px] lg:text-[20px]'>
+										{comment.userName}
+									</p>
 									<p className='text-[14px] text-[#707070]'>{comment.date}</p>
 								</div>
-								<div className='flex gap-[10px] mb-[24px]'>
+								<div className='flex gap-[10px] mb-[18px] lg:mb-[24px]'>
 									{star.map((i) => (
 										<FaStar
 											key={i}
-											className='size-[18px] cursor-pointer text-[#000000]'
+											className='size-[14px] lg:size-[18px] cursor-pointer text-[#000000]'
 										/>
 									))}
 								</div>
@@ -49,7 +51,7 @@ export const Reviews = () => {
 					</div>
 				</div>
 				{/* ОСТАВИТЬ СВОЙ ОТЗЫВ */}
-				<div className='w-[580px]'>
+				<div className='hidden lg:block w-[580px]'>
 					<p className='text-[20px] leading-[26px]'>Add a Review</p>
 					<p className='text-[13px] text-[#707070] leading-[30px] mb-[46px]'>
 						Your email address will not be published. Required fields are marked
@@ -69,6 +71,7 @@ export const Reviews = () => {
 							state={email}
 							setState={setEmail}
 							placeholder='Enter your Email*'
+							type='email'
 						/>
 					</div>
 					<div className='flex gap-[8px] cursor-pointer'>

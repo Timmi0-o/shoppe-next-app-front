@@ -43,7 +43,7 @@ export const Header = () => {
 				} ${
 					isNawActive !== null
 						? 'lg:pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] lg:pb-[12px] sm:mt-[48px]'
-						: 'sm:mt-[64px] md:border-b-transparent'
+						: 'lg:mt-[64px] md:border-b-transparent'
 				}`}
 			>
 				{/* LOGO */}
@@ -99,8 +99,8 @@ export const Header = () => {
 					</div>
 				</div>
 				{/* Мобильная навигация (shop cart & burger) */}
-				<div className='flex gap-[16px] lg:hidden'>
-					<div className='relative size-[18px]'>
+				<div className='flex lg:hidden'>
+					<div className='relative size-[18px] mr-[15px]'>
 						<Image src={'/shopping-cart.svg'} fill alt='search' />
 					</div>
 					<div

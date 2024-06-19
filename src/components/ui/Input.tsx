@@ -5,6 +5,7 @@ interface InputProps {
 	state: string
 	setState: Dispatch<SetStateAction<string>>
 	placeholder?: string
+	type?: string
 }
 
 export const InputSearch = ({ state, setState }: InputProps) => {
@@ -24,13 +25,13 @@ export const InputSearch = ({ state, setState }: InputProps) => {
 	)
 }
 
-export const Input = ({ state, setState, placeholder }: InputProps) => {
+export const Input = ({ state, setState, placeholder, type }: InputProps) => {
 	return (
-		<div className='w-full h-[35px] pb-[13px] border-b-[1px] border-b-[#D8D8D8]'>
+		<div className='w-full h-[25px] lg:h-[35px] pb-[13px] text-[12px] lg:text-[14px] border-b-[1px] border-b-[#D8D8D8]'>
 			<input
 				className='w-full outline-none'
 				onChange={(e) => setState(e.target.value)}
-				type='text'
+				type={type ? type : 'text'}
 				value={state}
 				placeholder={placeholder ? placeholder : ''}
 			/>

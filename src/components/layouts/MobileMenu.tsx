@@ -24,10 +24,10 @@ export const MobileMenu = ({
 						isShowModal
 							? 'translate-y-0 opacity-100 '
 							: 'translate-y-[-100vh] opacity-0'
-					} top-[-5px] left-0 w-full duration-300 z-10 rounded-ee-[20px] rounded-es-[20px]`}
+					} top-[0px] left-0 w-full duration-300 z-10 rounded-ee-[20px] rounded-es-[20px]`}
 				>
-					<div className='max-w-[320px] sm:max-w-[500px]  md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
-						<div className='flex justify-between items-center h-[42px] mt-[5px]'>
+					<div className='max-w-[320px] sm:max-w-[500px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
+						<div className='flex justify-between items-center'>
 							<Link href={'/'}>
 								<div
 									onClick={() => setIsNawActive(null)}
@@ -39,8 +39,8 @@ export const MobileMenu = ({
 									<p className='text-[#A18A68]'>S</p>HOPPE
 								</div>
 							</Link>
-							<div className='flex items-center'>
-								<div className='relative size-[18px] mr-[20px]'>
+							<div className='flex items-center gap-[15px]'>
+								<div className='relative size-[18px]'>
 									<Image src={'/shopping-cart.svg'} fill alt='shopping-cart' />
 								</div>
 								<div onClick={() => setIsShowModal(!isShowModal)}>

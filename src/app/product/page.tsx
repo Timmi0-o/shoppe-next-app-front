@@ -3,6 +3,7 @@ import { DropMenuMobile } from '@/components/layouts/DropMenuMobile'
 import { Reviews } from '@/components/layouts/Reviews'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import { Section } from '@/components/ui/Section'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -25,9 +26,15 @@ function Product() {
 
 	const [allPrice, setAllPrice] = useState(20)
 
+	// АНИМАЦИИ ДЛЯ НАЖАТОЙ КНОПКИ ПОКУПКИ ТОВАРА
 	const [isAddedShop, setIsAddedShop] = useState(false)
 	const [isBtnShopClick, setIsBtnShopClick] = useState('')
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
+
+	// ФОРМА ДЛЯ ЗАПОЛНЕНИЯ КОММЕНТАРИЯ
+	const [comment, setComment] = useState('')
+	const [names, setNames] = useState('')
+	const [email, setEmail] = useState('')
 
 	const addProductShop = () => {
 		setIsAddedShop(true)
@@ -284,13 +291,63 @@ function Product() {
 					</div>
 				</div>
 			</div>
+
+			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
 			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
-				<DropMenuMobile title='Description' dropLink={productDescription} />
+				<DropMenuMobile
+					heightCustom='h-[270px]'
+					title='Description'
+					dropLink={productDescription}
+				/>
 				<DropMenuMobile
 					title='Additional information'
 					dropLink={productAdditionInfo}
 				/>
-				{/* <DropMenuMobile title='Reviews(0)' dropLink={} /> */}
+				<DropMenuMobile
+					heightCustom='h-fit'
+					title='Reviews(0)'
+					dropLink={<Reviews />}
+				/>
+			</div>
+			{/* ОСТАВИТЬ СВОЙ ОТЗЫВ (ONLY MOBILE) */}
+			<div className='block lg:hidden w-full'>
+				<p className='text-[20px] leading-[26px] mb-[5px]'>Add a Review</p>
+				<p className='text-[13px] text-[#707070] leading-[20px] mb-[26px]'>
+					Your email address will not be published. Required fields are marked *
+				</p>
+				<p className='text-[14px] text-[#707070] leading-[22px]'>
+					Your Review*
+				</p>
+				<div className='flex flex-col gap-[26px] mb-[24px]'>
+					<Input state={comment} setState={setComment} />
+					<Input
+						state={names}
+						setState={setNames}
+						placeholder='Enter your name*'
+					/>
+					<Input
+						state={email}
+						setState={setEmail}
+						placeholder='Enter your Email*'
+						type='email'
+					/>
+				</div>
+				<div className='flex gap-[8px] cursor-pointer'>
+					<div className='size-[18px] border-[1px] border-black'></div>
+					<p className='w-[250px] text-[12px] text-[#707070] mb-[26px]'>
+						Save my name, email, and website in this browser for the next time I
+						comment
+					</p>
+				</div>
+				<p className='text-[14px] text-[#707070] mb-[13px]'>Your Rating*</p>
+				<div className='flex gap-[10px] mb-[28px]'>
+					{star.map((i) => (
+						<FaStar key={i} className='size-[18px] cursor-pointer' />
+					))}
+				</div>
+				<div className='w-full mb-[28px]'>
+					<Button title='Submit' />
+				</div>
 			</div>
 			<SimilarProducts />
 		</Section>
@@ -314,19 +371,19 @@ const productDescription = [
 
 const productAdditionInfo = [
 	<div className='flex flex-col gap-[10px]' key={1}>
-		<div className='flex gap-[10px] text-[16px]'>
+		<div className='flex gap-[10px] text-[13px] lg:text-[16px]'>
 			<p className='text-black font-normal'>Weight:</p>
 			<p className='text-[#707070]'>0.3 kg</p>
 		</div>
-		<div className='flex gap-[10px] text-[16px]'>
+		<div className='flex gap-[10px] text-[13px] lg:text-[16px]'>
 			<p className='text-black font-normal'>Dimentions:</p>
 			<p className='text-[#707070]'>15 x 10 x 1 cm</p>
 		</div>
-		<div className='flex gap-[10px] text-[16px]'>
+		<div className='flex gap-[10px] text-[13px] lg:text-[16px]'>
 			<p className='text-black font-normal'>Colours:</p>
 			<p className='text-[#707070]'>Black, Browns, White</p>
 		</div>
-		<div className='flex gap-[10px] text-[16px]'>
+		<div className='flex gap-[10px] text-[13px] lg:text-[16px]'>
 			<p className='text-black font-normal'>Material:</p>
 			<p className='text-[#707070]'>Metal</p>
 		</div>
@@ -340,3 +397,5 @@ const SocialWishlist = [
 	{ src: '/instagram.svg', size: 'w-[18px] h-[18px]' },
 	{ src: '/x.svg', size: 'w-[20px] h-[16px]' },
 ]
+
+const star = [1, 2, 3, 4, 5]
