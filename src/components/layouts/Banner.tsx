@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -38,11 +39,13 @@ export const Banner = () => {
 											$ 68,00
 										</p>
 									</div>
-									<div className='flex items-center justify-center w-[100px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
-										<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
-											View Product
-										</p>
-									</div>
+									<Link href={'/product'}>
+										<div className='flex items-center justify-center w-[100px] sm:w-[193px] h-[42px] sm:h-[53px] rounded-[6px] border-[2px] border-white cursor-pointer hover:border-[#ececec] active:border-[#e2e2e2] duration-200'>
+											<p className='text-[14px] sm:text-[20px] font-bold leading-[26px]'>
+												View Product
+											</p>
+										</div>
+									</Link>
 								</div>
 							</div>
 						</SwiperSlide>

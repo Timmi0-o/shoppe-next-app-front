@@ -24,12 +24,32 @@ function Product() {
 	const [isSwitchesActive, setIsSwitchesActive] = useState(0)
 
 	const [allPrice, setAllPrice] = useState(20)
+
+	const [isAddedShop, setIsAddedShop] = useState(false)
+	const [isBtnShopClick, setIsBtnShopClick] = useState('')
+	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
+
+	const addProductShop = () => {
+		setIsAddedShop(true)
+		setBtnTitle('ADDED!')
+		setIsBtnShopClick('tracking-[2px] ')
+
+		setTimeout(() => {
+			setIsBtnShopClick('tracking-[0px]')
+		}, 200)
+
+		setTimeout(() => {
+			setIsAddedShop(false)
+			setBtnTitle('ADD TO CART')
+		}, 3500)
+	}
+
 	return (
 		<Section>
-			<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[62px] mb-[21px] lg:mb-[96px]'>
+			<div className='flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px]'>
 				{/* Главный слайдер и боковой для привью */}
-				<div className='flex gap-[39px]'>
-					<div className='hidden lg:block h-[600px] w-[120px]'>
+				<div className='flex md:gap-[40px] lg:gap-[15px] xl:gap-[39px]'>
+					<div className='hidden md:block md:h-[540px] xl:h-[600px] w-[120px]'>
 						<Swiper
 							onSwiper={setThumbsSwiper}
 							spaceBetween={10}
@@ -37,31 +57,18 @@ function Product() {
 							freeMode={true}
 							watchSlidesProgress={true}
 							modules={[FreeMode, Navigation, Thumbs]}
-							wrapperClass='flex-col gap-[39px]'
+							wrapperClass='flex-col md:gap-[20px] lg:gap-[39px]'
 						>
-							<SwiperSlide className='rounded-[8px]'>
-								<div className='relative size-[120px] rounded-[8px] overflow-hidden'>
-									<Image src={'/Item1.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide className='rounded-[8px]'>
-								<div className='relative size-[120px] rounded-[8px] overflow-hidden'>
-									<Image src={'/Item2.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide className='rounded-[8px]'>
-								<div className='relative size-[120px] rounded-[8px] overflow-hidden'>
-									<Image src={'/Item3.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide className='rounded-[8px]'>
-								<div className='relative size-[120px] rounded-[8px] overflow-hidden'>
-									<Image src={'/Item4.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
+							{productImg.map((img, i) => (
+								<SwiperSlide key={i} className='rounded-[8px]'>
+									<div className='relative size-[120px] lg:size-[105px] xl:size-[120px] rounded-[8px] overflow-hidden'>
+										<Image src={img} fill alt='item' />
+									</div>
+								</SwiperSlide>
+							))}
 						</Swiper>
 					</div>
-					<div className='w-full lg:w-[540px]'>
+					<div className='w-full md:w-[500px] xl:w-[540px]'>
 						<Swiper
 							spaceBetween={10}
 							slidesPerView={1}
@@ -70,26 +77,13 @@ function Product() {
 							scrollbar={true}
 							centeredSlides
 						>
-							<SwiperSlide>
-								<div className='relative w-full h-[374px] lg:w-[500px] lg:h-[540px] xl:w-[540px] xl:h-[600px]'>
-									<Image src={'/Item1.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide>
-								<div className='relative w-full h-[374px] xl:w-[540px] xl:h-[600px]'>
-									<Image src={'/Item2.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide>
-								<div className='relative w-full h-[374px] xl:w-[540px] xl:h-[600px]'>
-									<Image src={'/Item3.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
-							<SwiperSlide>
-								<div className='relative w-full h-[374px] xl:w-[540px] xl:h-[600px]'>
-									<Image src={'/Item4.png'} fill alt='item' />
-								</div>
-							</SwiperSlide>
+							{productImg.map((img, i) => (
+								<SwiperSlide key={i}>
+									<div className='relative w-full h-[374px] sm:h-[550px] md:w-[500px] md:h-[540px] xl:w-[540px] xl:h-[600px]'>
+										<Image src={img} fill alt='item' />
+									</div>
+								</SwiperSlide>
+							))}
 						</Swiper>
 					</div>
 				</div>
@@ -119,7 +113,7 @@ function Product() {
 						</div>
 					</div>
 					{/* ОЦЕНКА ТОВАРА */}
-					<div className='hidden lg:flex items-center gap-[24px] mt-[64px]'>
+					<div className='hidden lg:flex items-center gap-[24px] mt-[30px] xl:mt-[64px]'>
 						<div className='flex gap-[10px]'>
 							{productStars.map((i) => (
 								<FaStar
@@ -141,7 +135,7 @@ function Product() {
 								augue, a maximus elit ex vitae libero. Sed quis mauris eget arcu
 								facilisis consequat sed eu felis.
 							</p>
-							<div className='flex items-center gap-[5px] active:opacity-75 duration-200'>
+							<div className='flex md:hidden items-center gap-[5px] active:opacity-75 duration-200'>
 								<p className='text-[12px] text-[#A18A68]'>View more</p>
 								<div className='relative w-[8px] h-[14px] -rotate-90'>
 									<Image src={'/drop-arrow.svg'} fill alt='drop-arrow' />
@@ -149,7 +143,7 @@ function Product() {
 							</div>
 						</div>
 						{/* КОПКА ДОБАВИТЬ В КОРЗИНУ И (ВЫБОРА КОЛ-ВА НА PC) */}
-						<div className='flex mt-[24px] lg:mt-[49px]'>
+						<div className='flex mt-[25px] xl:mt-[49px]'>
 							<div className='hidden lg:flex items-center justify-center w-[102px] h-[53px] bg-[#EFEFEF] rounded-[4px] mr-[23px]'>
 								<div
 									onClick={() => {
@@ -179,7 +173,64 @@ function Product() {
 									</div>
 								</div>
 							</div>
-							<Button title='ADD TO CART' />
+							{/* ДОБАВИТЬ ТОВАР В КОРЗИНУ И ОТОБРАЗИТЬ ВСПЛЫВАЮЩЕЕ ОКНО */}
+							<div className='w-full'>
+								<Button
+									onClick={() => addProductShop()}
+									title={btnTitle}
+									AddTitleClass={isBtnShopClick}
+								/>
+								<div
+									className={`flex items-center justify-between fixed lg:absolute z-20 bottom-0 lg:top-[-100px] h-[68px] bg-[#EFEFEF] px-[5px] sm:px-[16px] lg:px-[40px] duration-300 ease-in-out w-full ${
+										isAddedShop
+											? 'opacity-100 left-0 lg:mt-0'
+											: 'opacity-0 z-[-1] left-[-100%] lg:mt-[-10px] lg:left-0'
+									}`}
+								>
+									<div className='flex gap-[16px] items-center'>
+										<div className='relative size-[20px]'>
+											<Image
+												src={'/success-shop.svg'}
+												fill
+												alt='success-shop'
+											/>
+										</div>
+										<p className='text-[14px] md:text-[16px] leading-[27px] font-normal'>
+											The item added to your Shopping bag.
+										</p>
+									</div>
+									<p className='text-[14px] md:text-[16px]  text-[#A18A68] cursor-pointer'>
+										VIEW CART
+									</p>
+								</div>
+							</div>
+						</div>
+						{/* МЕТА ИНФА О ТОВАРЕ */}
+						<div className='hidden lg:block mt-[40px] xl:mt-[80px]'>
+							{/* Social Wishlist */}
+							<div className='flex items-center h-[20px]'>
+								{SocialWishlist.map((social, i) => (
+									<div className='flex items-center mr-[24px]' key={i}>
+										<div className={`relative cursor-pointer ${social.size}`}>
+											<Image src={social.src} fill alt='social-link' />
+										</div>
+										{i === 0 && (
+											<div className='w-[1px] h-[20px] bg-[#D8D8D8] ml-[40px] mr-[16px]'></div>
+										)}
+									</div>
+								))}
+							</div>
+							{/* SKU И КАТЕГОРИИ */}
+							<div className='mt-[25px] xl:mt-[37px]'>
+								<div className='flex gap-[16px] text-[16px] leading-[27px]'>
+									<p>SKU:</p>
+									<p className='text-[#707070]'>12</p>
+								</div>
+								<div className='flex gap-[16px] text-[16px] leading-[27px]'>
+									<p>Categories:</p>
+									<p className='text-[#707070]'>Fashion, Style</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -247,6 +298,8 @@ function Product() {
 }
 
 export default Product
+
+const productImg = ['/Item1.png', '/Item2.png', '/Item3.png', '/Item4.png']
 const productStars = [1, 2, 3, 4, 5]
 
 const switchesDescription = [
@@ -278,4 +331,12 @@ const productAdditionInfo = [
 			<p className='text-[#707070]'>Metal</p>
 		</div>
 	</div>,
+]
+
+const SocialWishlist = [
+	{ src: '/like-product.svg', size: 'w-[20px] h-[18px]' },
+	{ src: '/email.svg', size: 'w-[21px] h-[16px]' },
+	{ src: '/facebook.svg', size: 'w-[10px] h-[17px]' },
+	{ src: '/instagram.svg', size: 'w-[18px] h-[18px]' },
+	{ src: '/x.svg', size: 'w-[20px] h-[16px]' },
 ]

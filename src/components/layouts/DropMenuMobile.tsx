@@ -17,7 +17,11 @@ export const DropMenuMobile = ({ title, dropLink }: DropMenuMobileProps) => {
 		>
 			<div className='flex justify-between items-center'>
 				<p>{title}</p>
-				<div className='relative w-[8] h-[16px]'>
+				<div
+					className={`relative w-[10px] h-[18px] duration-300 ease-out ${
+						isDropActive ? 'rotate-180' : ''
+					}`}
+				>
 					<Image src={'/drop-arrow.svg'} fill alt='drop-arrow' />
 				</div>
 			</div>
