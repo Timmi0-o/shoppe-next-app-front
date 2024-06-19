@@ -1,5 +1,5 @@
 'use client'
-import { DropMenuMobile } from '@/components/layouts/DropMenuMobile'
+import { DropMenu } from '@/components/layouts/DropMenu'
 import { Reviews } from '@/components/layouts/Reviews'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
@@ -298,16 +298,16 @@ function Product() {
 
 			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
 			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
-				<DropMenuMobile
+				<DropMenu
 					heightCustom='h-[270px]'
 					title='Description'
 					dropLink={productDescription}
 				/>
-				<DropMenuMobile
+				<DropMenu
 					title='Additional information'
 					dropLink={productAdditionInfo}
 				/>
-				<DropMenuMobile
+				<DropMenu
 					heightCustom='h-fit'
 					title='Reviews(0)'
 					dropLink={<Reviews />}

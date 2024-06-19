@@ -87,7 +87,7 @@ export const Footer = () => {
 }
 
 const links = [
-	{ title: 'CONTACT', href: '#' },
+	{ title: 'CONTACT', href: '/contact-as' },
 	{ title: 'TERMS OF SERVICES', href: '#' },
 	{ title: 'SHIPPING AND RETURNS', href: '#' },
 ]

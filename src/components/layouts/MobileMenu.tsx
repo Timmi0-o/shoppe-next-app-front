@@ -16,11 +16,6 @@ export const MobileMenu = ({
 	setIsNawActive,
 	setIsShowModal,
 }: MobileMenuProps) => {
-	const handleIsShowModal = () => {
-		setTimeout(() => {
-			setIsShowModal(!isShowModal)
-		}, 300)
-	}
 	return (
 		<div>
 			<Section>
@@ -48,7 +43,7 @@ export const MobileMenu = ({
 								<div className='relative size-[18px]'>
 									<Image src={'/shopping-cart.svg'} fill alt='shopping-cart' />
 								</div>
-								<div onClick={() => handleIsShowModal()}>
+								<div onClick={() => setIsShowModal(!isShowModal)}>
 									<IoClose className='size-[25px]' />
 								</div>
 							</div>
@@ -56,7 +51,7 @@ export const MobileMenu = ({
 						<div className='flex flex-col mt-[39px] gap-[24px] mb-[39px]'>
 							{links.map((link, i) => (
 								<Link
-									onClick={() => handleIsShowModal()}
+									onTransitionEnd={() => setIsShowModal(!isShowModal)}
 									href={link.link}
 									key={i}
 								>
@@ -96,6 +91,6 @@ const links = [
 	{ title: 'About', link: '/' },
 	{ title: 'Blog', link: '/' },
 	{ title: 'Help', link: '/' },
-	{ title: 'Contact', link: '/' },
+	{ title: 'Contact', link: '/contact-as' },
 	{ title: 'Search', link: '/' },
 ]

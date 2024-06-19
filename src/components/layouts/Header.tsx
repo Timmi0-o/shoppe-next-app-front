@@ -117,7 +117,7 @@ export const Header = () => {
 					/>
 				</div>
 			</div>
-			<div className={'block md:hidden'}>
+			<div className={'block lg:hidden'}>
 				<div className={`${path === '/product' ? 'hidden' : ''}`}>
 					<InputSearch state={searchText} setState={setSearchText} />
 				</div>
