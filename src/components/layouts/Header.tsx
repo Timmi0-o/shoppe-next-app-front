@@ -42,7 +42,7 @@ export const Header = () => {
 					path !== '/' ? 'mb-[17px] lg:mb-[96px]' : 'mb-[17px] md:mb-0'
 				} ${
 					isNawActive !== null
-						? 'pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] pb-[12px] sm:mt-[48px]'
+						? 'lg:pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] lg:pb-[12px] sm:mt-[48px]'
 						: 'sm:mt-[64px] md:border-b-transparent'
 				}`}
 			>
