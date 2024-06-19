@@ -6,6 +6,10 @@ import { useState } from 'react'
 
 function Page() {
 	const [isVariableActive, setIsVariableActive] = useState(0)
+
+	const [password, setPassword] = useState('')
+	const [userName, setUserName] = useState('')
+	const [email, setEmail] = useState('')
 	return (
 		<Section>
 			<div className='flex flex-col items-center'>
@@ -42,10 +46,18 @@ function Page() {
 								isVariableActive === 1 ? 'mr-0' : 'mr-[100%] absolute'
 							}`}
 						>
-							<Input placeholder='UserName' />
+							<Input
+								state={userName}
+								setState={setUserName}
+								placeholder='UserName'
+							/>
 						</div>
-						<Input placeholder='Email' />
-						<Input placeholder='Password' />
+						<Input state={email} setState={setEmail} placeholder='Email' />
+						<Input
+							state={password}
+							setState={setPassword}
+							placeholder='Password'
+						/>
 					</div>
 					<div className='flex items-center gap-[8px] mt-[15px] w-full mb-[12px] lg:mb-[85px]'>
 						<div className='size-[18px] border-[1px] border-[#707070] rounded-[2px]'></div>
