@@ -19,7 +19,6 @@ export const Header = () => {
 	const [isShowModal, setIsShowModal] = useState(false)
 
 	let path = usePathname()
-	console.log('path', path)
 
 	useEffect(() => {
 		if (isShowModal) {
@@ -87,14 +86,13 @@ export const Header = () => {
 					{/* Навигация (search, shop cart & profile (only PC) ) */}
 					<div className='flex ml-[48px] gap-[19px]'>
 						{navigation.map((navigate, i) => (
-							<div
-								className='flex justify-center items-center size-[32px] lg:hover:bg-[#f1f1f1] lg:active:bg-[#d9d9d9] rounded-[50%] duration-200'
-								key={i}
-							>
-								<div className='relative size-[20px] cursor-pointer'>
-									<Image src={navigate.img} fill alt='search' />
+							<Link href={navigate.href} key={i}>
+								<div className='flex justify-center items-center size-[32px] lg:hover:bg-[#f1f1f1] lg:active:bg-[#d9d9d9] rounded-[50%] duration-200'>
+									<div className='relative size-[20px] cursor-pointer'>
+										<Image src={navigate.img} fill alt='search' />
+									</div>
 								</div>
-							</div>
+							</Link>
 						))}
 					</div>
 				</div>
@@ -163,9 +161,9 @@ const nawLink = [
 ]
 
 const navigation = [
-	{ img: '/search.svg', description: 'Поиск' },
-	{ img: '/shopping-cart.svg', description: 'Ваши покупки' },
-	{ img: '/profile.svg', description: 'Профиль' },
+	{ img: '/search.svg', description: 'Поиск', href: '#' },
+	{ img: '/shopping-cart.svg', description: 'Ваши покупки', href: '#' },
+	{ img: '/profile.svg', description: 'Профиль', href: '/account' },
 ]
 
 const mobileCategory = [

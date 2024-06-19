@@ -63,20 +63,32 @@ export const MobileMenu = ({
 						</div>
 						<div className='w-full h-[1px] bg-[#D8D8D8]'></div>
 						<div className='flex flex-col items-start gap-[23px] mt-[24px]'>
-							<div className='flex items-center gap-[10px]'>
-								<div className='relative size-[20px]'>
-									<Image src={'/profile.svg'} fill alt='profile' />
+							<Link
+								onTransitionEnd={() => setIsShowModal(!isShowModal)}
+								href='/account'
+							>
+								<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
+									<div className='relative size-[20px]'>
+										<Image src={'/profile.svg'} fill alt='profile' />
+									</div>
+									<p className='text-[20px] font-normal leading-[26px]'>
+										My account
+									</p>
 								</div>
-								<p className='text-[20px] font-normal leading-[26px]'>
-									My account
-								</p>
-							</div>
-							<div className='flex items-center gap-[10px]'>
-								<div className='relative size-[18px]'>
-									<Image src={'/log-out.svg'} fill alt='profile' />
+							</Link>
+							<Link
+								onTransitionEnd={() => setIsShowModal(!isShowModal)}
+								href='/log-out'
+							>
+								<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
+									<div className='relative size-[18px]'>
+										<Image src={'/log-out.svg'} fill alt='profile' />
+									</div>
+									<p className='text-[20px] font-normal leading-[26px]'>
+										Logout
+									</p>
 								</div>
-								<p className='text-[20px] font-normal leading-[26px]'>Logout</p>
-							</div>
+							</Link>
 						</div>
 					</div>
 				</div>
