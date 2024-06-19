@@ -191,7 +191,7 @@ function Product() {
 									className={`flex items-center justify-between fixed lg:absolute z-20 bottom-0 lg:top-[-100px] h-[68px] bg-[#EFEFEF] px-[5px] sm:px-[16px] lg:px-[40px] duration-300 ease-in-out w-full ${
 										isAddedShop
 											? 'opacity-100 left-0 lg:mt-0'
-											: 'opacity-0 z-[-1] left-[-100%] lg:mt-[-10px] lg:left-0'
+											: 'opacity-0 z-[-1] left-[-30%]'
 									}`}
 								>
 									<div className='flex gap-[16px] items-center'>
