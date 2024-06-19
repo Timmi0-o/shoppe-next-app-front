@@ -39,11 +39,15 @@ function Product() {
 	const addProductShop = () => {
 		setIsAddedShop(true)
 		setBtnTitle('ADDED!')
-		setIsBtnShopClick('tracking-[2px] ')
+		setIsBtnShopClick('tracking-[2px] duration-300 ')
 
 		setTimeout(() => {
-			setIsBtnShopClick('tracking-[0px]')
+			setIsBtnShopClick('tracking-[0px] duration-300')
 		}, 200)
+
+		setTimeout(() => {
+			setIsBtnShopClick('')
+		}, 500)
 
 		setTimeout(() => {
 			setIsAddedShop(false)
