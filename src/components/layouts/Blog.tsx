@@ -8,21 +8,26 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Blog() {
+	// СТЕЙТЫ ДЛЯ ПОИСКА В SIDEBAR
 	const [searchBlog, setSearchBlog] = useState('')
 
+	// НОМЕР СТРАНИЦЫ И КОЛ-ВО ЭЛЕМЕНТОВ В ПАГИНАЦИИ
 	const searchParams = useSearchParams()
 	const page = searchParams.get('page') ?? '1'
 	const per_page = searchParams.get('per_page') ?? '4'
 
+	// ПЕРИОДЫ ДЛЯ ОПРЕДЕЛЕНИЯ ПО С КАКОГО ПО КАКОЙ СЛАЙСИТЬ
 	const start = (Number(page) - 1) * Number(per_page)
 	const end = start + Number(per_page)
 
+	// МАССИВ С ТЕКУЩИМИ БЛОГАМИ
 	const entries = blogs.slice(start, end)
 
 	return (
 		<Section>
 			<SideBar title='Blog' titleMobile='Blog'>
 				<div className='flex gap-[39px] mt-[39px] lg:mt-[36px]'>
+					{/* SIDEBAR */}
 					<div className='hidden lg:block'>
 						<div className='flex justify-between items-center w-[261px] pb-[11px] border-b-[1px] border-b-[#D8D8D8]'>
 							<input
@@ -32,7 +37,7 @@ export default function Blog() {
 								value={searchBlog}
 								placeholder='Search...'
 							/>
-							<div className='relative size-[19px]'>
+							<div className='relative w-[19px] h-[19px]'>
 								<Image src={'/search.svg'} fill alt='search' />
 							</div>
 						</div>
@@ -49,27 +54,33 @@ export default function Blog() {
 							</div>
 						</div>
 					</div>
-					<div className='flex flex-wrap gap-[48px]'>
+					{/* БЛОГИ */}
+					<div className='flex justify-center flex-wrap gap-[39px] lg:gap-[48px]'>
 						{entries.map((blog, i) => (
-							<div key={i} className='w-[450px] h-[490px] rounded-[8px]'>
-								<div className='relative w-full h-[300px]'>
-									<Image src={blog.src} fill alt='blog1' />
+							<Link href={'/blog/details'} key={i}>
+								<div className='w-full lg:w-[305px] xl:w-[450px] h-[340px] md:h-[550px] lg:h-[490px] rounded-[8px]'>
+									<div className='relative w-full h-[192px] md:h-[450px] lg:h-[230px] xl:h-[300px] cursor-pointer'>
+										<Image src={blog.src} fill alt='blog1' />
+									</div>
+									<div className='mt-[15px] lg:mt-[22px]'>
+										<p className='text-[12px] md:text-[14px] text-[#707070] mb-[2px] lg:mb-[5px]'>
+											Fashion - October 8, 2020
+										</p>
+										<p className='text-[16px] md:text-[20px]'>
+											Top Trends From Spring
+										</p>
+										<p className='text-[12px] md:text-[16px] text-[#707070] mt-[5px] lg:mt-[15px]'>
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											faucibus augue, a maximus elit ex vitae libero...
+										</p>
+										<p className='text-[12px] lg:text-[16px] text-[#A18A68] mt-[15px] lg:mt-[24px] cursor-pointer'>
+											Read More
+										</p>
+									</div>
 								</div>
-								<div className='mt-[15px] lg:mt-[22px]'>
-									<p className='text-[14px] text-[#707070] mb-[2px] lg:mb-[5px]'>
-										Fashion - October 8, 2020
-									</p>
-									<p className='text-[20px]'>Top Trends From Spring</p>
-									<p className='text-[12px] lg:text-[16px] text-[#707070] mt-[5px] lg:mt-[15px]'>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										faucibus augue, a maximus elit ex vitae libero...{' '}
-									</p>
-									<p className='text-[12px] lg:text-[16px] text-[#A18A68] mt-[15px] lg:mt-[24px] cursor-pointer'>
-										Read More
-									</p>
-								</div>
-							</div>
+							</Link>
 						))}
+						{/* ПАГИНАЦИЯ */}
 						<div className='w-full flex justify-center'>
 							<PaginationControls />
 						</div>

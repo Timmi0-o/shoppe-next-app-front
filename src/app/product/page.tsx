@@ -1,6 +1,7 @@
 'use client'
 import { DropMenu } from '@/components/layouts/DropMenu'
 import { Reviews } from '@/components/layouts/Reviews'
+import { Rights } from '@/components/layouts/Rights'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -35,6 +36,7 @@ function Product() {
 	const [comment, setComment] = useState('')
 	const [names, setNames] = useState('')
 	const [email, setEmail] = useState('')
+	const [rights, setRights] = useState(false)
 
 	const addProductShop = () => {
 		setIsAddedShop(true)
@@ -161,7 +163,7 @@ function Product() {
 										setProductNumber(
 											productNumber > 1 ? productNumber - 1 : productNumber
 										)
-										setAllPrice(allPrice >= 20 ? allPrice - 20 : 0)
+										setAllPrice(allPrice > 20 ? allPrice - 20 : allPrice)
 									}}
 									className='p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300'
 								>
@@ -336,13 +338,11 @@ function Product() {
 						type='email'
 					/>
 				</div>
-				<div className='flex gap-[8px] cursor-pointer'>
-					<div className='size-[18px] border-[1px] border-black'></div>
-					<p className='w-[250px] text-[12px] text-[#707070] mb-[26px]'>
-						Save my name, email, and website in this browser for the next time I
-						comment
-					</p>
-				</div>
+				<Rights
+					rightsState={rights}
+					rightsSetState={setRights}
+					rightsText='Save my name, email, and website in this browser for the next time I comment'
+				/>
 				<p className='text-[14px] text-[#707070] mb-[13px]'>Your Rating*</p>
 				<div className='flex gap-[10px] mb-[28px]'>
 					{star.map((i) => (

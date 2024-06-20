@@ -3,11 +3,14 @@ import { FaStar } from 'react-icons/fa'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { Section } from '../ui/Section'
+import { Rights } from './Rights'
 
 export const Reviews = () => {
 	const [comment, setComment] = useState('')
 	const [names, setNames] = useState('')
 	const [email, setEmail] = useState('')
+
+	const [rights, setRights] = useState(false)
 	return (
 		<Section>
 			<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[85px]'>
@@ -74,13 +77,11 @@ export const Reviews = () => {
 							type='email'
 						/>
 					</div>
-					<div className='flex gap-[8px] cursor-pointer'>
-						<div className='size-[18px] border-[1px] border-black'></div>
-						<p className='text-[12px] text-[#707070] mb-[46px]'>
-							Save my name, email, and website in this browser for the next time
-							I comment
-						</p>
-					</div>
+					<Rights
+						rightsState={rights}
+						rightsSetState={setRights}
+						rightsText='Save my name, email, and website in this browser for the next time I comment'
+					/>
 					<p className='text-[14px] text-[#707070] mb-[13px]'>Your Rating*</p>
 					<div className='flex gap-[10px] mb-[48px]'>
 						{star.map((i) => (

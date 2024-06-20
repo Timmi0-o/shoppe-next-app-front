@@ -32,6 +32,15 @@ export const Header = () => {
 		if (path === '/product') {
 			setIsNawActive(0)
 		}
+		if (path === '/shop') {
+			setIsNawActive(0)
+		}
+		if (path === '/blog') {
+			setIsNawActive(1)
+		}
+		if (path === '/blog/details') {
+			setIsNawActive(1)
+		}
 	}, [path])
 
 	return (
