@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ReactNode } from 'react'
 
 interface SectionProps {
@@ -6,6 +7,7 @@ interface SectionProps {
 	postTitle?: string
 	bg?: string
 	height?: string
+	postTitleLink?: string
 }
 
 export const Section = ({
@@ -14,6 +16,7 @@ export const Section = ({
 	postTitle,
 	bg,
 	height,
+	postTitleLink,
 }: SectionProps) => {
 	return (
 		<div className={`w-full ${height && height} ${bg ? bg : 'bg-white'}`}>
@@ -28,11 +31,18 @@ export const Section = ({
 						<p className='text-[16px] sm:text-[33px] font-medium leading-[27px] sm:leading-[43px]'>
 							{title}
 						</p>
-						{postTitle && (
-							<p className='text-[12px] sm:text-[20px] text-[#A18A68] font-bold leading-[26px] cursor-pointer active:opacity-80 duration-200'>
-								{postTitle}
-							</p>
-						)}
+						{postTitle &&
+							(postTitleLink ? (
+								<Link href={postTitleLink}>
+									<p className='text-[12px] sm:text-[20px] text-[#A18A68] font-bold leading-[26px] cursor-pointer active:opacity-80 duration-200'>
+										{postTitle}
+									</p>
+								</Link>
+							) : (
+								<p className='text-[12px] sm:text-[20px] text-[#A18A68] font-bold leading-[26px] cursor-pointer active:opacity-80 duration-200'>
+									{postTitle}
+								</p>
+							))}
 					</div>
 				)}
 				{children}
