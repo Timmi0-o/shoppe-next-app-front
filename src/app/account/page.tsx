@@ -5,14 +5,27 @@ import { Section } from '@/components/ui/Section'
 import { useState } from 'react'
 
 function Page() {
+	// ВЫБОР РЕЖИМА ВХОДА
 	const [isVariableActive, setIsVariableActive] = useState(0)
 
+	// ФОРМА ДЛЯ РЕГИСТРАЦИИ / ЛОГИНА
 	const [password, setPassword] = useState('')
 	const [userName, setUserName] = useState('')
 	const [email, setEmail] = useState('')
+
+	const [remember, setRemember] = useState(false)
+
+	const [isResetPassword, setIsResetPassword] = useState(false)
+	// const [logRegForm, setLogRegForm] = useState('')
+	// const [resetPasswordForm, setResetPasswordForm] = useState('')
+
 	return (
 		<Section>
-			<div className='flex flex-col items-center'>
+			<div
+				className={`flex flex-col items-center duration-300 ${
+					isResetPassword ? 'opacity-0 left-[-1000px] fixed' : 'opacity-100'
+				}`}
+			>
 				<p className='text-[20px] lg:text-[33px] text-center my-[24px] lg:mb-[64px]'>
 					My account
 				</p>
@@ -60,15 +73,40 @@ function Page() {
 						/>
 					</div>
 					<div className='flex items-center gap-[8px] mt-[15px] w-full mb-[12px] lg:mb-[85px]'>
-						<div className='size-[18px] border-[1px] border-[#707070] rounded-[2px]'></div>
+						<div
+							onClick={() => setRemember(!remember)}
+							className={`size-[18px] duration-300 ease-in-out border-[1px] border-[#707070] ${
+								remember && 'bg-[#000000]'
+							} rounded-[2px]`}
+						></div>
 						<p>Remember me</p>
 					</div>
 					<Button title={isVariableActive === 0 ? 'SIGN IN' : 'REGISTER'} />
 					<p
-						className={`relative text-center mt-[13px] mb-[40px] lg:mb-[247px] cursor-pointer before:w-[50%] before:absolute before:h-[2px] before:top-[25px] before:bg-[#000000] before:ease-out before:duration-300 before:origin-left active:before:scale-x-[1] lg:hover:before:scale-x-[1] before:scale-x-[0]`}
+						onClick={() => setIsResetPassword(!isResetPassword)}
+						className={`relative text-center mt-[13px] mb-[40px] lg:mb-[247px] cursor-pointer`}
 					>
 						Have you forgotten your password?
 					</p>
+				</div>
+			</div>
+			<div
+				className={`flex flex-col items-center duration-300 my-[24px] ${
+					isResetPassword ? 'ml-0' : 'ml-[100%] opacity-0 fixed'
+				}`}
+			>
+				<p className='hidden lg:block text-[33px] mb-[39px] text-center'>
+					Have you Forgotten Your Password ?
+				</p>
+				<p className='block lg:hidden text-[20px] mb-[16px]'>Lost password</p>
+
+				<p className='text-[12px] lg:text-[20px] text-left lg:text-center'>
+					If you've forgotten your password, enter your e-mail <br /> address
+					and we'll send you an e-mail
+				</p>
+				<div className='flex flex-col gap-[64px] w-full lg:w-[500px] mt-[76px] mb-[250px]'>
+					<Input placeholder='Email' />
+					<Button title='RESET PASSWORD' />
 				</div>
 			</div>
 		</Section>
