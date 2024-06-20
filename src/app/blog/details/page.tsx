@@ -15,6 +15,11 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 export default function Details() {
 	const [searchBlog, setSearchBlog] = useState('')
 	const [rights, setRights] = useState(false)
+	const [comment, setComment] = useState('')
+	const [name, setName] = useState('')
+	const [email, setEmail] = useState('')
+	const [website, setWebsite] = useState('')
+
 	return (
 		<Section>
 			{/* SIDEBAR  */}
@@ -153,9 +158,21 @@ export default function Details() {
 									marked *
 								</p>
 								<div className='flex flex-col gap-[38px] lg:gap-[50px] mt-[56px] lg:mt-[74px]'>
-									<Input placeholder='Enter your name*' />
-									<Input placeholder='Enter your Email*' />
-									<Input placeholder='Enter your Website' />
+									<Input
+										state={name}
+										setState={setName}
+										placeholder='Enter your name*'
+									/>
+									<Input
+										state={email}
+										setState={setEmail}
+										placeholder='Enter your Email*'
+									/>
+									<Input
+										state={website}
+										setState={setWebsite}
+										placeholder='Enter your Website'
+									/>
 								</div>
 								<div className='mt-[39px] lg:mt-[24px]'>
 									<Rights
@@ -167,7 +184,7 @@ export default function Details() {
 								<p className='text-[14px] text-[#707070] mb-[25px]'>
 									Your Comment*
 								</p>
-								<Input />
+								<Input state={comment} setState={setComment} />
 								<div className='w-[158px] lg:w-[197px] my-[48px] lg:my-[64px]'>
 									<Button
 										heightCustom='h-[48px] sm:h-[48px] lg:h-[53px]'
