@@ -101,11 +101,11 @@ function Page() {
 				<p className='block lg:hidden text-[20px] mb-[16px]'>Lost password</p>
 
 				<p className='text-[12px] lg:text-[20px] text-left lg:text-center'>
-					If you've forgotten your password, enter your e-mail <br /> address
-					and we'll send you an e-mail
+					If you&rsquo;ve forgotten your password, enter your e-mail <br />
+					address and we&rsquo;ll send you an e-mail
 				</p>
 				<div className='flex flex-col gap-[64px] w-full lg:w-[500px] mt-[76px] mb-[250px]'>
-					<Input placeholder='Email' />
+					<Input state={email} setState={setEmail} placeholder='Email' />
 					<Button title='RESET PASSWORD' />
 				</div>
 			</div>
