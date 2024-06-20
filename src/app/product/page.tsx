@@ -116,8 +116,8 @@ function Product() {
 									}`}
 								>{`($ ${allPrice},00)`}</p>
 							</div>
-							<div className='lg:hidden flex justify-center items-center size-[24px] active:bg-[#d9d9d9] duration-200 rounded-full'>
-								<div className='relative size-[14px]'>
+							<div className='lg:hidden flex justify-center items-center size-[24px] rounded-full'>
+								<div className='relative buttonActive size-[14px]'>
 									<Image src={'/share.svg'} fill alt='share' />
 								</div>
 							</div>

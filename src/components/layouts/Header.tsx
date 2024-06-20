@@ -88,7 +88,7 @@ export const Header = () => {
 						{navigation.map((navigate, i) => (
 							<Link href={navigate.href} key={i}>
 								<div className='flex justify-center items-center size-[32px] lg:hover:bg-[#f1f1f1] lg:active:bg-[#d9d9d9] rounded-[50%] duration-200'>
-									<div className='relative size-[20px] cursor-pointer'>
+									<div className='relative buttonActive size-[20px] cursor-pointer'>
 										<Image src={navigate.img} fill alt='search' />
 									</div>
 								</div>
@@ -98,12 +98,12 @@ export const Header = () => {
 				</div>
 				{/* Мобильная навигация (shop cart & burger) */}
 				<div className='flex lg:hidden'>
-					<div className='relative size-[18px] mr-[15px]'>
+					<div className='flex justify-center items-center relative size-[18px] mr-[15px] buttonActive'>
 						<Image src={'/shopping-cart.svg'} fill alt='search' />
 					</div>
 					<div
 						onClick={() => setIsShowModal(!isShowModal)}
-						className='relative w-[20px] h-[15px]'
+						className='relative buttonActive size-[20px]'
 					>
 						<Image src={'/burger.svg'} fill alt='burger' />
 					</div>
@@ -156,13 +156,17 @@ export const Header = () => {
 
 const nawLink = [
 	{ title: 'Shop', href: '/shop' },
-	{ title: 'Blog', href: '#' },
-	{ title: 'Our Story', href: '#' },
+	{ title: 'Blog', href: '/blog' },
+	{ title: 'Our Story', href: '/our-story' },
 ]
 
 const navigation = [
-	{ img: '/search.svg', description: 'Поиск', href: '#' },
-	{ img: '/shopping-cart.svg', description: 'Ваши покупки', href: '#' },
+	{ img: '/search.svg', description: 'Поиск', href: '/search' },
+	{
+		img: '/shopping-cart.svg',
+		description: 'Ваши покупки',
+		href: '#',
+	},
 	{ img: '/profile.svg', description: 'Профиль', href: '/account' },
 ]
 

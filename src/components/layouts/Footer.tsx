@@ -47,7 +47,7 @@ export const Footer = () => {
 					<div className='hidden sm:flex items-center gap-[20px] cursor-pointer'>
 						{socialLinks.map((link, i) => (
 							<div
-								className=' flex justify-center items-center size-[32px] rounded-[50%] bg-transparent lg:hover:bg-[#f1f1f1] lg:active:bg-[#d9d9d9] active:bg-[#35353552] duration-200'
+								className=' flex justify-center items-center size-[32px] rounded-[50%] bg-transparent lg:hover:bg-[#f1f1f1] lg:buttonActive active:bg-[#35353552] duration-200'
 								key={i}
 							>
 								<div

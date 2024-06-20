@@ -40,10 +40,13 @@ export const MobileMenu = ({
 								</div>
 							</Link>
 							<div className='flex items-center gap-[15px]'>
-								<div className='relative size-[18px]'>
+								<div className='relative buttonActive size-[18px]'>
 									<Image src={'/shopping-cart.svg'} fill alt='shopping-cart' />
 								</div>
-								<div onClick={() => setIsShowModal(!isShowModal)}>
+								<div
+									className='relative buttonActive'
+									onClick={() => setIsShowModal(!isShowModal)}
+								>
 									<IoClose className='size-[25px]' />
 								</div>
 							</div>
@@ -100,9 +103,9 @@ export const MobileMenu = ({
 const links = [
 	{ title: 'Home', link: '/' },
 	{ title: 'Shop', link: '/shop' },
-	{ title: 'About', link: '/' },
-	{ title: 'Blog', link: '/' },
-	{ title: 'Help', link: '/' },
+	{ title: 'About', link: '/about' },
+	{ title: 'Blog', link: '/blog' },
+	{ title: 'Help', link: '/help' },
 	{ title: 'Contact', link: '/contact-as' },
-	{ title: 'Search', link: '/' },
+	{ title: 'Search', link: '/search' },
 ]

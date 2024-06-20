@@ -1,6 +1,7 @@
 'use client'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Section } from '@/components/ui/Section'
+import { SideBar } from '@/components/ui/SideBar'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -8,13 +9,7 @@ export default function Shop() {
 	const [searchProduct, setSearchProduct] = useState('')
 	return (
 		<Section>
-			<div className='mt-[24px] mb-[60px] md:mb-[120px]'>
-				<p className='hidden md:block text-[33px] font-medium leading-[43px]'>
-					Shop The Latest
-				</p>
-				<p className='block md:hidden text-[20px] font-medium leading-[26px]'>
-					Shop
-				</p>
+			<SideBar title='Shop The Latest' titleMobile='Shop'>
 				<div className='flex flex-col md:flex-row items-start gap-[16px] md:gap-[36px] mt-[16px] md:mt-[39px]'>
 					{/* ФИЛЬТРЫ ДЛЯ ТОВАРОВ (ONLY PC) */}
 					<div className='hidden md:flex flex-col gap-[39px]'>
@@ -100,7 +95,7 @@ export default function Shop() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</SideBar>
 		</Section>
 	)
 }
