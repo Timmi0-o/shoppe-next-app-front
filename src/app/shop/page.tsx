@@ -72,7 +72,7 @@ export default function Shop() {
 					</div>
 					{/* ФИЛЬТРЫ ДЛЯ ТОВАРОВ (ONLY MOBILE) */}
 					<div className='flex md:hidden items-center gap-[8px]'>
-						<div className='relative size-[18px]'>
+						<div className='relative buttonActive size-[18px]'>
 							<Image src={'/filters.svg'} fill alt='filters' />
 						</div>
 						<p className='text-[12px] text-[#A18A68] font-normal leading-[20px]'>
