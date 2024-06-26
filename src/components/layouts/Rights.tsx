@@ -14,14 +14,14 @@ export const Rights = ({
 	return (
 		<div
 			onClick={() => rightsSetState(!rightsState)}
-			className='flex gap-[8px] w-full cursor-pointer'
+			className='flex items-start gap-[8px] w-full cursor-pointer mb-[26px] mt-[11px]'
 		>
 			<div
-				className={`size-[18px] border-[1px] border-black duration-300 ease-in ${
+				className={`size-[13px] lg:size-[18px] border-[1px] border-black duration-300 ease-in ${
 					rightsState && 'bg-black'
 				}`}
 			></div>
-			<p className='w-fit text-[12px] text-[#707070] mb-[26px]'>{rightsText}</p>
+			<p className='w-fit text-[12px] text-[#707070]'>{rightsText}</p>
 		</div>
 	)
 }

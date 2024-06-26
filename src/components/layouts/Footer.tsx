@@ -1,11 +1,15 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import { Section } from '../ui/Section'
+import { Rights } from './Rights'
 
 export const Footer = () => {
+	const [rights, setRights] = useState(false)
 	return (
 		<Section>
-			<div className='h-[159px] lg:border-t-[1px] mb-[90px] lg:border-t-[#D8D8D8]'>
+			<div className='w-full h-[159px] lg:border-t-[1px] mb-[90px] lg:border-t-[#D8D8D8]'>
 				<div className='flex flex-col-reverse items-start md:flex-row sm:justify-between sm:items-center mt-[37px] mb-[32px] sm:mb-[47px]'>
 					<div className='flex flex-col sm:flex-row gap-[8px] sm:gap-[25px] md:gap-[28px] lg:gap-[41px]'>
 						{links.map((link, i) => (
@@ -17,8 +21,8 @@ export const Footer = () => {
 						))}
 					</div>
 					{/* Подписка на рассылку через ввод почты */}
-					<div>
-						<div className='flex justify-between items-center w-[288px] sm:w-[300px] lg:w-[396px] border-b-[1px] border-b-black pb-[13px] sm:mb-[24px] md:mb-0'>
+					<div className='w-full md:w-fit'>
+						<div className='flex justify-between items-center w-full lg:w-[396px] border-b-[1px] border-b-black pb-[13px] sm:mb-[24px] md:mb-0'>
 							<input
 								className='w-full outline-none text-[14px] placeholder:text-[14px] md:text-[16px] md:placeholder:text-[16px] leading-[27px] font-normal'
 								type='text'
@@ -29,19 +33,21 @@ export const Footer = () => {
 							</div>
 						</div>
 						{/* Согласие с правами сайта (only mobile) */}
-						<div className='flex sm:hidden items-center mt-[11px] mb-[40px] gap-[4px]'>
-							<div className='size-[13px] border-[1px] rounded-[2px] border-[#707070]'></div>
-							<p className='text-[12px] font-normal'>
-								I agree to the website’s terms and conditions
-							</p>
-						</div>
+						<Rights
+							rightsState={rights}
+							rightsSetState={setRights}
+							rightsText='I agree to the website’s terms and conditions'
+						/>
 					</div>
 				</div>
 				<div className='flex flex-col-reverse sm:flex-row  justify-between items-center'>
 					{/* Все права защищены */}
 					<div className='flex gap-[3px] text-[12px] sm:text-[14px] md:text-[16px] w-full mb-[24px] sm:mb-0 lg:mb-[24px]'>
 						© 2021 Shelly. <p className='text-[#707070]'>Terms of use</p> and
-						<p className='text-[#707070]'>privacy policy</p>.
+						<Link href={'/privacy-policy'}>
+							<p className='text-[#707070]'>privacy policy</p>
+						</Link>
+						.
 					</div>
 					{/* follow us (ссылки на соц сети для ПК) */}
 					<div className='hidden sm:flex items-center gap-[20px] cursor-pointer'>

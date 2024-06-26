@@ -2,11 +2,35 @@
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Section } from '@/components/ui/Section'
 import { SideBar } from '@/components/ui/SideBar'
+import axios from 'axios'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+interface Product {
+	title: string
+	description: string
+	price: number
+	_id: string
+}
 
 export default function Shop() {
 	const [searchProduct, setSearchProduct] = useState('')
+
+	const [products, setProducts] = useState<Product[]>([])
+
+	useEffect(() => {
+		const GetProducts = async () => {
+			try {
+				const response = await axios.get('http://localhost:5000/products')
+				setProducts(response.data)
+			} catch (error) {
+				console.error('Error fetching products:', error)
+			}
+		}
+
+		GetProducts()
+	}, [])
+
 	return (
 		<Section>
 			<SideBar title='Shop The Latest' titleMobile='Shop'>
@@ -87,9 +111,10 @@ export default function Shop() {
 									customSizeImg='size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[220px] xl:h-[300px]'
 									key={i}
 									propsKey={i}
-									img={product.img}
+									img={'/Item1.png'}
 									title={product.title}
 									price={product.price}
+									id={product._id}
 								/>
 							))}
 						</div>
@@ -99,11 +124,3 @@ export default function Shop() {
 		</Section>
 	)
 }
-
-const products = [
-	{ img: '/Item1.png', title: 'Lira Earrings', price: 20 },
-	{ img: '/Item2.png', title: 'Hal Earrings', price: 30 },
-	{ img: '/Item3.png', title: 'Kaede Hair Pin Set Of 3 ', price: 35 },
-	{ img: '/Item4.png', title: 'Hair Pin Set of 3', price: 25 },
-	{ img: '/Item5.png', title: 'Plaine Necklace', price: 75 },
-]

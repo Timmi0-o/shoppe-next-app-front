@@ -1,7 +1,32 @@
+'use client'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { ProductCard } from '../ui/ProductCard'
 import { Section } from '../ui/Section'
 
+interface Product {
+	title: string
+	description: string
+	price: number
+	_id: string
+}
+
 export const LatestShop = () => {
+	const [products, setProducts] = useState<Product[]>([])
+
+	useEffect(() => {
+		const GetProducts = async () => {
+			try {
+				const response = await axios.get('http://localhost:5000/products')
+				setProducts(response.data)
+			} catch (error) {
+				console.error('Error fetching products:', error)
+			}
+		}
+
+		GetProducts()
+	}, [])
+
 	return (
 		<div className='mt-[21px] md:mt-[64px]'>
 			<Section
@@ -15,9 +40,10 @@ export const LatestShop = () => {
 							<ProductCard
 								key={i}
 								propsKey={i}
-								img={product.img}
+								img={'/Item1.png'}
 								title={product.title}
 								price={product.price}
+								id={product._id}
 							/>
 						))}
 					</div>
@@ -26,11 +52,3 @@ export const LatestShop = () => {
 		</div>
 	)
 }
-
-const products = [
-	{ img: '/Item1.png', title: 'Lira Earrings', price: 20 },
-	{ img: '/Item2.png', title: 'Hal Earrings', price: 30 },
-	{ img: '/Item3.png', title: 'Kaede Hair Pin Set Of 3 ', price: 35 },
-	{ img: '/Item4.png', title: 'Hair Pin Set of 3', price: 25 },
-	{ img: '/Item5.png', title: 'Plaine Necklace', price: 75 },
-]

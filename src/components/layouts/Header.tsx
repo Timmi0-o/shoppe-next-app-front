@@ -124,8 +124,8 @@ export const Header = () => {
 					/>
 				</div>
 			</div>
-			<div className={'block lg:hidden'}>
-				<div className={`${path === '/product' ? 'hidden' : ''}`}>
+			<div className={'block lg:hidden mb-[39px]'}>
+				<div className={`${path.includes('/product') ? 'hidden' : ''}`}>
 					<InputSearch state={searchText} setState={setSearchText} />
 				</div>
 				<div className={`mt-[16px] ${path !== '/' && 'hidden'}`}>
@@ -139,6 +139,9 @@ export const Header = () => {
 							},
 							640: {
 								slidesPerView: 3.2,
+							},
+							770: {
+								slidesPerView: 4.5,
 							},
 						}}
 					>
@@ -166,7 +169,7 @@ export const Header = () => {
 const nawLink = [
 	{ title: 'Shop', href: '/shop' },
 	{ title: 'Blog', href: '/blog' },
-	{ title: 'Our Story', href: '/our-story' },
+	{ title: 'Our Story', href: '/about' },
 ]
 
 const navigation = [
@@ -181,7 +184,7 @@ const navigation = [
 
 const mobileCategory = [
 	{ title: 'Earring', link: '#' },
-	{ title: 'Necklace', link: '/' },
+	{ title: 'Necklace', link: '#' },
 	{ title: 'Serge', link: '#' },
 	{ title: 'Watch', link: '#' },
 	{ title: 'Phone', link: '#' },

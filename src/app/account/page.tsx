@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Section } from '@/components/ui/Section'
+import Link from 'next/link'
 import { useState } from 'react'
 
 function Page() {
@@ -48,6 +49,7 @@ function Page() {
 						</div>
 					))}
 				</div>
+				{/* ВОЙТИ В АККАУНТ */}
 				<div className='w-full lg:w-[500px] duration-300'>
 					<div
 						className={`flex flex-col gap-[46px] duration-300 ${
@@ -81,7 +83,9 @@ function Page() {
 						></div>
 						<p>Remember me</p>
 					</div>
-					<Button title={isVariableActive === 0 ? 'SIGN IN' : 'REGISTER'} />
+					<Link href={'/account/profile'}>
+						<Button title={isVariableActive === 0 ? 'SIGN IN' : 'REGISTER'} />
+					</Link>
 					<p
 						onClick={() => setIsResetPassword(!isResetPassword)}
 						className={`relative text-center mt-[13px] mb-[40px] lg:mb-[247px] cursor-pointer`}
@@ -90,6 +94,7 @@ function Page() {
 					</p>
 				</div>
 			</div>
+			{/* ВОССТАНОВЛЕНИЕ ПАРОЛЯ */}
 			<div
 				className={`flex flex-col items-center duration-300 my-[24px] ${
 					isResetPassword ? 'ml-0' : 'ml-[100%] opacity-0 fixed'
@@ -104,10 +109,16 @@ function Page() {
 					If you&rsquo;ve forgotten your password, enter your e-mail <br />
 					address and we&rsquo;ll send you an e-mail
 				</p>
-				<div className='flex flex-col gap-[64px] w-full lg:w-[500px] mt-[76px] mb-[250px]'>
+				<div className='flex flex-col gap-[64px] w-full lg:w-[500px] mt-[76px]'>
 					<Input state={email} setState={setEmail} placeholder='Email' />
 					<Button title='RESET PASSWORD' />
 				</div>
+				<p
+					onClick={() => setIsResetPassword(!isResetPassword)}
+					className={`relative text-center mt-[13px] lg:mb-[247px] cursor-pointer mb-[250px]`}
+				>
+					You remembered the password?
+				</p>
 			</div>
 		</Section>
 	)

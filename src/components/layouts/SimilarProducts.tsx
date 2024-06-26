@@ -1,3 +1,6 @@
+'use client'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
@@ -6,7 +9,28 @@ import 'swiper/css/thumbs'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { ProductCard } from '../ui/ProductCard'
 
+interface Product {
+	title: string
+	description: string
+	price: number
+	_id: string
+}
+
 export const SimilarProducts = () => {
+	const [products, setProducts] = useState<Product[]>([])
+
+	useEffect(() => {
+		const GetProducts = async () => {
+			try {
+				const response = await axios.get('http://localhost:5000/products')
+				setProducts(response.data)
+			} catch (error) {
+				console.error('Error fetching products:', error)
+			}
+		}
+
+		GetProducts()
+	}, [])
 	return (
 		<>
 			<div className='hidden lg:block mb-[250px]'>
@@ -18,9 +42,10 @@ export const SimilarProducts = () => {
 						<ProductCard
 							key={i}
 							propsKey={i}
-							img={product.img}
+							img={'/Item2.png'}
 							title={product.title}
 							price={product.price}
+							id={product._id}
 						/>
 					))}
 				</div>
@@ -44,9 +69,10 @@ export const SimilarProducts = () => {
 						<SwiperSlide key={i}>
 							<ProductCard
 								propsKey={i}
-								img={product.img}
+								img={'/Item2.png'}
 								title={product.title}
 								price={product.price}
+								id={product._id}
 							/>
 						</SwiperSlide>
 					))}
@@ -55,11 +81,3 @@ export const SimilarProducts = () => {
 		</>
 	)
 }
-
-const products = [
-	{ img: '/Item1.png', title: 'Lira Earrings', price: 20 },
-	{ img: '/Item2.png', title: 'Hal Earrings', price: 30 },
-	{ img: '/Item3.png', title: 'Kaede Hair Pin Set Of 3 ', price: 35 },
-	{ img: '/Item4.png', title: 'Hair Pin Set of 3', price: 25 },
-	{ img: '/Item5.png', title: 'Plaine Necklace', price: 75 },
-]

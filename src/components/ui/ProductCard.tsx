@@ -10,6 +10,7 @@ interface ProductCardProps {
 	propsKey?: number
 	customSize?: string
 	customSizeImg?: string
+	id: string
 }
 
 export const ProductCard = ({
@@ -19,6 +20,7 @@ export const ProductCard = ({
 	propsKey,
 	customSize,
 	customSizeImg,
+	id,
 }: ProductCardProps) => {
 	const [isItemHover, setIsItemsHover] = useState(false)
 	const [isFastOption, setIsFastOption] = useState<null | number>(null)
@@ -30,7 +32,7 @@ export const ProductCard = ({
 	}
 
 	return (
-		<Link href='/product' onClick={handleClickFastOptions}>
+		<Link href={`/product/${id}`} onClick={handleClickFastOptions}>
 			<div
 				onMouseEnter={() => setIsItemsHover(true)}
 				onMouseLeave={() => setIsItemsHover(false)}
