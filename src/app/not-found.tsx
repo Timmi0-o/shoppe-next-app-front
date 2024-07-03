@@ -10,7 +10,10 @@ export default function NotFound() {
 				<p className='text-[12px] lg:text-[20px] text-[#707070] text-center mb-[64px]'>
 					This page not found; <br /> back to home and start again
 				</p>
-				<Link href={'/'} className='w-[115px] lg:w-[187px]'>
+				<Link
+					href={'https://shoppe-next-app-back-2.onrender.com'}
+					className='w-[115px] lg:w-[187px]'
+				>
 					<Button title='HOMEPAGE' />
 				</Link>
 			</div>

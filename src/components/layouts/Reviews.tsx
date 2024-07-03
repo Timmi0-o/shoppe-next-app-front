@@ -34,7 +34,7 @@ export const Reviews = () => {
 		const getReviews = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:5000/review/${nowPath}`
+					`https://shoppe-next-app-back-2.onrender.com/review/${nowPath}`
 				)
 				setReviews(response.data)
 			} catch (error) {

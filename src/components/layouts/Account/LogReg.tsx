@@ -39,7 +39,7 @@ export const LogReg = () => {
 
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `http://localhost:5000/auth`,
+			url: `https://shoppe-next-app-back-2.onrender.com/auth`,
 			post: localStorage.getItem('token')
 				? { token: localStorage.getItem('token') }
 				: undefined,
@@ -68,10 +68,13 @@ export const LogReg = () => {
 			}
 
 			setButtonActive(!buttonActive)
-			const data = await axios.post('http://localhost:5000/auth/login', {
-				username,
-				password,
-			})
+			const data = await axios.post(
+				'https://shoppe-next-app-back-2.onrender.com/auth/login',
+				{
+					username,
+					password,
+				}
+			)
 			localStorage.setItem('token', data.data.token)
 		} catch (error: any) {
 			setUserErrors(`${error.response.data.message}!`)
@@ -98,11 +101,14 @@ export const LogReg = () => {
 				setValidationPasswordError('')
 			}
 			setButtonActive(!buttonActive)
-			const data = await axios.post('http://localhost:5000/auth/create', {
-				username,
-				email,
-				password,
-			})
+			const data = await axios.post(
+				'https://shoppe-next-app-back-2.onrender.com/auth/create',
+				{
+					username,
+					email,
+					password,
+				}
+			)
 
 			console.log('data', data)
 			localStorage.setItem('token', data.data.token)
