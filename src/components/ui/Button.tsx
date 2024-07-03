@@ -1,4 +1,6 @@
-import { MouseEventHandler } from 'react'
+'use client'
+import Link from 'next/link'
+import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react'
 
 interface ButtonProps {
 	title: string
@@ -6,6 +8,7 @@ interface ButtonProps {
 	addedClass?: string
 	AddTitleClass?: string
 	heightCustom?: string
+	href?: string
 }
 
 export const Button = ({
@@ -14,19 +17,44 @@ export const Button = ({
 	addedClass,
 	AddTitleClass,
 	heightCustom,
+	href = '',
 }: ButtonProps) => {
+	const handleClickLink = (e: MouseEvent<HTMLAnchorElement>) => {
+		if (!href) {
+			e.preventDefault()
+		}
+	}
+
+	const [titleEffect, setTitleEffect] = useState('')
+
+	useEffect(() => {
+		setTimeout(() => {
+			setTitleEffect('tracking-[2px] duration-200 opacity-40')
+		}, 100)
+
+		setTimeout(() => {
+			setTitleEffect('tracking-[0px] duration-200 opacity-100 ')
+		}, 400)
+
+		setTimeout(() => {
+			setTitleEffect('')
+		}, 700)
+	}, [title])
+
 	return (
-		<button
-			onClick={onClick}
-			className={`flex justify-center items-center w-full  ${
-				heightCustom ? heightCustom : 'h-[32px] sm:h-[45px] lg:h-[53px]'
-			} rounded-[4px] border border-[#000000] active:bg-black active:text-white xl:hover:bg-black xl:hover:text-white duration-200 ease-out active:scale-[0.99] ${addedClass}`}
-		>
-			<p
-				className={`text-[12px] sm:text-[14px] lg:text-[16px] leading-[20px] font-normal lg:font-bold lg:leading-[21px] ${AddTitleClass}`}
+		<Link onClick={(e) => handleClickLink(e)} href={href}>
+			<button
+				onClick={onClick}
+				className={`flex justify-center items-center w-full  ${
+					heightCustom ? heightCustom : 'h-[32px] sm:h-[45px] lg:h-[53px]'
+				} rounded-[4px] border border-[#000000] active:bg-black active:text-white lg:hover:bg-black lg:hover:text-white duration-200 ease-out active:scale-[0.99] ${addedClass}`}
 			>
-				{title}
-			</p>
-		</button>
+				<p
+					className={`text-[12px] sm:text-[14px] lg:text-[16px] leading-[20px] font-normal lg:font-bold lg:leading-[21px] ${AddTitleClass} ${titleEffect}`}
+				>
+					{title}
+				</p>
+			</button>
+		</Link>
 	)
 }

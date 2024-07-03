@@ -20,11 +20,11 @@ export const MobileMenu = ({
 		<div>
 			<Section>
 				<div
-					className={`fixed z-20 h-[100vh] w-full pt-[15px] bg-white ${
+					className={`fixed min-h-[100vh] w-full pt-[15px] bg-white ${
 						isShowModal
 							? 'translate-y-0 opacity-100 '
-							: 'translate-y-[-100vh] opacity-0'
-					} top-[0px] left-0 w-full duration-300 z-10 rounded-ee-[20px] rounded-es-[20px]`}
+							: 'translate-y-[-100vh] opacity-50'
+					} top-[0px] left-0 duration-300 z-10 rounded-ee-[20px] rounded-es-[20px]`}
 				>
 					<div className='max-w-[320px] sm:max-w-[500px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
 						<div className='flex justify-between items-center'>
@@ -80,8 +80,9 @@ export const MobileMenu = ({
 								</div>
 							</Link>
 							<Link
+								onClick={() => localStorage.setItem('token', '')}
 								onTransitionEnd={() => setIsShowModal(!isShowModal)}
-								href='/log-out'
+								href='/'
 							>
 								<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
 									<div className='relative size-[18px]'>

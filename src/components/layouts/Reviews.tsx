@@ -10,6 +10,10 @@ import { Rights } from './Rights'
 
 interface Reviews {
 	feedback: string
+	date: string
+	user: {
+		username: string
+	}
 }
 
 export const Reviews = () => {
@@ -40,7 +44,7 @@ export const Reviews = () => {
 		getReviews()
 	}, [nowPath])
 
-	console.log('reviews', reviews)
+	// console.log('reviews', reviews)
 
 	return (
 		<Section>

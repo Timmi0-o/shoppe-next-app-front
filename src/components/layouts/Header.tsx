@@ -29,7 +29,7 @@ export const Header = () => {
 	}, [isShowModal])
 
 	useEffect(() => {
-		if (path === '/product') {
+		if (path.includes('/product')) {
 			setIsNawActive(0)
 		}
 		if (path === '/shop') {
@@ -70,11 +70,11 @@ export const Header = () => {
 				<div
 					className={`hidden lg:flex ${
 						isNawActive !== null
-							? ' items-start translate-y-[12px]'
+							? 'items-start translate-y-[12px]'
 							: 'items-center'
 					}`}
 				>
-					<div className='flex gap-[64px] mr-[48px]'>
+					<div className='flex gap-[64px] mr-[48px] '>
 						{nawLink.map((link, i) => (
 							<Link onClick={() => setIsNawActive(i)} key={i} href={link.href}>
 								<p

@@ -1,8 +1,17 @@
 'use client'
 import { Section } from '@/components/ui/Section'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function ViewOrder() {
+	const router = useRouter()
+	const token = localStorage.getItem('token')
+	useEffect(() => {
+		if (!token) {
+			router.push('/')
+		}
+	})
+
 	const [purchasesOrder, setPurchasesOrder] = useState([
 		{ product: 'Lira Earrings', price: 64 },
 		{ product: 'Ollie Earrings', price: 10 },

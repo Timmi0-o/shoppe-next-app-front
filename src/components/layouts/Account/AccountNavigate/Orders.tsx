@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Notification } from '../Notification'
+import { Notification } from '../../Notification'
 
 export const Orders = () => {
 	const [orders, setOrders] = useState([
@@ -21,8 +21,8 @@ export const Orders = () => {
 				/>
 			</div>
 			<div
-				className={`flex justify-between md:justify-normal md:flex-col gap-[24px] border-b-[1px] border-b-[#D8D8D8] ${
-					orders.length ? '' : 'hidden'
+				className={`flex justify-between md:justify-normal md:flex-col gap-[24px] border-b-[1px] border-b-[#D8D8D8] duration-300 ${
+					orders.length ? '' : 'opacity-0 ml-[-200px] absolute'
 				}`}
 			>
 				<div className='grid grid-cols-1 gap-[24px] md:gap-0 md:grid-cols-5 pb-[16px] md:border-b-[1px] md:border-b-black'>

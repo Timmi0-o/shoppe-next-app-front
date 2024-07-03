@@ -87,7 +87,7 @@ function Product() {
 	const [isBtnShopClick, setIsBtnShopClick] = useState('')
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
 
-	console.log('isAddedShop', isAddedShop)
+	// console.log('isAddedShop', isAddedShop)
 
 	// ФОРМА ДЛЯ ЗАПОЛНЕНИЯ КОММЕНТАРИЯ
 	const [comment, setComment] = useState('')
@@ -173,15 +173,16 @@ function Product() {
 								{nowProduct.title}
 							</p>
 							<div className='flex items-center justify-between'>
-								<div className='flex gap-[10px]'>
+								{/* ЦЕНА ТОВАРА И ВСПЛЫВАЮЩЕЕ СУММА ПРИ КОЛ-ВЕ БОЛЬШЕ 1ШТ */}
+								<div className='flex items-center gap-[10px]'>
 									<p className='text-[20px] text-[#A18A68] font-medium leading-[26px]'>
 										$ {nowProduct.price},00
 									</p>
 									<p
-										className={`text-[12] duration-200 origin-left ${
+										className={`duration-150 origin-left ${
 											allPrice > nowProduct.price
 												? 'opacity-100 scale-1'
-												: 'opacity-0 scale-0'
+												: 'opacity-0 scale-[0.7]'
 										}`}
 									>{`($ ${allPrice},00)`}</p>
 								</div>
