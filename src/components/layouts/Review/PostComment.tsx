@@ -27,7 +27,7 @@ export const PostComment = () => {
 
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `process.env.BACK_PORTauth`,
+			url: `${process.env.BACK_PORT}auth`,
 			post: localStorage.getItem('token')
 				? { token: localStorage.getItem('token') }
 				: undefined,
@@ -55,15 +55,18 @@ export const PostComment = () => {
 		}
 
 		try {
-			const response = await axios.post('process.env.BACK_PORTreview/create', {
-				user: data._id,
-				product: nowPath,
-				feedback: comment,
-			})
+			const response = await axios.post(
+				`${process.env.BACK_PORT}review/create`,
+				{
+					user: data._id,
+					product: nowPath,
+					feedback: comment,
+				}
+			)
 
 			if (response) {
 				setComment('')
-				mutate({ url: `process.env.BACK_PORTreview/${nowPath}` })
+				mutate({ url: `${process.env.BACK_PORT}review/${nowPath}` })
 			}
 		} catch (error: any) {
 			console.log(error.message)
