@@ -22,7 +22,7 @@ export const Profile = () => {
 
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `https://shoppe-next-app-back-2.onrender.com/auth`,
+			url: `${process.env.BACK_PORT}auth`,
 			post: localStorage.getItem('token')
 				? { token: localStorage.getItem('token') }
 				: undefined,

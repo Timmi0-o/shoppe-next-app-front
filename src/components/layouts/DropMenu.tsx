@@ -40,18 +40,20 @@ export const DropMenu = ({
 					<Image src={'/drop-arrow.svg'} fill alt='drop-arrow' />
 				</div>
 			</div>
+			{/* ДЕФОЛТНОЕ МЕНЮ */}
 			<div
 				className={` ${
 					list && 'hidden'
-				} text-[13px] duration-300 border-[1px] border-[#00000047] rounded-[6px] p-[5px] ${
+				} text-[13px] duration-300 bg-[#f9f9f9] rounded-[6px] p-[5px] ${
 					isDropActive
-						? 'opacity-100 h-fit scale-[1]'
-						: ' opacity-0 z-[-1] h-0 scale-[0.9]'
+						? 'opacity-100 scale-[1]'
+						: ' opacity-0 z-[-1] h-0 scale-[0.95]'
 				}`}
 			>
 				{dropLink}
 			</div>
 
+			{/* ОПЦИОНАЛЬНОЕ ДРОП МЕНЮ СО СПИСКАМИ */}
 			<div
 				className={`${
 					list ? 'flex' : 'hidden'

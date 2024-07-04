@@ -1,11 +1,10 @@
 'use client'
 import { DropMenu } from '@/components/layouts/DropMenu'
 import { Notification } from '@/components/layouts/Notification'
-import { Reviews } from '@/components/layouts/Reviews'
-import { Rights } from '@/components/layouts/Rights'
+import { PostComment } from '@/components/layouts/Review/PostComment'
+import { Reviews } from '@/components/layouts/Review/Reviews'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
 import { Section } from '@/components/ui/Section'
 import axios from 'axios'
 import Image from 'next/image'
@@ -46,7 +45,7 @@ function Product() {
 		const getProduct = async () => {
 			try {
 				const response = await axios.get(
-					`https://shoppe-next-app-back-2.onrender.com/products/${nowPath}`
+					`${process.env.BACK_PORT}products/${nowPath}`
 				)
 				setNowProduct(response.data)
 			} catch (error) {
@@ -56,7 +55,7 @@ function Product() {
 		const getReviews = async () => {
 			try {
 				const response = await axios.get(
-					`https://shoppe-next-app-back-2.onrender.com/review/${nowPath}`
+					`${process.env.BACK_PORT}review/${nowPath}`
 				)
 				setReviews(response.data)
 			} catch (error) {
@@ -344,13 +343,16 @@ function Product() {
 					</div>
 					{/* ОТЗЫВЫ */}
 					<div
-						className={`${
+						className={`flex ${
 							isSwitchesActive === 2
 								? 'h-[610px] overflow-y-auto opacity-100'
 								: 'h-0 z-[-1] opacity-0'
 						}`}
 					>
 						<Reviews />
+						<div className='hidden lg:block'>
+							<PostComment />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -358,7 +360,7 @@ function Product() {
 			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
 			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
 				<DropMenu
-					heightCustom='h-[270px]'
+					heightCustom='h-[120px]'
 					title='Description'
 					dropLink={nowProduct?.fullDescription}
 				/>
@@ -367,48 +369,13 @@ function Product() {
 					dropLink={productAdditionInfo}
 				/>
 				<DropMenu
-					heightCustom='h-fit'
+					heightCustom='h-[500px]'
 					title={`Reviews(${reviews.length})`}
 					dropLink={<Reviews />}
 				/>
 			</div>
-			{/* ОСТАВИТЬ СВОЙ ОТЗЫВ (ONLY MOBILE) */}
-			<div className='block lg:hidden w-full'>
-				<p className='text-[20px] leading-[26px] mb-[5px]'>Add a Review</p>
-				<p className='text-[13px] text-[#707070] leading-[20px] mb-[26px]'>
-					Your email address will not be published. Required fields are marked *
-				</p>
-				<p className='text-[14px] text-[#707070] leading-[22px]'>
-					Your Review*
-				</p>
-				<div className='flex flex-col gap-[26px] mb-[24px]'>
-					<Input state={comment} setState={setComment} />
-					<Input
-						state={names}
-						setState={setNames}
-						placeholder='Enter your name*'
-					/>
-					<Input
-						state={email}
-						setState={setEmail}
-						placeholder='Enter your Email*'
-						type='email'
-					/>
-				</div>
-				<Rights
-					rightsState={rights}
-					rightsSetState={setRights}
-					rightsText='Save my name, email, and website in this browser for the next time I comment'
-				/>
-				<p className='text-[14px] text-[#707070] mb-[13px]'>Your Rating*</p>
-				<div className='flex gap-[10px] mb-[28px]'>
-					{star.map((i) => (
-						<FaStar key={i} className='size-[18px] cursor-pointer' />
-					))}
-				</div>
-				<div className='w-full mb-[28px]'>
-					<Button title='Submit' />
-				</div>
+			<div className='block lg:hidden'>
+				<PostComment />
 			</div>
 			<SimilarProducts />
 		</Section>
@@ -448,5 +415,3 @@ const SocialWishlist = [
 	{ src: '/instagram.svg', size: 'w-[18px] h-[18px]' },
 	{ src: '/x.svg', size: 'w-[20px] h-[16px]' },
 ]
-
-const star = [1, 2, 3, 4, 5]

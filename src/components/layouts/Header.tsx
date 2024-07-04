@@ -46,12 +46,12 @@ export const Header = () => {
 	return (
 		<Section>
 			<div
-				className={`flex justify-between items-center ease-out mt-[15px] ${
+				className={`flex justify-between items-center ease-out ${
 					path !== '/' ? 'mb-[17px] lg:mb-[96px]' : 'mb-[17px] md:mb-0'
 				} ${
 					isNawActive !== null
-						? 'lg:pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] lg:pb-[12px] sm:mt-[48px]'
-						: 'lg:mt-[64px] md:border-b-transparent'
+						? 'lg:pt-[17px] md:border-b-[1px] md:border-b-[#D8D8D8] lg:pb-[12px] mt-[15px] lg:mt-[48px]'
+						: 'mt-[15px] lg:mt-[64px] md:border-b-transparent'
 				}`}
 			>
 				{/* LOGO */}

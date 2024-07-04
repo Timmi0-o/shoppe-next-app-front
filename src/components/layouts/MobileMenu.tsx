@@ -20,11 +20,9 @@ export const MobileMenu = ({
 		<div>
 			<Section>
 				<div
-					className={`fixed min-h-[100vh] w-full pt-[15px] bg-white ${
-						isShowModal
-							? 'translate-y-0 opacity-100 '
-							: 'translate-y-[-100vh] opacity-50'
-					} top-[0px] left-0 duration-300 z-10 rounded-ee-[20px] rounded-es-[20px]`}
+					className={`fixed h-full w-full pt-[15px] bg-white ${
+						isShowModal ? 'top-[0px] opacity-100' : 'top-[-1000%] opacity-50'
+					}  left-0 duration-500 z-10 rounded-ee-[20px] rounded-es-[20px]`}
 				>
 					<div className='max-w-[320px] sm:max-w-[500px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
 						<div className='flex justify-between items-center'>

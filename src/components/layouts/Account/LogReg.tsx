@@ -30,16 +30,19 @@ export const LogReg = () => {
 	// const [userData, setUserData] = useState<userData>()
 	const [userErrors, setUserErrors] = useState('')
 
+	const [logRegNotification, setLogRegNotification] = useState('')
+
 	const validateErrors = [
 		validationEmailError,
 		validationPasswordError,
 		validationUserError,
 		userErrors,
+		logRegNotification,
 	]
 
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `https://shoppe-next-app-back-2.onrender.com/auth`,
+			url: `process.env.BACK_PORTauth`,
 			post: localStorage.getItem('token')
 				? { token: localStorage.getItem('token') }
 				: undefined,
@@ -55,28 +58,36 @@ export const LogReg = () => {
 
 	const login = async () => {
 		try {
+			if (authButtonTitle === 'Loading...') {
+				setLogRegNotification(
+					'Происходит вход в аккаунт, пожалуйста, подождите!'
+				)
+			}
 			if (username === '') {
+				setButtonActive(false)
 				return setValidationUserError('Имя пользователя не может быть пустым')
 			} else {
 				setValidationUserError('')
 			}
 
 			if (password === '') {
+				setButtonActive(false)
 				return setValidationPasswordError('Пароль не может быть пустым')
 			} else {
 				setValidationPasswordError('')
 			}
-
-			setButtonActive(!buttonActive)
-			const data = await axios.post(
-				'https://shoppe-next-app-back-2.onrender.com/auth/login',
-				{
-					username,
-					password,
-				}
-			)
+			setButtonActive(true)
+			setLogRegNotification('Происходит вход в аккаунт, пожалуйста, подождите!')
+			const data = await axios.post('process.env.BACK_PORTauth/login', {
+				username,
+				password,
+			})
 			localStorage.setItem('token', data.data.token)
+			setButtonActive(false)
+			setLogRegNotification('')
 		} catch (error: any) {
+			setButtonActive(false)
+			setLogRegNotification('')
 			setUserErrors(`${error.response.data.message}!`)
 		}
 	}
@@ -84,35 +95,42 @@ export const LogReg = () => {
 	const register = async () => {
 		try {
 			const re = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+			if (authButtonTitle === 'Loading...') {
+				setLogRegNotification(
+					'Происходит регистрация и вход в аккаунт, пожалуйста, подождите!'
+				)
+			}
 			if (!re.test(email)) {
+				setButtonActive(false)
 				return setValidationEmailError('Неверный email!')
 			} else {
 				setValidationEmailError('')
 			}
 			if (username === '') {
+				setButtonActive(false)
 				return setValidationUserError('Имя пользователя не может быть пустым')
 			} else {
 				setValidationUserError('')
 			}
 
 			if (password === '') {
+				setButtonActive(false)
 				return setValidationPasswordError('Пароль не может быть пустым')
 			} else {
 				setValidationPasswordError('')
 			}
-			setButtonActive(!buttonActive)
-			const data = await axios.post(
-				'https://shoppe-next-app-back-2.onrender.com/auth/create',
-				{
-					username,
-					email,
-					password,
-				}
-			)
+			setButtonActive(true)
+
+			const data = await axios.post(`${process.env.BACK_PORT}auth/create`, {
+				username,
+				email,
+				password,
+			})
 
 			console.log('data', data)
 			localStorage.setItem('token', data.data.token)
 		} catch (error: any) {
+			setButtonActive(false)
 			console.log(error.message)
 		}
 	}
@@ -142,6 +160,19 @@ export const LogReg = () => {
 		}
 	}, [isVariableActive, buttonActive])
 
+	useEffect(() => {
+		setValidationEmailError('')
+		setValidationPasswordError('')
+		setValidationUserError('')
+		setUserErrors('')
+
+		if (isVariableActive === 0) {
+			setAuthButtonTitle('SIGN IN')
+		} else {
+			setAuthButtonTitle('REGISTER')
+		}
+	}, [isVariableActive])
+
 	return (
 		<div className='pageLoadMove'>
 			<Section>
@@ -153,12 +184,12 @@ export const LogReg = () => {
 					<p className='text-[20px] lg:text-[33px] text-center mb-[24px] lg:mb-[64px]'>
 						My account
 					</p>
-					<div className='flex items-center justify-center w-full h-[32px] sm:w-[500px] lg:h-[60px] bg-[#EFEFEF] rounded-[5px] lg:rounded-[8px] mb-[87px] lg:mb-[131px]'>
+					<div className='flex items-center justify-center w-full h-[48px] sm:w-[500px] lg:h-[60px] bg-[#EFEFEF] rounded-[5px] lg:rounded-[8px] mb-[87px] lg:mb-[131px]'>
 						{variables.map((variable, i) => (
 							<div
 								onClick={() => setIsVariableActive(i)}
 								key={i}
-								className={`relative flex justify-center items-center w-[calc(100%/2.07)] lg:w-[236px] h-[28px] lg:h-[50px] before:rounded-[5px] lg:before:rounded-[8px] cursor-pointer before:absolute before:size-full before:duration-300 before:origin-right ${
+								className={`relative flex justify-center items-center w-[calc(100%/2.07)] lg:w-[236px] h-[38px] lg:h-[50px] before:rounded-[5px] lg:before:rounded-[8px] cursor-pointer before:absolute before:size-full before:duration-300 before:origin-right ${
 									isVariableActive === i
 										? 'before:bg-[#fff]'
 										: `before:bg-transparent ${
@@ -168,7 +199,7 @@ export const LogReg = () => {
 										  }`
 								}`}
 							>
-								<p className='text-[12px] lg:text-[20px] z-[2]'>{variable}</p>
+								<p className='text-[14px] lg:text-[20px] z-[2]'>{variable}</p>
 							</div>
 						))}
 					</div>

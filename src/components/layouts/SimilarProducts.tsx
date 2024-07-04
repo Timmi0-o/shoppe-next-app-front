@@ -22,9 +22,7 @@ export const SimilarProducts = () => {
 	useEffect(() => {
 		const GetProducts = async () => {
 			try {
-				const response = await axios.get(
-					'https://shoppe-next-app-back-2.onrender.com/products'
-				)
+				const response = await axios.get(`${process.env.BACK_PORT}products`)
 				setProducts(response.data)
 			} catch (error) {
 				console.error('Error fetching products:', error)

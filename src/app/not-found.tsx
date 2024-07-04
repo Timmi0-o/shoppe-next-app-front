@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
-import Link from 'next/link'
 
 export default function NotFound() {
 	return (
@@ -10,12 +9,9 @@ export default function NotFound() {
 				<p className='text-[12px] lg:text-[20px] text-[#707070] text-center mb-[64px]'>
 					This page not found; <br /> back to home and start again
 				</p>
-				<Link
-					href={'https://shoppe-next-app-back-2.onrender.com'}
-					className='w-[115px] lg:w-[187px]'
-				>
-					<Button title='HOMEPAGE' />
-				</Link>
+				<div className='w-[115px] lg:w-[187px]'>
+					<Button href='/' title='HOMEPAGE' />
+				</div>
 			</div>
 		</Section>
 	)
