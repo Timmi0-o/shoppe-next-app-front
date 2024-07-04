@@ -38,7 +38,7 @@ export default function Product() {
 
 	return (
 		<Section>
-			<div className='flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal'>
+			<div className='flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal pageLoadMove'>
 				{/* Главный слайдер и боковой для привью */}
 				<div className='flex sm:gap-[20px] lg:gap-[15px] xl:gap-[25px] mb-[40px]'>
 					<div className='hidden sm:block h-[400px] md:h-[450px] xl:h-[520px] w-[72px] md:w-[100px]'>

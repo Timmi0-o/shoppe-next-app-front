@@ -42,7 +42,7 @@ export const LogReg = () => {
 
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `process.env.BACK_PORTauth`,
+			url: `${process.env.BACK_PORT}auth`,
 			post: localStorage.getItem('token')
 				? { token: localStorage.getItem('token') }
 				: undefined,
@@ -78,7 +78,7 @@ export const LogReg = () => {
 			}
 			setButtonActive(true)
 			setLogRegNotification('Происходит вход в аккаунт, пожалуйста, подождите!')
-			const data = await axios.post('process.env.BACK_PORTauth/login', {
+			const data = await axios.post(`${process.env.BACK_PORT}auth/login`, {
 				username,
 				password,
 			})
