@@ -4,6 +4,7 @@ import { fetcher } from '@/utils/fetcher'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
 import SwiperCore from 'swiper'
 import 'swiper/css'
@@ -38,9 +39,9 @@ export default function Product() {
 
 	return (
 		<Section>
-			<div className='flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal pageLoadMove'>
+			<div className='flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal'>
 				{/* Главный слайдер и боковой для привью */}
-				<div className='flex sm:gap-[20px] lg:gap-[15px] xl:gap-[25px] mb-[40px]'>
+				<div className='flex sm:gap-[20px] lg:gap-[15px] xl:gap-[25px] mb-[40px] pageLoadMove'>
 					<div className='hidden sm:block h-[400px] md:h-[450px] xl:h-[520px] w-[72px] md:w-[100px]'>
 						<Swiper
 							onSwiper={setThumbsSwiper}
@@ -71,7 +72,7 @@ export default function Product() {
 						>
 							{productImg.map((img, i) => (
 								<SwiperSlide key={i}>
-									<div className='relative w-full h-[360px] md:h-[460px] xl:h-[520px]'>
+									<div className='relative w-full h-[360px] sm:h-[400px] md:h-[460px] xl:h-[520px]'>
 										<Image src={img} fill alt='item' />
 									</div>
 								</SwiperSlide>
@@ -80,7 +81,11 @@ export default function Product() {
 					</div>
 				</div>
 				{/* КОММЕНТАРИИ */}
-				<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[85px] mb-[75px] lg:mb-[120px] w-full md:w-[580px] lg:w-[360px] xl:w-[540px]'>
+				<div
+					className={`flex flex-col lg:flex-row gap-[40px] lg:gap-[85px] mb-[75px] lg:mb-[120px] w-full md:w-[580px] lg:w-[360px] xl:w-[540px] duration-[1s] ease-out ${
+						data?.length ? 'contentLoadMove' : ''
+					}`}
+				>
 					{data?.length ? (
 						<div className='w-full'>
 							<div className=''>
@@ -117,10 +122,10 @@ export default function Product() {
 							</div>
 						</div>
 					) : (
-						<div className='w-full lg:w-[580px]'>
-							<p className='text-[18px] lg:text-[28px] text-center text-[#4d4d4d]'>
-								There are no comments here yet...
-							</p>
+						<div className='flex justify-center items-center w-full lg:w-[580px] h-[200px] lg:h-[500px]'>
+							<AiOutlineLoading3Quarters
+								className={`animate-spin size-[50px] duration-300 `}
+							/>
 						</div>
 					)}
 				</div>

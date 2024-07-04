@@ -100,6 +100,20 @@ body {
 	}
 }
 
+@keyframes contentMove {
+	0% {
+		margin-left: 120px;
+		opacity: 0;
+		scale: 0.98;
+	}
+
+	100% {
+		margin-left: 0px;
+		opacity: 1;
+		scale: 1;
+	}
+}
+
 @layer utilities {
 	.text-balance {
 		text-wrap: balance;
@@ -123,6 +137,10 @@ body {
 	}
 
 	.pageLoadMove {
-		animation: pageMove 400ms ease-out;
+		animation: pageMove 300ms linear;
+	}
+
+	.contentLoadMove {
+		animation: contentMove 300ms ease-out;
 	}
 }

@@ -2,9 +2,11 @@
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Section } from '@/components/ui/Section'
 import { SideBar } from '@/components/ui/SideBar'
-import axios from 'axios'
+import { fetcher } from '@/utils/fetcher'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import useSWR, { SWRResponse } from 'swr'
 
 interface Product {
 	title: string
@@ -16,20 +18,10 @@ interface Product {
 export default function Shop() {
 	const [searchProduct, setSearchProduct] = useState('')
 
-	const [products, setProducts] = useState<Product[]>([])
-
-	useEffect(() => {
-		const GetProducts = async () => {
-			try {
-				const response = await axios.get(`${process.env.BACK_PORT}products`)
-				setProducts(response.data)
-			} catch (error) {
-				console.error('Error fetching products:', error)
-			}
-		}
-
-		GetProducts()
-	}, [])
+	const { data, error, isLoading }: SWRResponse<any, any, any> = useSWR(
+		{ url: `${process.env.BACK_PORT}products` },
+		fetcher
+	)
 
 	return (
 		<Section>
@@ -103,20 +95,36 @@ export default function Shop() {
 							Filters
 						</p>
 					</div>
-					<div className='flex justify-center'>
-						<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[16px] md:gap-[18px] xl:gap-[22px]'>
-							{products.map((product, i) => (
-								<ProductCard
-									customSize='w-[156px h-[208px] sm:w-[180px] sm:h-[280px] md:w-[200px] md:h-[280px] lg:w-[200px] lg:h-[292px] xl:w-[300px] xl:h-[392px] mb-[31px]'
-									customSizeImg='size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[220px] xl:h-[300px]'
-									key={i}
-									propsKey={i}
-									img={'/Item1.png'}
-									title={product.title}
-									price={product.price}
-									id={product._id}
-								/>
-							))}
+					{/* ТОВАРЫ */}
+					<div className='flex justify-center w-full'>
+						<div
+							className={`flex items-center mb-[40px] justify-center w-full  ${
+								isLoading ? 'block' : 'opacity-0 ml-[100%] fixed'
+							}`}
+						>
+							<AiOutlineLoading3Quarters
+								className={`animate-spin size-[50px] lg:size-[100px] `}
+							/>
+						</div>
+						<div
+							className={`flex justify-center duration-300 ${
+								isLoading ? 'opacity-0 mt-[100%] absolute' : 'block'
+							}`}
+						>
+							<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[16px] md:gap-[18px] xl:gap-[22px]'>
+								{data?.map((product: Product, i: number) => (
+									<ProductCard
+										customSize='w-[156px h-[208px] sm:w-[180px] sm:h-[280px] md:w-[200px] md:h-[280px] lg:w-[200px] lg:h-[292px] xl:w-[300px] xl:h-[392px] mb-[31px]'
+										customSizeImg='size-[156px] sm:size-[180px] md:h-[210px] md:w-full lg:h-[220px] xl:h-[300px]'
+										key={i}
+										propsKey={i}
+										img={'/Item1.png'}
+										title={product.title}
+										price={product.price}
+										id={product._id}
+									/>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
