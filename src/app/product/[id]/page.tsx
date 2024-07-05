@@ -120,7 +120,7 @@ function Product() {
 		<Section>
 			<div
 				className={`flex justify-center w-full ${
-					!productData ? '' : 'hidden'
+					productLoading ? '' : 'hidden'
 				} `}
 			>
 				<Loading />

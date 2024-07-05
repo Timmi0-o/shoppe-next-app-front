@@ -72,9 +72,10 @@ export const Header = () => {
 		{
 			img: '/profile.svg',
 			description: 'Профиль',
-			href: localStorage.getItem('token')
-				? `/account/${data?.username}`
-				: '/account',
+			href:
+				typeof window !== 'undefined' && localStorage.getItem('token')
+					? `/account/${data?.username}`
+					: '/account',
 		},
 	]
 
