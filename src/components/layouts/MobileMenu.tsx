@@ -1,3 +1,4 @@
+'use client'
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
