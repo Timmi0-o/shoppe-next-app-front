@@ -7,10 +7,11 @@ import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
+import Loading from '@/utils/Loading'
+import axios from 'axios'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
 import SwiperCore from 'swiper'
 import 'swiper/css'
@@ -40,14 +41,26 @@ function Product() {
 	const nowPath = path.split('/')[2]
 
 	// Получение товара из БД
-	const {
-		data: productData,
-		error: productError,
-		isLoading: productLoading,
-	}: SWRResponse<any, any, any> = useSWR(
-		{ url: `${process.env.BACK_PORT}products/${nowPath}` },
-		fetcher
-	)
+	// const {
+	// 	data: productData,
+	// 	error: productError,
+	// 	isLoading: productLoading,
+	// }: SWRResponse<any, any, any> = useSWR(
+	// 	{ url: `${process.env.BACK_PORT}products/${nowPath}` },
+	// 	fetcher
+	// )
+
+	const [productData, setProductData] = useState<Product>()
+	const handleProductData = async () => {
+		const response = (
+			await axios.get(`${process.env.BACK_PORT}products/${nowPath}`)
+		).data
+		setProductData(response)
+	}
+
+	useEffect(() => {
+		handleProductData()
+	}, [])
 
 	// Получение review из БД
 	const {
@@ -56,13 +69,15 @@ function Product() {
 		isLoading: reviewLoading,
 	}: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}review/${nowPath}` },
-		fetcher
+		fetcher,
+		{ refreshInterval: 6000 }
 	)
 
 	// const [nowProduct, setNowProduct] = useState<Product>()
-	const [reviews, setReviews] = useState<Reviews[]>(
-		!reviewLoading && reviewData?.length
-	)
+
+	// const [reviews, setReviews] = useState<Reviews[]>(
+	// 	!reviewLoading && reviewData?.length
+	// )
 
 	// ДЛЯ СИНХРОНИЗАЦИИ ДВУХ СЛАЙДЕРОВ
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null)
@@ -86,12 +101,6 @@ function Product() {
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
 
 	// console.log('isAddedShop', isAddedShop)
-
-	// ФОРМА ДЛЯ ЗАПОЛНЕНИЯ КОММЕНТАРИЯ
-	const [comment, setComment] = useState('')
-	const [names, setNames] = useState('')
-	const [email, setEmail] = useState('')
-	const [rights, setRights] = useState(false)
 
 	// АНИМАЦИЯ ПРИ НАЖАТИИ НА КНОПКУ КУПИТЬ
 	const addProductShop = () => {
@@ -121,12 +130,12 @@ function Product() {
 
 	return (
 		<Section>
-			<div className='flex justify-center w-full'>
-				<AiOutlineLoading3Quarters
-					className={`animate-spin size-[50px] lg:size-[100px] ${
-						productLoading ? '' : 'opacity-0 ml-[100%] absolute'
-					}`}
-				/>
+			<div
+				className={`flex justify-center w-full ${
+					!productData ? '' : 'hidden'
+				} `}
+			>
+				<Loading />
 			</div>
 			<div
 				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out ${
@@ -212,7 +221,7 @@ function Product() {
 							))}
 						</div>
 						<p className='text-[16px] text-[#707070] font-normal leading-[27px]'>
-							1 customer review
+							{reviewData?.length} customer(s) review
 						</p>
 					</div>
 					<div className='flex flex-col-reverse lg:flex-col'>
@@ -366,11 +375,12 @@ function Product() {
 			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
 			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
 				<DropMenu
-					heightCustom='h-[120px]'
+					heightCustom='h-[200px]'
 					title='Description'
 					dropLink={productData?.fullDescription}
 				/>
 				<DropMenu
+					heightCustom='h-[200px]'
 					title='Additional information'
 					dropLink={productAdditionInfo}
 				/>
@@ -380,9 +390,11 @@ function Product() {
 					dropLink={<Reviews />}
 				/>
 			</div>
+			{/* ОСТАВИТЬ КОММЕНТАРИЙ ONLY MOBILE */}
 			<div className='block lg:hidden'>
 				<PostComment />
 			</div>
+			{/* ПОХОЖИЕ ТОВАРЫ */}
 			<SimilarProducts />
 		</Section>
 	)

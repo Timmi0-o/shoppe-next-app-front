@@ -1,6 +1,7 @@
 'use client'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { fetcher } from '@/utils/fetcher'
+import Loading from '@/utils/Loading'
+import useSWR, { SWRResponse } from 'swr'
 import { ProductCard } from '../ui/ProductCard'
 import { Section } from '../ui/Section'
 
@@ -12,20 +13,10 @@ interface Product {
 }
 
 export const LatestShop = () => {
-	const [products, setProducts] = useState<Product[]>([])
-
-	useEffect(() => {
-		const GetProducts = async () => {
-			try {
-				const response = await axios.get(`${process.env.BACK_PORT}products`)
-				setProducts(response.data)
-			} catch (error) {
-				console.error('Error fetching products:', error)
-			}
-		}
-
-		GetProducts()
-	}, [])
+	const { data, isLoading, error }: SWRResponse<any, any, any> = useSWR(
+		{ url: `${process.env.BACK_PORT}products` },
+		fetcher
+	)
 
 	return (
 		<div className='mt-[21px] md:mt-[64px]'>
@@ -34,9 +25,16 @@ export const LatestShop = () => {
 				postTitle='View All'
 				postTitleLink='/shop'
 			>
+				<div
+					className={`duration-300 ${
+						data ? 'opacity-0 absolute -z-10' : 'opacity-100'
+					}`}
+				>
+					<Loading />
+				</div>
 				<div className='flex justify-center'>
 					<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[20px] md:gap-[30px] lg:gap-[52px] xl:gap-[57px]'>
-						{products.map((product, i) => (
+						{data?.map((product: Product, i: number) => (
 							<ProductCard
 								key={i}
 								propsKey={i}

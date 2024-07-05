@@ -1,4 +1,5 @@
 'use client'
+import { fetcher } from '@/utils/fetcher'
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import useSWR from 'swr'
 import { InputSearch } from '../ui/Input'
 import { Section } from '../ui/Section'
 import { MobileMenu } from './MobileMenu'
@@ -42,6 +44,39 @@ export const Header = () => {
 			setIsNawActive(1)
 		}
 	}, [path])
+
+	// ПРОВЕРКА ЛОГИНА
+	const { data, error, isLoading } = useSWR(
+		() => ({
+			url: `${process.env.BACK_PORT}auth`,
+			post: localStorage.getItem('token')
+				? { token: localStorage.getItem('token') }
+				: undefined,
+		}),
+		fetcher
+	)
+
+	const nawLink = [
+		{ title: 'Shop', href: '/shop' },
+		{ title: 'Blog', href: '/blog' },
+		{ title: 'Our Story', href: '/about' },
+	]
+
+	const navigation = [
+		{ img: '/search.svg', description: 'Поиск', href: '/search' },
+		{
+			img: '/shopping-cart.svg',
+			description: 'Ваши покупки',
+			href: '#',
+		},
+		{
+			img: '/profile.svg',
+			description: 'Профиль',
+			href: localStorage.getItem('token')
+				? `/account/${data?.username}`
+				: '/account',
+		},
+	]
 
 	return (
 		<Section>
@@ -165,22 +200,6 @@ export const Header = () => {
 		</Section>
 	)
 }
-
-const nawLink = [
-	{ title: 'Shop', href: '/shop' },
-	{ title: 'Blog', href: '/blog' },
-	{ title: 'Our Story', href: '/about' },
-]
-
-const navigation = [
-	{ img: '/search.svg', description: 'Поиск', href: '/search' },
-	{
-		img: '/shopping-cart.svg',
-		description: 'Ваши покупки',
-		href: '#',
-	},
-	{ img: '/profile.svg', description: 'Профиль', href: '/account' },
-]
 
 const mobileCategory = [
 	{ title: 'Earring', link: '#' },

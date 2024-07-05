@@ -23,6 +23,6 @@ export const fetcher = async ({ url, post }: fetcherType) => {
 			return response.data
 		}
 	} catch (error: any) {
-		throw error.response?.data ?? error.message
+		throw error.response?.data ?? error.response.data.message
 	}
 }

@@ -20,15 +20,19 @@ interface Product {
 export const SimilarProducts = () => {
 	const { data, error, isLoading }: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}products` },
-		fetcher
+		fetcher,
+		{ refreshInterval: 300000 }
 	)
+
 	return (
 		<>
-			<div className='flex items-center mb-[40px] justify-center w-full'>
+			<div
+				className={`flex items-center mb-[40px] justify-center w-full ${
+					isLoading ? 'block' : 'opacity-100 ml-[100%] fixed'
+				}`}
+			>
 				<AiOutlineLoading3Quarters
-					className={`animate-spin size-[50px] lg:size-[100px] ${
-						isLoading ? 'block' : 'opacity-0 ml-[100%] absolute'
-					}`}
+					className={`animate-spin size-[50px] lg:size-[100px]`}
 				/>
 			</div>
 			<div

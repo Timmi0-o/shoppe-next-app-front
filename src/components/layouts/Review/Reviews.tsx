@@ -24,8 +24,6 @@ export const Reviews = () => {
 		fetcher
 	)
 
-	console.log('comment', data)
-
 	// const [reviews, setReviews] = useState<Reviews[]>()
 
 	return (
@@ -41,7 +39,7 @@ export const Reviews = () => {
 								</p>
 							</Link>
 						</div>
-						<div className='h-[280px] sm:h-[280px] md:h-[320px] lg:h-[400px] overflow-scroll lg:overflow-hidden'>
+						<div className='h-[360px] lg:h-[400px] overflow-scroll lg:overflow-hidden'>
 							{data.slice(0, 2).map((comment: Reviews, i: number) => (
 								<div
 									key={i}
@@ -68,7 +66,7 @@ export const Reviews = () => {
 										))}
 									</div>
 									<p className='text-[12px] md:text-[16px] text-[#707070]'>
-										{comment.feedback.slice(0, 150)}
+										{comment.feedback.slice(0, 120)}...
 									</p>
 								</div>
 							))}

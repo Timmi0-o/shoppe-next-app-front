@@ -40,6 +40,7 @@ export const LogReg = () => {
 		logRegNotification,
 	]
 
+	// ПРОВЕРКА ЛОГИНА
 	const { data, error, isLoading } = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
@@ -131,7 +132,7 @@ export const LogReg = () => {
 			localStorage.setItem('token', data.data.token)
 		} catch (error: any) {
 			setButtonActive(false)
-			console.log(error.message)
+			console.log(error.response.data.message)
 		}
 	}
 

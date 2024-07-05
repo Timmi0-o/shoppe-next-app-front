@@ -17,11 +17,13 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body suppressHydrationWarning className={`h-full ` + dmSans.className}>
-				<div className='min-h-[90vh]'>
-					<Header />
-					<div>{children}</div>
+				<div>
+					<div className='min-h-[90vh]'>
+						<Header />
+						<div>{children}</div>
+					</div>
+					<Footer />
 				</div>
-				<Footer />
 			</body>
 		</html>
 	)
