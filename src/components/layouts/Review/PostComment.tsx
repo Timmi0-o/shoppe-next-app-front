@@ -51,11 +51,14 @@ export const PostComment = () => {
 		isLoading: reviewIsLoading,
 	} = useSWR(
 		{ url: `${process.env.BACK_PORT}review/${nowPath}/${userData?._id}` },
-		fetcher
+		fetcher,
+		{
+			refreshInterval: 10,
+		}
 	)
 
 	console.log('userData', userData)
-	console.log('reviewData', reviewData)
+	console.log('reviewData', reviewData?.feedback)
 
 	// ОСТАВИТЬ КОММЕНТАРИЙ
 	const handleComment = async () => {
@@ -96,11 +99,11 @@ export const PostComment = () => {
 	}
 
 	return (
-		<div>
+		<div className='overflow-x-hidden'>
 			{/* ОСТАВИТЬ СВОЙ ОТЗЫВ */}
 			<div
-				className={`w-full lg:w-[400px] xl:w-[580px] ${
-					reviewData ? 'hidden' : ''
+				className={`w-full lg:w-[400px] xl:w-[580px] duration-300 ${
+					reviewData?.feedback ? 'ml-[100%] fixed' : ''
 				} `}
 			>
 				<p className='text-[20px] leading-[26px]'>Add a Review</p>
@@ -138,8 +141,8 @@ export const PostComment = () => {
 			</div>
 			{/* НАПИСАННЫЙ КОММЕНТАРИЙ */}
 			<div
-				className={`w-full lg:w-[400px] xl:w-[580px] mb-[48px] lg:mb-0  ${
-					reviewData ? '' : 'ml-[100%] fixed'
+				className={`w-full lg:w-[400px] xl:w-[580px] mb-[48px] lg:mb-0 duration-300  ${
+					reviewData?.feedback ? '' : 'ml-[100%] fixed'
 				}`}
 			>
 				<div className='flex items-center gap-[16px] mb-[8px] lg:mb-[16px]'>
