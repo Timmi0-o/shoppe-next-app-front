@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
 import Loading from '@/utils/Loading'
-import axios from 'axios'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -41,26 +40,15 @@ function Product() {
 	const nowPath = path.split('/')[2]
 
 	// Получение товара из БД
-	// const {
-	// 	data: productData,
-	// 	error: productError,
-	// 	isLoading: productLoading,
-	// }: SWRResponse<any, any, any> = useSWR(
-	// 	{ url: `${process.env.BACK_PORT}products/${nowPath}` },
-	// 	fetcher
-	// )
-
-	const [productData, setProductData] = useState<Product>()
-	const handleProductData = async () => {
-		const response = (
-			await axios.get(`${process.env.BACK_PORT}products/${nowPath}`)
-		).data
-		setProductData(response)
-	}
-
-	useEffect(() => {
-		handleProductData()
-	}, [])
+	const {
+		data: productData,
+		error: productError,
+		isLoading: productLoading,
+	}: SWRResponse<any, any, any> = useSWR(
+		{ url: `${process.env.BACK_PORT}products/${nowPath}` },
+		fetcher,
+		{ refreshInterval: 600000 }
+	)
 
 	// Получение review из БД
 	const {
