@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 export default function ViewOrder() {
 	const router = useRouter()
-	const token = error.response.data.message.getItem('token')
+	const token = localStorage.getItem('token')
 	useEffect(() => {
 		if (!token) {
 			router.push('/')
