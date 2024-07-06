@@ -18,6 +18,7 @@ type ReviewData = {
 }
 
 export const PostComment = () => {
+	const token = localStorage.getItem('token')
 	const path = usePathname()
 
 	// ID ТЕКУЩЕГО ТОВАРА
@@ -50,10 +51,12 @@ export const PostComment = () => {
 		error: reviewError,
 		isLoading: reviewIsLoading,
 	} = useSWR(
-		{ url: `${process.env.BACK_PORT}review/${nowPath}/${userData?._id}` },
+		userData
+			? { url: `${process.env.BACK_PORT}review/${nowPath}/${userData._id}` }
+			: null,
 		fetcher,
 		{
-			refreshInterval: 10,
+			refreshInterval: 10000,
 		}
 	)
 

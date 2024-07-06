@@ -78,20 +78,22 @@ export const MobileMenu = ({
 									</p>
 								</div>
 							</Link>
-							<Link
-								onClick={() => localStorage.setItem('token', '')}
-								onTransitionEnd={() => setIsShowModal(!isShowModal)}
-								href='/'
-							>
-								<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
-									<div className='relative size-[18px]'>
-										<Image src={'/log-out.svg'} fill alt='profile' />
+							{localStorage.getItem('token') && (
+								<Link
+									onClick={() => localStorage.setItem('token', '')}
+									onTransitionEnd={() => setIsShowModal(!isShowModal)}
+									href='/'
+								>
+									<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
+										<div className='relative size-[18px]'>
+											<Image src={'/log-out.svg'} fill alt='profile' />
+										</div>
+										<p className='text-[20px] font-normal leading-[26px]'>
+											Logout
+										</p>
 									</div>
-									<p className='text-[20px] font-normal leading-[26px]'>
-										Logout
-									</p>
-								</div>
-							</Link>
+								</Link>
+							)}
 						</div>
 					</div>
 				</div>

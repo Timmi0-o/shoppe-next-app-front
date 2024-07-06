@@ -15,7 +15,8 @@ import { MobileMenu } from './MobileMenu'
 export const Header = () => {
 	// Активна ссылка naw bar и добавляем бордер снизу шапки и бордер снизу link
 	const [isNawActive, setIsNawActive] = useState<null | number>(null)
-	// Стейты для поле поиска товаров
+
+	// Стейты для поля поиска товаров
 	const [searchText, setSearchText] = useState('')
 
 	const [isShowModal, setIsShowModal] = useState(false)
@@ -30,6 +31,7 @@ export const Header = () => {
 		}
 	}, [isShowModal])
 
+	// ВЫБОР АКТИВНОГО МЕНЮ В ЗАВИСИМОСТИ ОТ ССЫЛКИ (PC)
 	useEffect(() => {
 		if (path.includes('/product')) {
 			setIsNawActive(0)
@@ -62,6 +64,15 @@ export const Header = () => {
 		{ title: 'Our Story', href: '/about' },
 	]
 
+	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛМЕНТСКОЙ ЧАСТИ
+	const [href, setHref] = useState('/account')
+	useEffect(() => {
+		const token = localStorage.getItem('token')
+		if (token) {
+			setHref(`/account/${data?.username}`)
+		}
+	}, [data?.username])
+
 	const navigation = [
 		{ img: '/search.svg', description: 'Поиск', href: '/search' },
 		{
@@ -72,10 +83,7 @@ export const Header = () => {
 		{
 			img: '/profile.svg',
 			description: 'Профиль',
-			href:
-				typeof window !== 'undefined' && localStorage.getItem('token')
-					? `/account/${data?.username}`
-					: '/account',
+			href: href,
 		},
 	]
 

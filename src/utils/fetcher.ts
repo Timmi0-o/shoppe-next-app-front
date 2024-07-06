@@ -7,6 +7,9 @@ interface fetcherType {
 
 export const fetcher = async ({ url, post }: fetcherType) => {
 	try {
+		if (!url) {
+			return undefined
+		}
 		if (!post) {
 			const response = await axios.get(url, {
 				headers: {

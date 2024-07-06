@@ -1,9 +1,9 @@
 'use client'
 import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
+import Loading from '@/utils/Loading'
 import { useRouter } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
@@ -42,13 +42,9 @@ export const Profile = () => {
 	return (
 		<>
 			<div
-				className={`flex items-center mb-[40px] justify-center w-full  ${
-					!data?.username ? 'block' : 'opacity-0 ml-[100%] fixed'
-				}`}
+				className={`${!data?.username ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
 			>
-				<AiOutlineLoading3Quarters
-					className={`animate-spin size-[50px] lg:size-[100px] `}
-				/>
+				<Loading />
 			</div>
 
 			<div

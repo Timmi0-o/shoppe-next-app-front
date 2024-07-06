@@ -32,7 +32,7 @@ export const SimilarProducts = () => {
 				}`}
 			>
 				<AiOutlineLoading3Quarters
-					className={`animate-spin size-[50px] lg:size-[100px]`}
+					className={`animate-spin size-[30px] lg:size-[60px]`}
 				/>
 			</div>
 			<div

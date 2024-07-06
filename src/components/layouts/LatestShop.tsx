@@ -27,12 +27,16 @@ export const LatestShop = () => {
 			>
 				<div
 					className={`duration-300 ${
-						data ? 'opacity-0 absolute -z-10' : 'opacity-100'
+						isLoading ? 'opacity-100' : 'opacity-0 absolute -z-10'
 					}`}
 				>
 					<Loading />
 				</div>
-				<div className='flex justify-center'>
+				<div
+					className={`flex justify-center duration-500 ease-in-out ${
+						isLoading ? 'mt-[60px] opacity-0' : 'mt-0'
+					}`}
+				>
 					<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[20px] md:gap-[30px] lg:gap-[52px] xl:gap-[57px]'>
 						{data?.map((product: Product, i: number) => (
 							<ProductCard

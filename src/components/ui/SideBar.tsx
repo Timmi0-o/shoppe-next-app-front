@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 
 interface SideBarProps {
-	title: string
-	titleMobile: string
+	title?: string
+	titleMobile?: string
 	children: ReactNode
 }
 
