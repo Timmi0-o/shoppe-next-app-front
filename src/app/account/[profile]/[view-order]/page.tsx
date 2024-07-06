@@ -5,12 +5,18 @@ import { useEffect, useState } from 'react'
 
 export default function ViewOrder() {
 	const router = useRouter()
-	const token = localStorage.getItem('token')
+
+	const [token, setToken] = useState('')
 	useEffect(() => {
-		if (!token) {
-			router.push('/')
+		if (typeof window !== 'undefined') {
+			const storedToken = localStorage.getItem('token')
+			if (!storedToken) {
+				router.push('/')
+			} else {
+				setToken(storedToken)
+			}
 		}
-	})
+	}, [router])
 
 	const [purchasesOrder, setPurchasesOrder] = useState([
 		{ product: 'Lira Earrings', price: 64 },

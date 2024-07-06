@@ -38,9 +38,10 @@ export const PostComment = () => {
 	} = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
-			post: localStorage.getItem('token')
-				? { token: localStorage.getItem('token') }
-				: undefined,
+			post:
+				window && localStorage !== undefined
+					? { token: localStorage.getItem('token') }
+					: undefined,
 		}),
 		fetcher
 	)

@@ -8,9 +8,11 @@ export const Dashboard = () => {
 	const { data, error, isLoading } = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
-			post: localStorage.getItem('token')
-				? { token: localStorage.getItem('token') }
-				: undefined,
+			post:
+				typeof window !== 'undefined' &&
+				typeof localStorage.getItem('token') !== 'undefined'
+					? { token: localStorage.getItem('token') }
+					: undefined,
 		}),
 		fetcher
 	)

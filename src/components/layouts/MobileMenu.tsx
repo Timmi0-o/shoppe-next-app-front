@@ -2,7 +2,7 @@
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { Section } from '../ui/Section'
 
@@ -17,6 +17,14 @@ export const MobileMenu = ({
 	setIsNawActive,
 	setIsShowModal,
 }: MobileMenuProps) => {
+	const [token, setToken] = useState<string | null>()
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const storedToken = localStorage.getItem('token')
+			setToken(storedToken)
+		}
+	}, [])
+
 	return (
 		<div>
 			<Section>
@@ -78,7 +86,7 @@ export const MobileMenu = ({
 									</p>
 								</div>
 							</Link>
-							{localStorage.getItem('token') && (
+							{token && (
 								<Link
 									onClick={() => localStorage.setItem('token', '')}
 									onTransitionEnd={() => setIsShowModal(!isShowModal)}

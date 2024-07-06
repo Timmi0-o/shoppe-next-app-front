@@ -47,13 +47,19 @@ export const Header = () => {
 		}
 	}, [path])
 
+	const [token, setToken] = useState<string | null>()
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const storedToken = localStorage.getItem('token')
+			setToken(storedToken)
+		}
+	}, [])
+
 	// ПРОВЕРКА ЛОГИНА
 	const { data, error, isLoading } = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
-			post: localStorage.getItem('token')
-				? { token: localStorage.getItem('token') }
-				: undefined,
+			post: token ? { token } : undefined,
 		}),
 		fetcher
 	)
@@ -64,10 +70,13 @@ export const Header = () => {
 		{ title: 'Our Story', href: '/about' },
 	]
 
-	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛМЕНТСКОЙ ЧАСТИ
+	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТСКОЙ ЧАСТИ
 	const [href, setHref] = useState('/account')
 	useEffect(() => {
-		const token = localStorage.getItem('token')
+		const token =
+			typeof window !== 'undefined' &&
+			typeof localStorage.getItem('token') !== 'undefined' &&
+			localStorage.getItem('token')
 		if (token) {
 			setHref(`/account/${data?.username}`)
 		}
