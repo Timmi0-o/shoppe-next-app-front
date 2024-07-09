@@ -40,7 +40,8 @@ export const LogReg = () => {
 	]
 
 	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТЕ
-	const token = window !== undefined ? localStorage.getItem('token') : undefined
+	const token =
+		typeof window !== 'undefined' ? localStorage.getItem('token') : undefined
 
 	// ПРОВЕРКА ЛОГИНА
 	const { data } = useSWR(

@@ -78,8 +78,6 @@ export const Product = () => {
 	const [isBtnShopClick, setIsBtnShopClick] = useState('')
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
 
-	// console.log('isAddedShop', isAddedShop)
-
 	// АНИМАЦИЯ ПРИ НАЖАТИИ НА КНОПКУ КУПИТЬ
 	const addProductShop = () => {
 		setIsAddedShop(true)
