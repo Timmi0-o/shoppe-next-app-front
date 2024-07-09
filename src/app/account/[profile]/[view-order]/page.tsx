@@ -24,9 +24,9 @@ export default function ViewOrder() {
 	])
 	return (
 		<Section>
-			<div className='flex justify-between'>
+			<div className='flex flex-col lg:flex-row justify-between'>
 				{/* ДЕТАЛИ ЗАКАЗА (БАНКОВСКАЯ КАРТА, АДРЕС И Т.Д) */}
-				<div className='w-full md:w-[500px]'>
+				<div className='w-full lg:w-[400px] xl:w-[500px] mb-[60px] lg:mb-0'>
 					<h1 className='text-[26px] mb-[39px]'>Order Details</h1>
 					<div className='flex justify-between'>
 						<div className='flex flex-col gap-[39px]'>
@@ -80,7 +80,7 @@ export default function ViewOrder() {
 					</div>
 				</div>
 				{/* ПРАВАЯ ЧАСТЬ С ОПИСАНИЕМ КУПЛЕННЫХ ТОВАРОВ И ОБЩЕЙ СТОИМОСТИ */}
-				<div className='w-full md:w-[580px]'>
+				<div className='w-full lg:w-[450px] xl:w-[580px]'>
 					<h1 className='text-[26px] mb-[39px]'>ORDER Summary</h1>
 					<div className='w-full bg-[#EFEFEF] px-[59px] py-[39px] mt-[39px]'>
 						<div className='flex justify-between items-center pb-[18px] mb-[22px] border-b-[1px] border-b-[#D8D8D8]'>

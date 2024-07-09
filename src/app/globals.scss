@@ -7,12 +7,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #888;
+	background-color: #cacaca;
 	border-radius: 4px;
 
 	&:hover {
-		background-color: #555;
+		background-color: rgb(142, 142, 142);
 	}
+}
+
+.shoppingBagItems::-webkit-scrollbar-thumb {
+		background-color: transparent;
 }
 
 body {

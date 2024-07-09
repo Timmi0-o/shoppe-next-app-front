@@ -3,9 +3,9 @@ import { ProductCard } from '@/components/ui/ProductCard'
 import { Section } from '@/components/ui/Section'
 import { SideBar } from '@/components/ui/SideBar'
 import { fetcher } from '@/utils/fetcher'
+import Loading from '@/utils/Loading'
 import Image from 'next/image'
 import { useState } from 'react'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import useSWR, { SWRResponse } from 'swr'
 
 interface Product {
@@ -98,13 +98,9 @@ export default function Shop() {
 					{/* ТОВАРЫ */}
 					<div className='flex justify-center w-full'>
 						<div
-							className={`flex items-center mb-[40px] justify-center w-full  ${
-								isLoading ? 'block' : 'opacity-0 ml-[100%] fixed'
-							}`}
+							className={`${isLoading ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
 						>
-							<AiOutlineLoading3Quarters
-								className={`animate-spin size-[50px] lg:size-[100px] `}
-							/>
+							<Loading />
 						</div>
 						<div
 							className={`flex justify-center duration-300 ${

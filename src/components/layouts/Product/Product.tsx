@@ -7,7 +7,6 @@ import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
-import Loading from '@/utils/Loading'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -21,6 +20,7 @@ import 'swiper/css/thumbs'
 import { FreeMode, Navigation, Scrollbar, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR, { SWRResponse } from 'swr'
+import { ProductLoading } from '../Loading/ProductLoading'
 
 interface Product {
 	title: string
@@ -28,10 +28,6 @@ interface Product {
 	price: number
 	_id: string
 	fullDescription: string
-}
-
-interface Reviews {
-	feedback: string
 }
 
 export const Product = () => {
@@ -61,7 +57,7 @@ export const Product = () => {
 		{ refreshInterval: 6000 }
 	)
 
-	// ДЛЯ СИНХРОНИЗАЦИИ ДВУХ СЛАЙДЕРОВ
+	// Синхронизация двух слайдеров
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null)
 
 	// КОЛИЧЕСТВО ВЫБРАННОГО ТОВАРА И НОМЕР ПОДРОБНОСТЕЙ
@@ -112,12 +108,9 @@ export const Product = () => {
 
 	return (
 		<Section>
-			<div
-				className={`flex justify-center w-full ${
-					productLoading ? '' : 'hidden'
-				} `}
-			>
-				<Loading />
+			{/* LOADING */}
+			<div className={`${productLoading ? '' : 'hidden'} `}>
+				<ProductLoading />
 			</div>
 			<div
 				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out ${
@@ -149,7 +142,10 @@ export const Product = () => {
 						<Swiper
 							spaceBetween={10}
 							slidesPerView={1}
-							thumbs={{ swiper: thumbsSwiper }}
+							thumbs={{
+								swiper:
+									thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+							}}
 							modules={[FreeMode, Thumbs, Scrollbar]}
 							scrollbar={true}
 							centeredSlides

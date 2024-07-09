@@ -3,7 +3,7 @@ import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
 import Loading from '@/utils/Loading'
 import { useRouter } from 'next/navigation'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
@@ -21,12 +21,11 @@ export const Profile = () => {
 	// const token = localStorage.getItem('token')
 	const [isNavigateActive, setIsNavigateActive] = useState(0)
 
-	const { data, error, isLoading } = useSWR(
+	const { data } = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
 			post:
-				typeof window !== 'undefined' &&
-				typeof localStorage.getItem('token') !== 'undefined'
+				typeof window !== 'undefined'
 					? { token: localStorage.getItem('token') }
 					: undefined,
 		}),
@@ -35,8 +34,8 @@ export const Profile = () => {
 
 	console.log('data', data)
 
-	useLayoutEffect(() => {
-		if (typeof window !== 'undefined' && !localStorage.getItem('token')) {
+	useEffect(() => {
+		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
 	})

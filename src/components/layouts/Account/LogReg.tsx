@@ -27,7 +27,6 @@ export const LogReg = () => {
 	const [validationEmailError, setValidationEmailError] = useState('')
 	const [validationPasswordError, setValidationPasswordError] = useState('')
 	const [validationUserError, setValidationUserError] = useState('')
-	// const [userData, setUserData] = useState<userData>()
 	const [userErrors, setUserErrors] = useState('')
 
 	const [logRegNotification, setLogRegNotification] = useState('')
@@ -40,19 +39,19 @@ export const LogReg = () => {
 		logRegNotification,
 	]
 
+	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТЕ
+	const token = window !== undefined ? localStorage.getItem('token') : undefined
+
 	// ПРОВЕРКА ЛОГИНА
-	const { data, error, isLoading } = useSWR(
+	const { data } = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
-			post:
-				typeof window !== 'undefined' &&
-				typeof localStorage.getItem('token') !== 'undefined'
-					? { token: localStorage.getItem('token') }
-					: undefined,
+			post: token ? { token: token } : undefined,
 		}),
 		fetcher
 	)
 
+	// ЕСЛИ ЕСТЬ USER ТО ОТПРАВИТЬ НА СТРАНИЦУ С ПОЛЬЗОВАТЕЛЕМ
 	useEffect(() => {
 		if (data) {
 			router.push(`account/${data.username}`)

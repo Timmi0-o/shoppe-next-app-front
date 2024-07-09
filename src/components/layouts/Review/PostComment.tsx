@@ -3,22 +3,29 @@ import { fetcher } from '@/utils/fetcher'
 import axios from 'axios'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import useSWR from 'swr'
 import { Button } from '../../ui/Button'
 import { Input } from '../../ui/Input'
 
-type ReviewData = {
-	_id: string
-	product: string
-	user: string
-	feedback: string
-	date: string
-}
+// type ReviewData = {
+// 	_id: string
+// 	product: string
+// 	user: string
+// 	feedback: string
+// 	date: string
+// }
 
 export const PostComment = () => {
-	const token = localStorage.getItem('token')
+	const [token, setToken] = useState<string | null>()
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const storedToken = localStorage.getItem('token')
+			setToken(storedToken)
+		}
+	}, [])
+
 	const path = usePathname()
 
 	// ID ТЕКУЩЕГО ТОВАРА
@@ -38,10 +45,7 @@ export const PostComment = () => {
 	} = useSWR(
 		() => ({
 			url: `${process.env.BACK_PORT}auth`,
-			post:
-				window && localStorage !== undefined
-					? { token: localStorage.getItem('token') }
-					: undefined,
+			post: { token },
 		}),
 		fetcher
 	)

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button'
 import { fetcher } from '@/utils/fetcher'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import useSWR, { SWRResponse } from 'swr'
 import { Section } from '../../ui/Section'
@@ -24,7 +25,7 @@ export const Reviews = () => {
 		fetcher
 	)
 
-	// const [reviews, setReviews] = useState<Reviews[]>()
+	const [buttonTitle, setButtonTitle] = useState('All reviews')
 
 	return (
 		<Section bg='bg-transparent'>
@@ -80,7 +81,11 @@ export const Reviews = () => {
 					</div>
 				)}
 			</div>
-			<Button href={`${nowPath}/reviews`} title='All reviews' />
+			<Button
+				onClick={() => setButtonTitle('Loading...')}
+				href={`${nowPath}/reviews`}
+				title={buttonTitle}
+			/>
 		</Section>
 	)
 }

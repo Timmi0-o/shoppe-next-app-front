@@ -1,5 +1,5 @@
 import { Footer } from '@/components/layouts/Footer'
-import { Header } from '@/components/layouts/Header'
+import { Header } from '@/components/layouts/Header/Header'
 import { dmSans } from '@/utils/fonts'
 import type { Metadata } from 'next'
 import './globals.scss'

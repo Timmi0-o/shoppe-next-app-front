@@ -1,21 +1,21 @@
 'use client'
+import { Section } from '@/components/ui/Section'
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { Section } from '../ui/Section'
 
 interface MobileMenuProps {
 	isShowModal: boolean
-	setIsNawActive: Dispatch<SetStateAction<number | null>>
 	setIsShowModal: Dispatch<SetStateAction<boolean>>
+	setIsShoppingBagShop: Dispatch<SetStateAction<boolean>>
 }
 
 export const MobileMenu = ({
 	isShowModal,
-	setIsNawActive,
 	setIsShowModal,
+	setIsShoppingBagShop,
 }: MobileMenuProps) => {
 	const [token, setToken] = useState<string | null>()
 	useEffect(() => {
@@ -35,9 +35,8 @@ export const MobileMenu = ({
 				>
 					<div className='max-w-[320px] sm:max-w-[500px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
 						<div className='flex justify-between items-center'>
-							<Link href={'/'}>
+							<Link onClick={() => setIsShowModal(false)} href={'/'}>
 								<div
-									onClick={() => setIsNawActive(null)}
 									className={
 										'flex text-[20px] sm:text-[28px] md:text-[35px] cursor-pointer ' +
 										allertaStencil.className
@@ -47,7 +46,10 @@ export const MobileMenu = ({
 								</div>
 							</Link>
 							<div className='flex items-center gap-[15px]'>
-								<div className='relative buttonActive size-[18px]'>
+								<div
+									onClick={() => setIsShoppingBagShop(true)}
+									className='relative buttonActive size-[18px]'
+								>
 									<Image src={'/shopping-cart.svg'} fill alt='shopping-cart' />
 								</div>
 								<div

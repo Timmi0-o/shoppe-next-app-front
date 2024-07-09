@@ -65,7 +65,10 @@ export default function Product() {
 						<Swiper
 							spaceBetween={10}
 							slidesPerView={1}
-							thumbs={{ swiper: thumbsSwiper }}
+							thumbs={{
+								swiper:
+									thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+							}}
 							modules={[FreeMode, Thumbs, Scrollbar]}
 							scrollbar={true}
 							centeredSlides
