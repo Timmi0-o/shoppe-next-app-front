@@ -255,7 +255,7 @@ export const Product = () => {
 								<Button
 									onClick={() => addProductShop()}
 									title={btnTitle}
-									AddTitleClass={isBtnShopClick}
+									titleSize={isBtnShopClick}
 								/>
 								<Notification
 									title='The item added to your Shopping bag.'
