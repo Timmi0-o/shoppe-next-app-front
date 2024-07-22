@@ -11,6 +11,8 @@ function ContactAs() {
 	const [email, setEmail] = useState('')
 	const [message, setMessage] = useState('')
 
+	const [dropTitle, setDropTitle] = useState('Subject')
+
 	return (
 		<Section>
 			<div className='flex flex-col items-center'>
@@ -41,7 +43,13 @@ function ContactAs() {
 							<Input state={email} setState={setEmail} placeholder='Email' />
 						</div>
 						<div className='w-full md:w-[396px]'>
-							<DropMenu pc list title='Subject' dropLink={subjects} />
+							<DropMenu
+								underline
+								list
+								title={dropTitle}
+								setTitle={setDropTitle}
+								dropLink={subjects}
+							/>
 						</div>
 					</div>
 					<div className='w-full mb-[40px] lg:mb-[96px]'>

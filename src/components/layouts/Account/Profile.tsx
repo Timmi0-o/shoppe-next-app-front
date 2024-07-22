@@ -1,14 +1,13 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { Section } from '@/components/ui/Section'
-import { fetcher } from '@/utils/fetcher'
 import Loading from '@/utils/Loading'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR from 'swr'
 import { AccountDetails } from './AccountNavigate/AccountDetails'
 import { Addresses } from './AccountNavigate/Addresses'
 import { Dashboard } from './AccountNavigate/Dashboard'
@@ -21,43 +20,34 @@ export const Profile = () => {
 	// const token = localStorage.getItem('token')
 	const [isNavigateActive, setIsNavigateActive] = useState(0)
 
-	const { data } = useSWR(
-		() => ({
-			url: `${process.env.BACK_PORT}auth`,
-			post:
-				typeof window !== 'undefined'
-					? { token: localStorage.getItem('token') }
-					: undefined,
-		}),
-		fetcher
-	)
+	// GET USER DATA
+	const { user } = useUser()
+	// console.log('userProfile', user)
 
-	console.log('data', data)
-
-	useEffect(() => {
-		if (localStorage.getItem('token') === null) {
-			router.push('/')
-		}
-	})
+	// useEffect(() => {
+	// 	if (user === undefined) {
+	// 		router.push('/')
+	// 	}
+	// })
 
 	return (
 		<>
 			<div
-				className={`${!data?.username ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
+				className={`${!user?.username ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
 			>
 				<Loading />
 			</div>
 
 			<div
 				className={`pageLoadMove duration-300 ${
-					!data?.username ? 'opacity-0 ml-[100%] fixed' : ''
+					!user?.username ? 'opacity-0 ml-[100%] fixed' : ''
 				}`}
 			>
 				<Section>
 					<h1
 						className={`text-[20px] lg:text-[33px] text-center w-full mb-[24px] lg:mb-[64px]`}
 					>
-						{data && data.username}
+						{user && user.username}
 					</h1>
 					{/* НАВИГАЦИЯ ПК */}
 					<div className='hidden lg:flex justify-start items-center gap-[49px] pb-[34px] mb-[39px] border-b-[1px] border-b-[#D8D8D8]'>

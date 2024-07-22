@@ -1,11 +1,10 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { Button } from '@/components/ui/Button'
-import { fetcher } from '@/utils/fetcher'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import useSWR from 'swr'
 import { MobileMenu } from './MobileMenu'
 import { ShoppingBag } from './ShoppingBag'
 
@@ -38,34 +37,17 @@ export const Navigation = ({
 
 	const [isShoppingBagShop, setIsShoppingBagShop] = useState(false)
 
-	const [token, setToken] = useState<string | null>()
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const storedToken = localStorage.getItem('token')
-			setToken(storedToken)
-		}
-	}, [])
-
-	// ПРОВЕРКА ЛОГИНА
-	const { data, error, isLoading } = useSWR(
-		() => ({
-			url: `${process.env.BACK_PORT}auth`,
-			post: token ? { token } : undefined,
-		}),
-		fetcher
-	)
+	// GET USER DATA
+	const { user, mutateUser } = useUser()
 
 	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТСКОЙ ЧАСТИ
 	const [href, setHref] = useState('/account')
 	useEffect(() => {
-		const token =
-			typeof window !== 'undefined' &&
-			typeof localStorage.getItem('token') !== 'undefined' &&
-			localStorage.getItem('token')
-		if (token) {
-			setHref(`/account/${data?.username}`)
+		mutateUser()
+		if (user) {
+			setHref(`/account/${user.username}`)
 		}
-	}, [data?.username])
+	}, [user, mutateUser])
 
 	const isOpenShoppingBag = () => {
 		setIsShoppingBagShop(!isShoppingBagShop)

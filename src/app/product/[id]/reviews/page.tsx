@@ -1,8 +1,7 @@
 'use client'
+import { useReview } from '@/components/hooks/useReview'
 import { Section } from '@/components/ui/Section'
-import { fetcher } from '@/utils/fetcher'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
@@ -14,7 +13,6 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/thumbs'
 import { FreeMode, Navigation, Scrollbar, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR, { SWRResponse } from 'swr'
 
 interface CommentType {
 	user: {
@@ -25,14 +23,7 @@ interface CommentType {
 }
 
 export default function Product() {
-	const path = usePathname()
-	const nowPath = path.split('/')[2]
-
-	// ПОЛУЧЕНИЕ REVIEWS ИЗ БД
-	const { data, error, isLoading }: SWRResponse<any, any, any> = useSWR(
-		{ url: `${process.env.BACK_PORT}review/${nowPath}` },
-		fetcher
-	)
+	const { allReview } = useReview()
 
 	// ДЛЯ СИНХРОНИЗАЦИИ ДВУХ СЛАЙДЕРОВ
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null)
@@ -86,17 +77,17 @@ export default function Product() {
 				{/* КОММЕНТАРИИ */}
 				<div
 					className={`flex flex-col lg:flex-row gap-[40px] lg:gap-[85px] mb-[75px] lg:mb-[120px] w-full md:w-[580px] lg:w-[360px] xl:w-[540px] duration-[1s] ease-out ${
-						data?.length ? 'contentLoadMove' : ''
+						allReview?.length ? 'contentLoadMove' : ''
 					}`}
 				>
-					{data?.length ? (
+					{allReview?.length ? (
 						<div className='w-full'>
 							<div className=''>
-								{data.map((comment: CommentType, i: number) => (
+								{allReview.map((comment: CommentType, i: number) => (
 									<div
 										key={i}
 										className={` ${
-											data.length > i + 1
+											allReview.length > i + 1
 												? 'pb-[39px] border-b-[1px] border-b-[#D8D8D8] mb-[24px]'
 												: ''
 										}`}

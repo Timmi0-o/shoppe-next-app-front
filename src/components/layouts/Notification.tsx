@@ -8,7 +8,7 @@ interface NotificationProps {
 	title: string
 	btnTitle: string
 	onClick?: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void
-	linkHref?: string
+	href?: string
 	position?: string
 }
 
@@ -19,7 +19,7 @@ export const Notification = ({
 	btnTitle,
 	onClick,
 	position,
-	linkHref,
+	href,
 }: NotificationProps) => {
 	const [isActiveClass, setIsActiveClass] = useState(
 		isActive !== undefined
@@ -40,13 +40,13 @@ export const Notification = ({
 	const handleIsNotLink = (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
 	) => {
-		if (linkHref === undefined) e.preventDefault()
+		if (href === undefined) e.preventDefault()
 	}
 
 	return (
 		<div
 			className={`flex items-center justify-between md:items-center md:justify-between ${
-				position ? position : 'fixed lg:absolute z-20 bottom-0 lg:top-[-100px]'
+				position ? position : 'fixed lg:absolute z-9 bottom-0 lg:top-[-100px]'
 			} h-[68px] bg-[#EFEFEF] px-[5px] sm:px-[16px] lg:px-[40px] duration-300 ease-in-out w-full ${isActiveClass}`}
 		>
 			<div className='flex gap-[16px] items-center'>
@@ -57,7 +57,7 @@ export const Notification = ({
 					{title}
 				</p>
 			</div>
-			<Link onClick={(e) => handleIsNotLink(e)} href='/shop'>
+			<Link onClick={(e) => handleIsNotLink(e)} href={href || '#'}>
 				<p
 					onClick={onClick}
 					className='text-[14px] md:text-[16px]  text-[#A18A68] cursor-pointer'

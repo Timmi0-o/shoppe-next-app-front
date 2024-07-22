@@ -1,9 +1,10 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { Section } from '@/components/ui/Section'
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { IoClose } from 'react-icons/io5'
 
 interface MobileMenuProps {
@@ -17,14 +18,8 @@ export const MobileMenu = ({
 	setIsShowModal,
 	setIsShoppingBagShop,
 }: MobileMenuProps) => {
-	const [token, setToken] = useState<string | null>()
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const storedToken = localStorage.getItem('token')
-			setToken(storedToken)
-		}
-	}, [])
-
+	// GET USER DATA
+	const { user } = useUser()
 	return (
 		<div>
 			<Section>
@@ -88,9 +83,12 @@ export const MobileMenu = ({
 									</p>
 								</div>
 							</Link>
-							{token && (
+							{user !== null && (
 								<Link
-									onClick={() => localStorage.setItem('token', '')}
+									onClick={() => {
+										localStorage.removeItem('token')
+										setIsShowModal(false)
+									}}
 									onTransitionEnd={() => setIsShowModal(!isShowModal)}
 									href='/'
 								>

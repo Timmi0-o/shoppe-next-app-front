@@ -1,15 +1,15 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Section } from '@/components/ui/Section'
-import { fetcher } from '@/utils/fetcher'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 
 export const LogReg = () => {
 	const router = useRouter()
+
 	// ВЫБОР РЕЖИМА ВХОДА
 	const [isVariableActive, setIsVariableActive] = useState(0)
 
@@ -21,43 +21,25 @@ export const LogReg = () => {
 	const [remember, setRemember] = useState(false)
 
 	const [isResetPassword, setIsResetPassword] = useState(false)
-	// const [logRegForm, setLogRegForm] = useState('')
-	// const [resetPasswordForm, setResetPasswordForm] = useState('')
 
 	const [validationEmailError, setValidationEmailError] = useState('')
-	const [validationPasswordError, setValidationPasswordError] = useState('')
-	const [validationUserError, setValidationUserError] = useState('')
 	const [userErrors, setUserErrors] = useState('')
 
 	const [logRegNotification, setLogRegNotification] = useState('')
 
-	const validateErrors = [
-		validationEmailError,
-		validationPasswordError,
-		validationUserError,
-		userErrors,
-		logRegNotification,
-	]
+	const validateErrors = [validationEmailError, userErrors, logRegNotification]
 
-	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТЕ
-	const token =
-		typeof window !== 'undefined' ? localStorage.getItem('token') : undefined
-
-	// ПРОВЕРКА ЛОГИНА
-	const { data } = useSWR(
-		() => ({
-			url: `${process.env.BACK_PORT}auth`,
-			post: token ? { token: token } : undefined,
-		}),
-		fetcher
-	)
+	// GET USER DATA
+	const { user, mutateUser } = useUser()
+	console.log(user)
 
 	// ЕСЛИ ЕСТЬ USER ТО ОТПРАВИТЬ НА СТРАНИЦУ С ПОЛЬЗОВАТЕЛЕМ
 	useEffect(() => {
-		if (data) {
-			router.push(`account/${data.username}`)
+		mutateUser()
+		if (user && user.username) {
+			router.push(`account/${user.username}`)
 		}
-	}, [data, router])
+	}, [user, router, mutateUser])
 
 	const login = async () => {
 		try {
@@ -66,32 +48,29 @@ export const LogReg = () => {
 					'Происходит вход в аккаунт, пожалуйста, подождите!'
 				)
 			}
-			if (username === '') {
+			if (username === '' || password === '') {
 				setButtonActive(false)
-				return setValidationUserError('Имя пользователя не может быть пустым')
+				return setUserErrors('Имя пользователя и пароль не может быть пустым')
 			} else {
-				setValidationUserError('')
-			}
-
-			if (password === '') {
-				setButtonActive(false)
-				return setValidationPasswordError('Пароль не может быть пустым')
-			} else {
-				setValidationPasswordError('')
+				setUserErrors('')
 			}
 			setButtonActive(true)
 			setLogRegNotification('Происходит вход в аккаунт, пожалуйста, подождите!')
-			const data = await axios.post(`${process.env.BACK_PORT}auth/login`, {
+			const response = await axios.post(`${process.env.BACK_PORT}auth/login`, {
 				username,
 				password,
 			})
-			localStorage.setItem('token', data.data.token)
+			localStorage.setItem('token', response.data.token)
+			mutateUser()
 			setButtonActive(false)
-			setLogRegNotification('')
+			router.push(`account/${user?._id}`)
+			setTimeout(() => {
+				setLogRegNotification('')
+			}, 2000)
 		} catch (error: any) {
 			setButtonActive(false)
 			setLogRegNotification('')
-			setUserErrors(`${error.response.data.message}!`)
+			setUserErrors(`${error?.response?.data?.message}!`)
 		}
 	}
 
@@ -109,29 +88,22 @@ export const LogReg = () => {
 			} else {
 				setValidationEmailError('')
 			}
-			if (username === '') {
+			if (username === '' || password === '') {
 				setButtonActive(false)
-				return setValidationUserError('Имя пользователя не может быть пустым')
+				return setUserErrors('Имя пользователя и пароль не может быть пустым')
 			} else {
-				setValidationUserError('')
-			}
-
-			if (password === '') {
-				setButtonActive(false)
-				return setValidationPasswordError('Пароль не может быть пустым')
-			} else {
-				setValidationPasswordError('')
+				setUserErrors('')
 			}
 			setButtonActive(true)
-
 			const data = await axios.post(`${process.env.BACK_PORT}auth/create`, {
 				username,
 				email,
 				password,
 			})
-
-			console.log('data', data)
 			localStorage.setItem('token', data.data.token)
+			if (data) {
+				login()
+			}
 		} catch (error: any) {
 			setButtonActive(false)
 			console.log(error.response.data.message)
@@ -165,8 +137,6 @@ export const LogReg = () => {
 
 	useEffect(() => {
 		setValidationEmailError('')
-		setValidationPasswordError('')
-		setValidationUserError('')
 		setUserErrors('')
 
 		if (isVariableActive === 0) {

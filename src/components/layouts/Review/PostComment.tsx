@@ -1,118 +1,52 @@
 'use client'
-import { fetcher } from '@/utils/fetcher'
-import axios from 'axios'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useReview } from '@/components/hooks/useReview'
+import { useUser } from '@/components/hooks/useUser'
+import Loading from '@/utils/Loading'
+import { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
-import useSWR from 'swr'
 import { Button } from '../../ui/Button'
 import { Input } from '../../ui/Input'
 
-// type ReviewData = {
-// 	_id: string
-// 	product: string
-// 	user: string
-// 	feedback: string
-// 	date: string
-// }
-
 export const PostComment = () => {
-	const [token, setToken] = useState<string | null>()
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const storedToken = localStorage.getItem('token')
-			setToken(storedToken)
-		}
-	}, [])
-
-	const path = usePathname()
-
-	// ID ТЕКУЩЕГО ТОВАРА
-	const nowPath = path.split('/')[2]
-
 	const [comment, setComment] = useState('')
 	const [commentRating, setCommentRating] = useState(0)
 	const [commentButtonTitle, setCommentButtonTitle] = useState('Submit')
 
-	const [commentWarning, setCommentWarning] = useState<React.ReactNode>('')
+	const [isPostedComment, setIsPostedComment] = useState(false)
 
-	// ПОЛНОСТЬЮ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
-	const {
-		data: userData,
-		error: userError,
-		isLoading: userIsLoading,
-	} = useSWR(
-		() => ({
-			url: `${process.env.BACK_PORT}auth`,
-			post: { token },
-		}),
-		fetcher
-	)
+	// GET USER DATA
+	const { user } = useUser()
 
-	// ДАННЫЕ О ОТЗЫВЕ ПОЛЬЗОВАТЕЛЯ
-	const {
-		data: reviewData,
-		error: reviewError,
-		isLoading: reviewIsLoading,
-	} = useSWR(
-		userData
-			? { url: `${process.env.BACK_PORT}review/${nowPath}/${userData._id}` }
-			: null,
-		fetcher,
-		{
-			refreshInterval: 10000,
-		}
-	)
-
-	console.log('userData', userData)
-	console.log('reviewData', reviewData?.feedback)
+	const { userReview, userMutate, addUserComment, commentWarning } = useReview()
 
 	// ОСТАВИТЬ КОММЕНТАРИЙ
 	const handleComment = async () => {
-		if (!comment) {
-			return setCommentWarning(
-				<div className='text-[14px] w-full md:w-[250px] xl:w-[400px]'>
-					Комментарий не может быть пустым
-				</div>
-			)
-		}
-		if (userData === undefined) {
-			return setCommentWarning(
-				<div className='text-[14px] w-full lg:w-[250px] xl:w-[400px]'>
-					Комментарии могут оставлять только зарегистрированные пользователи,
-					<Link href={'/account'}>
-						<span className='text-black underline ml-[5px]'>войдите!</span>
-					</Link>
-				</div>
-			)
-		}
 		setCommentButtonTitle('Loading...')
-		try {
-			const response = (
-				await axios.post(`${process.env.BACK_PORT}review/create`, {
-					user: userData?._id,
-					product: nowPath,
-					feedback: comment,
-				})
-			).data
-
-			if (response) {
-				setComment('')
-			}
+		setIsPostedComment(true)
+		const response = await addUserComment(comment, setComment)
+		if (!response) {
 			setCommentButtonTitle('Submit')
-		} catch (error: any) {
-			console.log(error.response.data.message)
+		} else {
+			setIsPostedComment(false)
 		}
 	}
 
 	return (
 		<div className='overflow-x-hidden'>
+			<div
+				className={`duration-500 delay-150 ${
+					isPostedComment && !commentWarning
+						? 'opacity-100'
+						: 'opacity-0 absolute -z-10 mt-[-40px]'
+				}`}
+			>
+				<Loading />
+			</div>
 			{/* ОСТАВИТЬ СВОЙ ОТЗЫВ */}
 			<div
-				className={`w-full lg:w-[400px] xl:w-[580px] duration-300 ${
-					reviewData?.feedback ? 'ml-[100%] fixed' : ''
-				} `}
+				className={`w-full lg:w-[400px] xl:w-[580px] duration-500 ease-in-out ${
+					userReview?.feedback ? 'hidden' : ''
+				} ${isPostedComment && !commentWarning ? 'ml-[100%] opacity-0' : ''} `}
 			>
 				<p className='text-[20px] leading-[26px]'>Add a Review</p>
 				<p className='text-[13px] text-[#707070] leading-[30px] mb-[46px]'>
@@ -149,16 +83,16 @@ export const PostComment = () => {
 			</div>
 			{/* НАПИСАННЫЙ КОММЕНТАРИЙ */}
 			<div
-				className={`w-full lg:w-[400px] xl:w-[580px] mb-[48px] lg:mb-0 duration-300  ${
-					reviewData?.feedback ? '' : 'ml-[100%] fixed'
+				className={`w-full lg:w-[400px] xl:w-[580px] mb-[48px] lg:mb-0 duration-300 pl-[10px] ${
+					userReview?.feedback ? '' : 'ml-[100%] fixed'
 				}`}
 			>
 				<div className='flex items-center gap-[16px] mb-[8px] lg:mb-[16px]'>
 					<p className='text-[14px] md:text-[16px] lg:text-[20px]'>
-						{userData?.username} (You)
+						{user?.username} (You)
 					</p>
 					<p className='text-[12px] md:text-[14px] text-[#707070]'>
-						{reviewData && reviewData?.date.slice(0, 10)}
+						{userReview && userReview?.date.slice(0, 10)}
 					</p>
 				</div>
 				<div className='flex gap-[4px] md:gap-[10px] mb-[18px] lg:mb-[24px]'>
@@ -170,7 +104,7 @@ export const PostComment = () => {
 					))}
 				</div>
 				<p className='text-[12px] md:text-[16px] text-[#707070]'>
-					{reviewData?.feedback}
+					{userReview?.feedback}
 				</p>
 			</div>
 		</div>

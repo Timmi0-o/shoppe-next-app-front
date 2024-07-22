@@ -4,15 +4,13 @@ import Link from 'next/link'
 import useSWR from 'swr'
 
 export const Dashboard = () => {
+	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТЕ
+	const token =
+		typeof window !== 'undefined' ? localStorage.getItem('token') : undefined
 	// ПРОВЕРКА ЛОГИНА
 	const { data, error, isLoading } = useSWR(
 		() => ({
-			url: `${process.env.BACK_PORT}auth`,
-			post:
-				typeof window !== 'undefined' &&
-				typeof localStorage.getItem('token') !== 'undefined'
-					? { token: localStorage.getItem('token') }
-					: undefined,
+			url: `${process.env.BACK_PORT}auth/${token}`,
 		}),
 		fetcher
 	)

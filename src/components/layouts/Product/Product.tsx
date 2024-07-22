@@ -1,4 +1,5 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { DropMenu } from '@/components/layouts/DropMenu'
 import { Notification } from '@/components/layouts/Notification'
 import { PostComment } from '@/components/layouts/Review/PostComment'
@@ -7,6 +8,7 @@ import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
 import { fetcher } from '@/utils/fetcher'
+import axios from 'axios'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -35,6 +37,9 @@ export const Product = () => {
 	const path = usePathname()
 	const nowPath = path.split('/')[2]
 
+	// GET USER DATA
+	const { user } = useUser()
+
 	// Получение товара из БД
 	const {
 		data: productData,
@@ -42,8 +47,7 @@ export const Product = () => {
 		isLoading: productLoading,
 	}: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}products/${nowPath}` },
-		fetcher,
-		{ refreshInterval: 600000 }
+		fetcher
 	)
 
 	// Получение review из БД
@@ -77,10 +81,35 @@ export const Product = () => {
 	const [isAddedShop, setIsAddedShop] = useState(false)
 	const [isBtnShopClick, setIsBtnShopClick] = useState('')
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
+	// ADDED NEW ITEM TO BASKET
+	const handleAddNewItemToBasket = async () => {
+		try {
+			const response = await axios.patch(
+				`${process.env.BACK_PORT}basket/add-product`,
+				{
+					user: user._id,
+					product: { productId: productData._id, qty: productNumber },
+				}
+			)
+			if (response) {
+				console.log('ТОВАР ДОБАВЛЕН')
+			} else {
+				console.log('НЕ ДОБАВЛЕН')
+			}
+		} catch (error: any) {
+			console.log(error.response.data)
+		}
+	}
 
 	// АНИМАЦИЯ ПРИ НАЖАТИИ НА КНОПКУ КУПИТЬ
 	const addProductShop = () => {
 		setIsAddedShop(true)
+		// ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
+		if (user) {
+			handleAddNewItemToBasket()
+		} else {
+			console.log('НЕТ ТОКЕНА')
+		}
 		setBtnTitle('ADDED!')
 		setIsBtnShopClick('tracking-[2px] duration-300 ')
 
@@ -260,6 +289,7 @@ export const Product = () => {
 									noticeImg={'/success-shop.svg'}
 									btnTitle='VIEW CART'
 									isActive={isAddedShop}
+									href='/shopping-cart'
 								/>
 							</div>
 						</div>

@@ -1,11 +1,10 @@
 'use client'
+import { useReview } from '@/components/hooks/useReview'
 import { Button } from '@/components/ui/Button'
-import { fetcher } from '@/utils/fetcher'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
-import useSWR, { SWRResponse } from 'swr'
 import { Section } from '../../ui/Section'
 
 interface Reviews {
@@ -18,22 +17,21 @@ interface Reviews {
 
 export const Reviews = () => {
 	const path = usePathname()
+
+	// ID ТЕКУЩЕГО ТОВАРА
 	const nowPath = path.split('/')[2]
 
-	const { data, error, isLoading }: SWRResponse<any, any, any> = useSWR(
-		{ url: `${process.env.BACK_PORT}review/${nowPath}` },
-		fetcher
-	)
+	const { allReview } = useReview()
 
 	const [buttonTitle, setButtonTitle] = useState('All reviews')
 
 	return (
 		<Section bg='bg-transparent'>
 			<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[85px]'>
-				{data?.length ? (
+				{allReview?.length ? (
 					<div className='w-full lg:w-[400px] xl:w-[580px]'>
 						<div className='sticky top-0 flex justify-between text-[14px] md:text-[16px] lg:text-[20px] font-normal leading-[26px] mb-[20px] lg:mb-[76px]'>
-							<p>{data.length} Reviews for lira earings</p>
+							<p>{allReview.length} Reviews for lira earings</p>
 							<Link href={`${nowPath}/reviews`}>
 								<p className='text-[13px] lg:text-[15px] text-[#a18a68] cursor-pointer'>
 									All reviews
@@ -41,18 +39,18 @@ export const Reviews = () => {
 							</Link>
 						</div>
 						<div className='h-[360px] lg:h-[400px] overflow-scroll lg:overflow-hidden'>
-							{data.slice(0, 2).map((comment: Reviews, i: number) => (
+							{allReview.slice(0, 2).map((comment: Reviews, i: number) => (
 								<div
 									key={i}
 									className={` ${
-										data.slice(0, 2).length > i + 1
+										allReview.slice(0, 2).length > i + 1
 											? 'pb-[39px] border-b-[1px] border-b-[#D8D8D8] mb-[24px]'
 											: ''
 									}`}
 								>
 									<div className='flex items-center gap-[16px] mb-[8px] lg:mb-[16px]'>
 										<p className='text-[14px] md:text-[16px] lg:text-[20px]'>
-											{comment.user.username}
+											{comment?.user?.username}
 										</p>
 										<p className='text-[12px] md:text-[14px] text-[#707070]'>
 											{comment.date.slice(0, 10)}
@@ -81,11 +79,17 @@ export const Reviews = () => {
 					</div>
 				)}
 			</div>
-			<Button
-				onClick={() => setButtonTitle('Loading...')}
-				href={`${nowPath}/reviews`}
-				title={buttonTitle}
-			/>
+			<div
+				className={`duration-300 ease-in-out ${
+					allReview?.length !== 0 ? '' : 'ml-[-100%] absolute opacity-0'
+				}`}
+			>
+				<Button
+					onClick={() => setButtonTitle('Loading...')}
+					href={`${nowPath}/reviews`}
+					title={buttonTitle}
+				/>
+			</div>
 		</Section>
 	)
 }

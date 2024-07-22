@@ -1,5 +1,4 @@
-import { Footer } from '@/components/layouts/Footer'
-import { Header } from '@/components/layouts/Header/Header'
+import { MainWrapper } from '@/components/layouts/MainWrapper'
 import { dmSans } from '@/utils/fonts'
 import type { Metadata } from 'next'
 import './globals.scss'
@@ -17,13 +16,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body suppressHydrationWarning className={`h-full ` + dmSans.className}>
-				<div>
-					<div className='min-h-[90vh]'>
-						<Header />
-						<div>{children}</div>
-					</div>
-					<Footer />
-				</div>
+				<MainWrapper>{children}</MainWrapper>
 			</body>
 		</html>
 	)
