@@ -16,7 +16,7 @@ export const Orders = () => {
 				<Notification
 					title='No order has been made yet.'
 					btnTitle='BROWSE PRODUCT'
-					linkHref='/shop'
+					href='/shop'
 					position='block'
 				/>
 			</div>
