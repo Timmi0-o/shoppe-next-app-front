@@ -38,16 +38,11 @@ export const Navigation = ({
 	const [isShoppingBagShop, setIsShoppingBagShop] = useState(false)
 
 	// GET USER DATA
-	const { user, mutateUser } = useUser()
+	const { user } = useUser()
 
-	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТСКОЙ ЧАСТИ
-	const [href, setHref] = useState('/account')
-	useEffect(() => {
-		mutateUser()
-		if (user) {
-			setHref(`/account/${user.username}`)
-		}
-	}, [user, mutateUser])
+	const [href] = useState(
+		user?.username ? `/account/${user.username}` : '/account'
+	)
 
 	const isOpenShoppingBag = () => {
 		setIsShoppingBagShop(!isShoppingBagShop)

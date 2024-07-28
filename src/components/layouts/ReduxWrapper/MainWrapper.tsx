@@ -1,8 +1,8 @@
 'use client'
 import { store } from '@/lib/store'
 import { Provider } from 'react-redux'
-import { Footer } from './Footer'
-import { Header } from './Header/Header'
+import { Footer } from '../Footer'
+import { Header } from '../Header/Header'
 
 export const MainWrapper = ({ children }: any) => {
 	return (

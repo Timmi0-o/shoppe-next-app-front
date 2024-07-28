@@ -2,7 +2,7 @@ export const ProductLoading = () => {
 	return (
 		<div>
 			<div
-				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out`}
+				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[36px] duration-300 ease-in-out`}
 			>
 				{/* Главный слайдер и боковой для привью */}
 				<div className='flex md:gap-[40px] lg:gap-[15px] xl:gap-[39px]'>
@@ -12,12 +12,13 @@ export const ProductLoading = () => {
 				{/* О ТОВАРЕ */}
 				<div>
 					{/* НАЗВАНИЕ ТОВАРА И ПРАЙС */}
-					<div className='w-[147px] h-[84px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
+					<div className='w-[177px] h-[40px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
+					<div className='w-[100px] h-[20px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10PX]'></div>
 					{/* ОЦЕНКА ТОВАРА */}
 					<div className='hidden lg:flex items-center gap-[24px] my-[30px] xl:mt-[64px] w-[292px] h-[47px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
 					<div className='flex flex-col-reverse lg:flex-col'>
 						{/* ОПИСАНИЕ */}
-						<div className='border-b-[1px] border-b-[#D8D8D8] pb-[14px] md:pb-0 md:border-none bg-[#ededed] rounded-[12px] animate-pulse w-full md:w-[400px] xl:w-[484px] h-[108px] mt-[30px]'></div>
+						<div className='border-b-[1px] border-b-[#D8D8D8] pb-[14px] md:pb-0 md:border-none bg-[#ededed] rounded-[12px] animate-pulse w-full md:w-[320px] xl:w-[484px] h-[108px] mt-[30px]'></div>
 						{/* КОПКА ДОБАВИТЬ В КОРЗИНУ И (ВЫБОРА КОЛ-ВА НА PC) */}
 						<div className='flex mt-[25px] xl:mt-[49px]'>
 							<div className='hidden lg:flex items-center justify-center w-[102px] h-[53px] rounded-[4px] mr-[23px] bg-[#ededed] animate-pulse'>
@@ -38,12 +39,17 @@ export const ProductLoading = () => {
 					</div>
 				</div>
 			</div>
-			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY PC) */}
-			<div className='hidden lg:block mb-[96px]w-full h-[153px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
-			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
-			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px] w-full h-[78px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
-			{/* ОСТАВИТЬ КОММЕНТАРИЙ ONLY MOBILE */}
-			<div className='block lg:hidden w-full h-[300px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
+			{/* BLOCK DESCRIPTION */}
+			<div className='hidden lg:block mb-[56px] w-full h-[80px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
+			{/* ОПИСАНИЕ */}
+			<div>
+				<div className=' mb-[16px] w-full h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+				<div className=' mb-[16px] w-[75%] h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+				<div className=' mb-[16px] w-[90%] h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+				<div className=' mb-[16px] w-full h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+				<div className=' mb-[16px] w-full h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+				<div className=' mb-[16px] w-[65%] h-[23px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+			</div>
 		</div>
 	)
 }

@@ -71,9 +71,9 @@ export const useReview = () => {
 
 	return {
 		userReview,
+		allReview,
 		userMutate,
 		addUserComment,
 		commentWarning,
-		allReview,
 	}
 }

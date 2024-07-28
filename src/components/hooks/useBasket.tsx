@@ -3,44 +3,55 @@ import { fetcher } from '@/utils/fetcher'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import useSWR, { SWRResponse } from 'swr'
+import { useProduct } from './useProduct'
 import { useUser } from './useUser'
 
 interface BasketData {
-	user: string
-	products: [
-		{
-			product: {
-				_id: string
-				description: string
-				fullDescription: string
-				price: number
-				title: string
-			}
-			qty: number
-		}
-	]
+	product: {
+		_id: string
+		description: string
+		fullDescription: string
+		price: number
+		title: string
+	}
+	qty: number
+}
+
+interface ProductIsBasket {
+	productId: string
+	qty: number
 }
 
 export const useBasket = () => {
 	// GET USER DATA
 	const { user } = useUser()
-
+	// GET PRODUCT DATA
+	const { productId } = useProduct()
 	// GET BASKET DATA
 	const {
 		data: basketData,
-		error: basketError,
-		isLoading: basketIsLoading,
-		mutate,
-	}: SWRResponse<BasketData, any, any> = useSWR(
+		mutate: mutateBasket,
+	}: SWRResponse<BasketData[], any, any> = useSWR(
 		() =>
-			user
-				? {
-						url: `${process.env.BACK_PORT}basket/${user._id}`,
-				  }
-				: null,
-		fetcher,
-		{ refreshInterval: 800 }
+			user && {
+				url: `${process.env.BACK_PORT}basket/${user._id}`,
+			},
+		fetcher
 	)
+	// console.log('basketData', basketData)
+
+	const [isBasked, setIsBasked] = useState<ProductIsBasket[]>([])
+
+	useEffect(() => {
+		basketData?.map((item) =>
+			item.product?._id === productId
+				? setIsBasked((prev) => [
+						...prev,
+						{ productId: productId, qty: item.qty },
+				  ])
+				: ''
+		)
+	}, [basketData, productId])
 
 	// CALCULATED FULL ITEMS && END PRICE
 	const [numberItems, setNumberItems] = useState(0)
@@ -49,24 +60,67 @@ export const useBasket = () => {
 	useEffect(() => {
 		let countItems = 0
 		let countAllPrice = 0
-		basketData?.products.map((product) => {
-			countItems += product.qty
-			countAllPrice += product.product.price * product.qty
+		basketData?.map((item) => {
+			countItems += item.qty
+			countAllPrice += item.product?.price * item?.qty
 		})
 		setNumberItems(countItems)
 		setAllPrice(countAllPrice)
 	}, [basketData])
 
+	// ВКЛЮЧАЕТ ЗАГРУЗОЧНУЮ АНИМАЦИЮ
+	const [isAction, setIsAction] = useState(false)
+
+	// DELETE PRODUCT IN BASKET
+
 	const deleteProductToBasket = async (idProduct: string) => {
 		try {
-			const response = await axios.delete(
-				`${process.env.BACK_PORT}basket/delete-product`,
-				{ data: { idUser: user._id, idProduct: idProduct } }
-			)
-			mutate()
-			return response
+			if (!isAction) {
+				setIsAction(true)
+				const response = await axios.delete(
+					`${process.env.BACK_PORT}basket/delete-product`,
+					{
+						data: { idUser: user._id, idProduct: idProduct },
+					}
+				)
+				if (response) {
+					// UPDATING BASKED
+					mutateBasket((prevBasketData) => {
+						if (!prevBasketData) return prevBasketData
+						return prevBasketData.filter(
+							(item) => item.product._id !== idProduct
+						)
+					})
+
+					setIsAction(false)
+				}
+			}
 		} catch (error: any) {
-			console.log(error.responce.data)
+			console.log(error?.responce.data)
+		}
+	}
+
+	// ADD PRODUCT IN BASKET
+	const addProductInBasket = async (productId: string, qty: number) => {
+		if (!isAction) {
+			setIsAction(true)
+			const response = await axios.patch(
+				`${process.env.BACK_PORT}basket/add-product`,
+				{
+					user: user._id,
+					product: { productId, qty },
+				}
+			)
+			if (response) {
+				mutateBasket((prevBasketData) => {
+					if (!prevBasketData) return prevBasketData
+					return [...prevBasketData, { product: response.data.product, qty }]
+				})
+				setIsAction(false)
+				return true
+			}
+		} else {
+			console.log('Ошибка добавления!')
 		}
 	}
 
@@ -74,8 +128,9 @@ export const useBasket = () => {
 		basketData,
 		numberItems,
 		allPrice,
+		addProductInBasket,
 		deleteProductToBasket,
-		basketError,
-		basketIsLoading,
+		isAction,
+		isBasked,
 	}
 }

@@ -1,3 +1,4 @@
+import { ShopLoading } from '@/components/layouts/Loading/ShopLoading'
 import { Section } from '@/components/ui/Section'
 import { SideBar } from '@/components/ui/SideBar'
 
@@ -24,6 +25,8 @@ export default function Loading() {
 						</div>
 					</div>
 				</div>
+				{/* PRODUCTS  */}
+				<ShopLoading />
 			</SideBar>
 		</Section>
 	)

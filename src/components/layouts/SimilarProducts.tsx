@@ -1,6 +1,5 @@
 'use client'
 import { fetcher } from '@/utils/fetcher'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
@@ -9,6 +8,7 @@ import 'swiper/css/thumbs'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import useSWR, { SWRResponse } from 'swr'
 import { ProductCard } from '../ui/ProductCard'
+import { LatestShopLoading } from './Loading/LatestShopLoading'
 
 interface Product {
 	title: string
@@ -18,7 +18,7 @@ interface Product {
 }
 
 export const SimilarProducts = () => {
-	const { data, error, isLoading }: SWRResponse<any, any, any> = useSWR(
+	const { data, isLoading }: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}products` },
 		fetcher,
 		{ refreshInterval: 300000 }
@@ -31,9 +31,7 @@ export const SimilarProducts = () => {
 					isLoading ? 'block' : 'opacity-100 ml-[100%] fixed'
 				}`}
 			>
-				<AiOutlineLoading3Quarters
-					className={`animate-spin size-[30px] lg:size-[60px]`}
-				/>
+				<LatestShopLoading />
 			</div>
 			<div
 				className={`${isLoading ? 'opacity-0 ml-[100%] absolute' : 'block'}`}

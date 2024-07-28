@@ -4,7 +4,7 @@ import { Section } from '@/components/ui/Section'
 import { allertaStencil } from '@/utils/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 
 interface MobileMenuProps {
@@ -19,14 +19,22 @@ export const MobileMenu = ({
 	setIsShoppingBagShop,
 }: MobileMenuProps) => {
 	// GET USER DATA
-	const { user } = useUser()
+	const { user, deleteToken, mutateUser } = useUser()
+	const [href, setHref] = useState('/account')
+
+	useEffect(() => {
+		setHref(user ? `/account/${user.username}` : '/account')
+	}, [user, mutateUser, isShowModal])
+
 	return (
 		<div>
 			<Section>
 				<div
 					className={`fixed h-full w-full pt-[15px] bg-white ${
-						isShowModal ? 'top-[0px] opacity-100' : 'top-[-1000%] opacity-50'
-					}  left-0 duration-500 z-10 rounded-ee-[20px] rounded-es-[20px]`}
+						isShowModal
+							? 'top-[0px] opacity-100 overflow-y-auto overflow-x-hidden'
+							: 'top-[-100%] overflow-y-hidden opacity-80'
+					}  left-0 duration-300 ease-in-out z-10 delay-200`}
 				>
 					<div className='max-w-[320px] sm:max-w-[500px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1248px] mx-auto'>
 						<div className='flex justify-between items-center'>
@@ -70,9 +78,10 @@ export const MobileMenu = ({
 						</div>
 						<div className='w-full h-[1px] bg-[#D8D8D8]'></div>
 						<div className='flex flex-col items-start gap-[23px] mt-[24px]'>
+							{/*GO TO ACCOUNT  */}
 							<Link
 								onTransitionEnd={() => setIsShowModal(!isShowModal)}
-								href='/account'
+								href={href}
 							>
 								<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>
 									<div className='relative size-[20px]'>
@@ -83,13 +92,13 @@ export const MobileMenu = ({
 									</p>
 								</div>
 							</Link>
-							{user !== null && (
+							{/* LOGOUT  */}
+							{user?.username && (
 								<Link
-									onClick={() => {
-										localStorage.removeItem('token')
+									onTransitionEnd={() => {
 										setIsShowModal(false)
+										deleteToken()
 									}}
-									onTransitionEnd={() => setIsShowModal(!isShowModal)}
 									href='/'
 								>
 									<div className='flex items-center gap-[10px] active:bg-[#f0f0f0] duration-300 text-left rounded-[4px] px-[4px] py-[2px]'>

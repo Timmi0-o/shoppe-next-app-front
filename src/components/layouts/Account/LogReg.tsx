@@ -19,54 +19,45 @@ export const LogReg = () => {
 	const [email, setEmail] = useState('')
 
 	const [remember, setRemember] = useState(false)
-
 	const [isResetPassword, setIsResetPassword] = useState(false)
 
 	const [validationEmailError, setValidationEmailError] = useState('')
 	const [userErrors, setUserErrors] = useState('')
-
 	const [logRegNotification, setLogRegNotification] = useState('')
 
 	const validateErrors = [validationEmailError, userErrors, logRegNotification]
 
 	// GET USER DATA
-	const { user, mutateUser } = useUser()
-	console.log(user)
+	const { user, setToken } = useUser()
 
 	// ЕСЛИ ЕСТЬ USER ТО ОТПРАВИТЬ НА СТРАНИЦУ С ПОЛЬЗОВАТЕЛЕМ
 	useEffect(() => {
-		mutateUser()
 		if (user && user.username) {
 			router.push(`account/${user.username}`)
 		}
-	}, [user, router, mutateUser])
+	})
 
 	const login = async () => {
+		if (username === '' || password === '') {
+			setButtonActive(false)
+			return setUserErrors('Имя пользователя и пароль не может быть пустым')
+		} else {
+			setUserErrors('')
+		}
+		setButtonActive(true)
+		setLogRegNotification('Происходит вход в аккаунт, пожалуйста, подождите!')
 		try {
-			if (authButtonTitle === 'Loading...') {
-				setLogRegNotification(
-					'Происходит вход в аккаунт, пожалуйста, подождите!'
-				)
-			}
-			if (username === '' || password === '') {
-				setButtonActive(false)
-				return setUserErrors('Имя пользователя и пароль не может быть пустым')
-			} else {
-				setUserErrors('')
-			}
-			setButtonActive(true)
-			setLogRegNotification('Происходит вход в аккаунт, пожалуйста, подождите!')
 			const response = await axios.post(`${process.env.BACK_PORT}auth/login`, {
 				username,
 				password,
 			})
 			localStorage.setItem('token', response.data.token)
-			mutateUser()
+			setToken(response.data.token)
+
 			setButtonActive(false)
-			router.push(`account/${user?._id}`)
 			setTimeout(() => {
 				setLogRegNotification('')
-			}, 2000)
+			}, 3000)
 		} catch (error: any) {
 			setButtonActive(false)
 			setLogRegNotification('')

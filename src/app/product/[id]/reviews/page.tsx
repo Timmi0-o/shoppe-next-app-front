@@ -1,9 +1,9 @@
 'use client'
 import { useReview } from '@/components/hooks/useReview'
+import { ReviewLoading } from '@/components/layouts/Loading/ReviewLoading'
 import { Section } from '@/components/ui/Section'
 import Image from 'next/image'
 import { useState } from 'react'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
 import SwiperCore from 'swiper'
 import 'swiper/css'
@@ -30,7 +30,16 @@ export default function Product() {
 
 	return (
 		<Section>
-			<div className='flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal'>
+			{/* LOADING  */}
+			<div className={`${allReview ? 'hidden' : ''}`}>
+				<ReviewLoading />
+			</div>
+
+			<div
+				className={`flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-normal duration-300 ${
+					allReview ? '' : 'hidden'
+				}`}
+			>
 				{/* Главный слайдер и боковой для привью */}
 				<div className='flex sm:gap-[20px] lg:gap-[15px] xl:gap-[25px] mb-[40px] pageLoadMove'>
 					<div className='hidden sm:block h-[400px] md:h-[450px] xl:h-[520px] w-[72px] md:w-[100px]'>
@@ -116,10 +125,31 @@ export default function Product() {
 							</div>
 						</div>
 					) : (
-						<div className='flex justify-center items-center w-full lg:w-[580px] h-[200px] lg:h-[500px]'>
-							<AiOutlineLoading3Quarters
-								className={`animate-spin size-[50px] duration-300 `}
-							/>
+						<div className='flex flex-col gap-[54px] w-full'>
+							{Array.from({ length: 3 }).map((_, i) => (
+								<div key={i} className='flex flex-col w-full'>
+									<div>
+										{/* USER & TIME */}
+										<div className='flex gap-[10px] items-center'>
+											<div className='w-[147px] h-[34px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
+											<div className='w-[87px] h-[14px] bg-[#ededed] rounded-[4px] animate-pulse'></div>
+										</div>
+										{/* RATING  */}
+										<div className='w-[87px] h-[24px] bg-[#ededed] rounded-[4px] animate-pulse mt-[24px] mb-[24px]'></div>
+									</div>
+									{/* COMMENTS  */}
+									<div className='w-full'>
+										<div className='w-full h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-[90%] h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-[70%] h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-full h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-[95%] h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-[85%] h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-full h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+										<div className='w-full h-[12px] bg-[#ededed] rounded-[4px] animate-pulse mt-[10px]'></div>
+									</div>
+								</div>
+							))}
 						</div>
 					)}
 				</div>

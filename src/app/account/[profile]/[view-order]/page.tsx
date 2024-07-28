@@ -1,4 +1,5 @@
 'use client'
+import { useUser } from '@/components/hooks/useUser'
 import { Section } from '@/components/ui/Section'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -6,17 +7,13 @@ import { useEffect, useState } from 'react'
 export default function ViewOrder() {
 	const router = useRouter()
 
-	const [token, setToken] = useState('')
+	const { user } = useUser()
+
 	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const storedToken = localStorage.getItem('token')
-			if (!storedToken) {
-				router.push('/')
-			} else {
-				setToken(storedToken)
-			}
+		if (!user) {
+			router.push('/')
 		}
-	}, [router])
+	})
 
 	const [purchasesOrder, setPurchasesOrder] = useState([
 		{ product: 'Lira Earrings', price: 64 },

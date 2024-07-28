@@ -1,9 +1,9 @@
 'use client'
 import { fetcher } from '@/utils/fetcher'
-import Loading from '@/utils/Loading'
 import useSWR, { SWRResponse } from 'swr'
 import { ProductCard } from '../ui/ProductCard'
 import { Section } from '../ui/Section'
+import { LatestShopLoading } from './Loading/LatestShopLoading'
 
 interface Product {
 	title: string
@@ -25,12 +25,9 @@ export const LatestShop = () => {
 				postTitle='View All'
 				postTitleLink='/shop'
 			>
-				<div
-					className={`duration-300 ${
-						isLoading ? 'opacity-100' : 'opacity-0 absolute -z-10'
-					}`}
-				>
-					<Loading />
+				{/* LOADING  */}
+				<div className={`${data ? 'hidden' : ''}`}>
+					<LatestShopLoading />
 				</div>
 				<div
 					className={`flex justify-center duration-500 ease-in-out ${

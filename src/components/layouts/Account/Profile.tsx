@@ -1,8 +1,6 @@
 'use client'
 import { useUser } from '@/components/hooks/useUser'
 import { Section } from '@/components/ui/Section'
-import Loading from '@/utils/Loading'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -15,35 +13,41 @@ import { LogOut } from './AccountNavigate/LogOut'
 import { Orders } from './AccountNavigate/Orders'
 
 export const Profile = () => {
-	// const [userData, setUserData] = useState({})
-	const router = useRouter()
-	// const token = localStorage.getItem('token')
 	const [isNavigateActive, setIsNavigateActive] = useState(0)
 
 	// GET USER DATA
 	const { user } = useUser()
-	// console.log('userProfile', user)
-
-	// useEffect(() => {
-	// 	if (user === undefined) {
-	// 		router.push('/')
-	// 	}
-	// })
 
 	return (
 		<>
-			<div
-				className={`${!user?.username ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
-			>
-				<Loading />
-			</div>
-
-			<div
-				className={`pageLoadMove duration-300 ${
-					!user?.username ? 'opacity-0 ml-[100%] fixed' : ''
-				}`}
-			>
-				<Section>
+			<Section>
+				{/* LOADING  */}
+				<div
+					className={`flex flex-col items-center duration-300 ${
+						!user ? 'block' : 'hidden'
+					}`}
+				>
+					{/* USERNAME */}
+					<div className='mb-[24px] lg:mb-[64px] w-[250px] h-[43px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
+					{/* NAVIGATION */}
+					<div className='flex items-center justify-start pl-[20px] gap-[10px] w-full h-[48px] lg:h-[60px] rounded-[5px] lg:rounded-[8px] mb-[50px] bg-[#ebebeb] animate-pulse'>
+						<div className='h-[30px] w-[120px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
+						<div className='h-[30px] w-[200px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
+						<div className='h-[30px] w-[80px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
+						<div className='h-[30px] w-[140px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
+						<div className='h-[30px] w-[100px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
+					</div>
+					{/* DASHBOARD  */}
+					<div className='flex flex-col gap-[20px] w-full'>
+						<div className='w-[650px] h-[23px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
+						<div className='w-full h-[23px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
+					</div>
+				</div>
+				<div
+					className={`pageLoadMove duration-300 ${
+						!user?.username ? 'opacity-0 ml-[100%] fixed' : ''
+					}`}
+				>
 					<h1
 						className={`text-[20px] lg:text-[33px] text-center w-full mb-[24px] lg:mb-[64px]`}
 					>
@@ -104,8 +108,8 @@ export const Profile = () => {
 							</div>
 						))}
 					</div>
-				</Section>
-			</div>
+				</div>
+			</Section>
 		</>
 	)
 }

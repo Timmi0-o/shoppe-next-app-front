@@ -1,18 +1,20 @@
 'use client'
-import { useUser } from '@/components/hooks/useUser'
-import { DropMenu } from '@/components/layouts/DropMenu'
+import { useBasket } from '@/components/hooks/useBasket'
+import { useProduct } from '@/components/hooks/useProduct'
+import { useReview } from '@/components/hooks/useReview'
 import { Notification } from '@/components/layouts/Notification'
-import { PostComment } from '@/components/layouts/Review/PostComment'
-import { Reviews } from '@/components/layouts/Review/Reviews'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
 import { Section } from '@/components/ui/Section'
-import { fetcher } from '@/utils/fetcher'
-import axios from 'axios'
+import {
+	addedProductInBasket,
+	deletedProductInBasket,
+} from '@/lib/reducers/Product'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { FaStar } from 'react-icons/fa'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { FaCheck, FaStar } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
 import SwiperCore from 'swiper'
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -21,8 +23,10 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/thumbs'
 import { FreeMode, Navigation, Scrollbar, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import useSWR, { SWRResponse } from 'swr'
+import { DropMenu } from '../DropMenu'
 import { ProductLoading } from '../Loading/ProductLoading'
+import { PostComment } from '../Review/PostComment'
+import { Reviews } from '../Review/Reviews'
 
 interface Product {
 	title: string
@@ -33,115 +37,93 @@ interface Product {
 }
 
 export const Product = () => {
-	// ТЕКУЩИЙ ID ПРОДУКТА
-	const path = usePathname()
-	const nowPath = path.split('/')[2]
+	const dispatch = useDispatch()
+	// GET REVIEWS DATA
+	const { allReview } = useReview()
+	// GET PRODUCT DATA
+	const { product: productHook } = useProduct()
+	// BASKET
+	const { addProductInBasket, isAction, isBasked } = useBasket()
+	console.log('isBasked', isBasked)
 
-	// GET USER DATA
-	const { user } = useUser()
-
-	// Получение товара из БД
-	const {
-		data: productData,
-		error: productError,
-		isLoading: productLoading,
-	}: SWRResponse<any, any, any> = useSWR(
-		{ url: `${process.env.BACK_PORT}products/${nowPath}` },
-		fetcher
+	const [qty, setQty] = useState<number | null>(null)
+	const productInBasket = useSelector(
+		(state: any) => state.product.productInBasket
 	)
 
-	// Получение review из БД
-	const {
-		data: reviewData,
-		error: reviewError,
-		isLoading: reviewLoading,
-	}: SWRResponse<any, any, any> = useSWR(
-		{ url: `${process.env.BACK_PORT}review/${nowPath}` },
-		fetcher,
-		{ refreshInterval: 6000 }
-	)
+	useEffect(() => {
+		if (isBasked) {
+			isBasked.map((product) => {
+				if (product.productId === productHook?._id) {
+					setQty(product.qty)
+					dispatch(addedProductInBasket())
+				} else {
+					setQty(null)
+					dispatch(deletedProductInBasket())
+					setProductNumber(1)
+				}
+			})
+		} else {
+			setQty(null)
+			dispatch(deletedProductInBasket())
+			setProductNumber(1)
+		}
+	}, [isBasked, productHook, dispatch])
 
 	// Синхронизация двух слайдеров
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null)
-
 	// КОЛИЧЕСТВО ВЫБРАННОГО ТОВАРА И НОМЕР ПОДРОБНОСТЕЙ
 	const [productNumber, setProductNumber] = useState(1)
 	const [isSwitchesActive, setIsSwitchesActive] = useState(0)
-
 	// КАЛИБРОВКА ЦЕНЫ ТОВАРА
-	const [allPrice, setAllPrice] = useState(productData?.price || 0)
+	const [allPrice, setAllPrice] = useState(productHook?.price)
 
-	useEffect(() => {
-		if (productData) {
-			setAllPrice(productData.price)
-		}
-	}, [productData])
-
-	// АНИМАЦИИ ДЛЯ НАЖАТОЙ КНОПКИ ПОКУПКИ ТОВАРА
-	const [isAddedShop, setIsAddedShop] = useState(false)
-	const [isBtnShopClick, setIsBtnShopClick] = useState('')
+	// button title
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
 	// ADDED NEW ITEM TO BASKET
 	const handleAddNewItemToBasket = async () => {
+		setBtnTitle('ADDED!')
+
 		try {
-			const response = await axios.patch(
-				`${process.env.BACK_PORT}basket/add-product`,
-				{
-					user: user._id,
-					product: { productId: productData._id, qty: productNumber },
+			if (productHook) {
+				const response = await addProductInBasket(
+					productHook._id,
+					productNumber
+				)
+				if (response) {
+					setProductNumber(1)
 				}
-			)
-			if (response) {
-				console.log('ТОВАР ДОБАВЛЕН')
-			} else {
-				console.log('НЕ ДОБАВЛЕН')
 			}
 		} catch (error: any) {
-			console.log(error.response.data)
+			console.log(error.response?.data)
 		}
 	}
 
-	// АНИМАЦИЯ ПРИ НАЖАТИИ НА КНОПКУ КУПИТЬ
-	const addProductShop = () => {
-		setIsAddedShop(true)
-		// ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
-		if (user) {
-			handleAddNewItemToBasket()
+	// INITIAL PRICE PRODUCT
+	useEffect(() => {
+		if (productInBasket && qty) {
+			setBtnTitle('IN THE BASKET')
 		} else {
-			console.log('НЕТ ТОКЕНА')
-		}
-		setBtnTitle('ADDED!')
-		setIsBtnShopClick('tracking-[2px] duration-300 ')
-
-		setTimeout(() => {
-			setIsBtnShopClick('tracking-[0px] duration-300')
-		}, 200)
-
-		setTimeout(() => {
-			setIsBtnShopClick('')
-		}, 500)
-
-		setTimeout(() => {
-			setIsAddedShop(false)
 			setBtnTitle('ADD TO CART')
-		}, 3500)
-	}
+		}
+	}, [productInBasket, qty])
 
 	const switchesDescription = [
 		'Description',
 		'Aditional information',
-		`Reviews(${reviewData && reviewData?.length})`,
+		`Reviews(${allReview && allReview?.length})`,
 	]
 
 	return (
 		<Section>
 			{/* LOADING */}
-			<div className={`${productLoading ? '' : 'hidden'} `}>
+			<div className={`${!productHook ? '' : 'hidden'} `}>
 				<ProductLoading />
 			</div>
+			{/* PRODUCT  */}
 			<div
 				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out ${
-					productLoading ? 'opacity-0 mt-[-60px]' : ''
+					productHook ? '' : 'hidden'
 				}`}
 			>
 				{/* Главный слайдер и боковой для привью */}
@@ -192,17 +174,17 @@ export const Product = () => {
 					{/* НАЗВАНИЕ ТОВАРА И ПРАЙС */}
 					<div>
 						<p className='text-[26px] font-normal leading-[35px] mb-[5px] lg:mb-[23px]'>
-							{productData?.title}
+							{productHook?.title}
 						</p>
 						<div className='flex items-center justify-between'>
 							{/* ЦЕНА ТОВАРА И ВСПЛЫВАЮЩЕЕ СУММА ПРИ КОЛ-ВЕ БОЛЬШЕ 1ШТ */}
 							<div className='flex items-center gap-[10px]'>
 								<p className='text-[20px] text-[#A18A68] font-medium leading-[26px]'>
-									$ {productData?.price},00
+									$ {productHook?.price},00
 								</p>
 								<p
 									className={`duration-150 origin-left ${
-										allPrice > productData?.price
+										allPrice > productHook?.price
 											? 'opacity-100 scale-1'
 											: 'opacity-0 scale-[0.7]'
 									}`}
@@ -226,14 +208,15 @@ export const Product = () => {
 							))}
 						</div>
 						<p className='text-[16px] text-[#707070] font-normal leading-[27px]'>
-							{reviewData?.length} customer(s) review
+							{allReview?.length} customer(s) review
 						</p>
 					</div>
+					{/* PRODUCT META DATA && BUTTON PAY  */}
 					<div className='flex flex-col-reverse lg:flex-col'>
 						{/* ОПИСАНИЕ */}
 						<div className='border-b-[1px] border-b-[#D8D8D8] pb-[14px] md:pb-0 md:border-none'>
 							<p className='text-[12px] lg:text-[16px] text-[#707070] font-normal leading-[20px] lg:leading-[27px] mt-[16px] lg:mt-[20px] mb-[6px] lg:mb-0'>
-								{productData?.description}
+								{productHook?.description}
 							</p>
 							<div className='flex md:hidden items-center gap-[5px] active:opacity-75 duration-200'>
 								<p className='text-[12px] text-[#A18A68]'>View more</p>
@@ -244,51 +227,104 @@ export const Product = () => {
 						</div>
 						{/* КОПКА ДОБАВИТЬ В КОРЗИНУ И (ВЫБОРА КОЛ-ВА НА PC) */}
 						<div className='flex mt-[25px] xl:mt-[49px]'>
-							<div className='hidden lg:flex items-center justify-center w-[102px] h-[53px] bg-[#EFEFEF] rounded-[4px] mr-[23px]'>
+							{/* CHOICE NUMBER PRODUCTS  */}
+							<div
+								className={`relative hidden lg:flex items-center justify-center duration-300 ease-in-out ${
+									productInBasket && qty ? 'w-[53px]' : 'w-[102px]'
+								} bg-[#EFEFEF] rounded-[4px] mr-[23px]`}
+							>
+								{/* ONCLICK LOAD  */}
+								<div
+									className={`absolute size-full flex items-center  z-30 justify-center bg-[#ffffff95] mt-[-6%] duration-300 delay-300 ${
+										isAction && !productInBasket ? '' : 'hidden'
+									}`}
+								>
+									<AiOutlineLoading className='size-[1vw] animate-spin' />
+								</div>
+								{/* -  */}
 								<div
 									onClick={() => {
 										setProductNumber(
 											productNumber > 1 ? productNumber - 1 : productNumber
 										)
 										setAllPrice(
-											allPrice > productData?.price
-												? allPrice - productData?.price
+											allPrice > productHook?.price
+												? allPrice - productHook?.price
 												: allPrice
 										)
 									}}
-									className='p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300'
+									className={`p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300 ${
+										productInBasket && qty ? 'hidden' : ''
+									}`}
 								>
 									<div className='w-[9px] h-[1px] bg-[#707070]'></div>
 								</div>
-								<div className='flex justify-center items-center px-[15p] size-[24px]'>
+								{/* NUMBER  */}
+								<div
+									className={`flex justify-center items-center ${
+										productInBasket && qty ? '' : 'px-[15px]'
+									}  size-[24px]`}
+								>
 									<p className='text-[16px] text-[#707070] leading-[27px]'>
-										{productNumber}
+										{productInBasket && qty ? qty : productNumber}
 									</p>
 								</div>
+								{/* +  */}
 								<div
 									onClick={() => {
 										setProductNumber(productNumber + 1)
-										setAllPrice(allPrice + productData?.price)
+										setAllPrice(allPrice + productHook?.price)
 									}}
-									className='p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300'
+									className={`p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300 ${
+										productInBasket && qty ? 'hidden' : ''
+									}`}
 								>
 									<div className='flex justify-center items-center w-[9px] h-[1px] bg-[#707070] cursor-pointer'>
 										<div className='w-[1px] h-[9px] bg-[#707070]'></div>
 									</div>
 								</div>
 							</div>
-							{/* ДОБАВИТЬ ТОВАР В КОРЗИНУ И ОТОБРАЗИТЬ ВСПЛЫВАЮЩЕЕ ОКНО */}
-							<div className='w-full'>
-								<Button
-									onClick={() => addProductShop()}
-									title={btnTitle}
-									titleSize={isBtnShopClick}
-								/>
+							{/* BUTTON ADD TO BASKET & SHOW NOTIFICATION ON SUSSES */}
+							<div className='flex justify-between w-full'>
+								<div className={` duration-300 ease-in-out w-full`}>
+									<Button
+										noEffectText={productInBasket && qty ? true : false}
+										disabled={productInBasket && qty ? true : false}
+										onClick={() => handleAddNewItemToBasket()}
+										title={btnTitle}
+									>
+										{productInBasket && qty ? (
+											<div className='pl-[15px] '>
+												<FaCheck />
+											</div>
+										) : (
+											''
+										)}
+									</Button>
+								</div>
+								{/* BUTTON GO TO CARD  */}
+								<div
+									className={`w-[160px] pl-[10px] ${
+										productInBasket && qty
+											? ''
+											: 'fixed ml-[100%] select-none opacity-0'
+									}`}
+								>
+									<div
+										className={`size-full duration-300 ease-in-out ${
+											productInBasket && qty
+												? ''
+												: 'opacity-0 ml-[20px] scale-[0.95]'
+										}`}
+									>
+										<Button href='/shopping-cart' title='View cart' />
+									</div>
+								</div>
 								<Notification
 									title='The item added to your Shopping bag.'
 									noticeImg={'/success-shop.svg'}
 									btnTitle='VIEW CART'
-									isActive={isAddedShop}
+									isActive={isAction}
 									href='/shopping-cart'
 								/>
 							</div>
@@ -325,80 +361,83 @@ export const Product = () => {
 					</div>
 				</div>
 			</div>
-			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY PC) */}
-			<div className='hidden lg:block mb-[96px]'>
-				{/* SWITCHES */}
-				<div className='flex gap-[64px] items-center border-b-[1px] border-b-[#D8D8D8] pb-[34px] mb-[39px]'>
-					{switchesDescription.map((switches, i) => (
-						<p
-							onClick={() => setIsSwitchesActive(i)}
-							className={`relative text-[20px] font-normal cursor-pointer duration-200 before:w-full before:absolute before:h-[2px] before:left-0 before:top-[60px] before:bg-[#000000] before:px-[2px] before:ease-out leading-[27px] before:origin-left ${
-								isSwitchesActive === i
-									? 'text-black before:scale-x-[1] before:duration-300'
-									: 'before:scale-x-[0] text-[#707070] before:duration-300'
-							}`}
-							key={i}
-						>
-							{switches}
-						</p>
-					))}
-				</div>
-				<div>
-					<p
-						className={`text-[12px] lg:text-[16px] text-[#707070] leading-[27px] font-normal ${
-							isSwitchesActive === 0
-								? 'h-[100px] opacity-100'
-								: 'h-0 z-[-1] opacity-0'
-						} duration-300`}
-					>
-						{productData?.fullDescription}
-					</p>
-					<div
-						className={`flex flex-col gap-[20px] text-[12px] lg:text-[16px] text-[#707070] leading-[27px] font-normal duration-300 ${
-							isSwitchesActive === 1
-								? 'h-[120px] opacity-100'
-								: 'h-0 z-[-1] opacity-0'
-						}`}
-					>
-						{productAdditionInfo}
+			{/* ADDITIONAL PRODUCT DATA  */}
+			<div className={`${allReview ? '' : 'hidden'}`}>
+				{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY PC) */}
+				<div className='hidden lg:block mb-[96px]'>
+					{/* SWITCHES */}
+					<div className='flex gap-[64px] items-center border-b-[1px] border-b-[#D8D8D8] pb-[34px] mb-[39px]'>
+						{switchesDescription.map((switches, i) => (
+							<p
+								onClick={() => setIsSwitchesActive(i)}
+								className={`relative text-[20px] font-normal cursor-pointer duration-200 before:w-full before:absolute before:h-[2px] before:left-0 before:top-[60px] before:bg-[#000000] before:px-[2px] before:ease-out leading-[27px] before:origin-left ${
+									isSwitchesActive === i
+										? 'text-black before:scale-x-[1] before:duration-300'
+										: 'before:scale-x-[0] text-[#707070] before:duration-300'
+								}`}
+								key={i}
+							>
+								{switches}
+							</p>
+						))}
 					</div>
-					{/* ОТЗЫВЫ */}
-					<div
-						className={`flex ${
-							isSwitchesActive === 2
-								? 'h-[610px] overflow-y-auto opacity-100'
-								: 'h-0 z-[-1] opacity-0'
-						}`}
-					>
-						<Reviews />
-						<div className='hidden lg:block'>
-							<PostComment />
+					<div>
+						<p
+							className={`text-[12px] lg:text-[16px] text-[#707070] leading-[27px] font-normal ${
+								isSwitchesActive === 0
+									? 'h-[100px] opacity-100'
+									: 'h-0 z-[-1] opacity-0'
+							} duration-300`}
+						>
+							{productHook?.fullDescription}
+						</p>
+						<div
+							className={`flex flex-col gap-[20px] text-[12px] lg:text-[16px] text-[#707070] leading-[27px] font-normal duration-300 ${
+								isSwitchesActive === 1
+									? 'h-[120px] opacity-100'
+									: 'h-0 z-[-1] opacity-0'
+							}`}
+						>
+							{productAdditionInfo}
+						</div>
+						{/* REVIEWS */}
+						<div
+							className={`flex ${
+								isSwitchesActive === 2
+									? 'h-[610px] overflow-y-auto opacity-100'
+									: 'h-0 z-[-1] opacity-0'
+							}`}
+						>
+							<Reviews />
+							{/* POST COMMENT (PC ONLY) */}
+							<div className='hidden lg:block'>
+								<PostComment />
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-			{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
-			<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
-				<DropMenu
-					heightCustom='h-[200px]'
-					title='Description'
-					dropLink={productData?.fullDescription}
-				/>
-				<DropMenu
-					heightCustom='h-[200px]'
-					title='Additional information'
-					dropLink={productAdditionInfo}
-				/>
-				<DropMenu
-					heightCustom='h-[500px]'
-					title={`Reviews(${reviewData?.length})`}
-					dropLink={<Reviews />}
-				/>
-			</div>
-			{/* ОСТАВИТЬ КОММЕНТАРИЙ ONLY MOBILE */}
-			<div className='block lg:hidden'>
-				<PostComment />
+				{/* ОПИСАНИЕ, ДОП ИНФОРМАЦИЯ И ОТЗЫВЫ О ТОВАРЕ (ONLY MOBILE) */}
+				<div className='flex flex-col gap-[9px] lg:hidden my-[16px] border-b-[1px] border-b-[#D8D8D8] pb-[15px]'>
+					<DropMenu
+						heightCustom='h-[200px]'
+						title='Description'
+						dropLink={productHook?.fullDescription}
+					/>
+					<DropMenu
+						heightCustom='h-[200px]'
+						title='Additional information'
+						dropLink={productAdditionInfo}
+					/>
+					<DropMenu
+						heightCustom='h-[500px]'
+						title={`Reviews(${allReview?.length})`}
+						dropLink={<Reviews />}
+					/>
+				</div>
+				{/* POST COMMENT (ONLY MOBILE) */}
+				<div className='block lg:hidden'>
+					<PostComment />
+				</div>
 			</div>
 			{/* ПОХОЖИЕ ТОВАРЫ */}
 			<SimilarProducts />

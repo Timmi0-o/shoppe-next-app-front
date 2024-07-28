@@ -1,4 +1,4 @@
-import { MainWrapper } from '@/components/layouts/MainWrapper'
+import { MainWrapper } from '@/components/layouts/ReduxWrapper/MainWrapper'
 import { dmSans } from '@/utils/fonts'
 import type { Metadata } from 'next'
 import './globals.scss'

@@ -13,6 +13,7 @@ interface ButtonProps {
 	noEffectText?: boolean
 	children?: ReactNode
 	noStyle?: boolean
+	disabled?: boolean
 	titleSize?: string
 }
 
@@ -27,6 +28,7 @@ export const Button = ({
 	noEffectText,
 	children,
 	noStyle,
+	disabled,
 	titleSize,
 }: ButtonProps) => {
 	const handleClickLink = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -39,7 +41,7 @@ export const Button = ({
 
 	useEffect(() => {
 		setTimeout(() => {
-			setTitleEffect('tracking-[2px] duration-200 opacity-40')
+			setTitleEffect('tracking-[1px] duration-200 opacity-40')
 		}, 100)
 
 		setTimeout(() => {
@@ -54,12 +56,17 @@ export const Button = ({
 	return (
 		<Link onClick={(e) => handleClickLink(e)} href={href}>
 			<button
+				disabled={disabled ? true : false}
 				onClick={onClick}
 				className={`${
 					noStyle
 						? ''
-						: 'flex justify-center items-center w-full rounded-[4px] border border-[#000000] active:bg-black active:text-white lg:hover:bg-black lg:hover:text-white duration-200 ease-out active:scale-[0.99] '
-				}${className} ${
+						: `flex justify-center items-center w-full rounded-[4px] border border-[#000000] active:text-white lg:hover:bg-black duration-200 ease-out ${
+								disabled
+									? 'select-none bg-black text-white cursor-not-allowed'
+									: 'active:bg-black lg:hover:text-white text-black active:scale-[0.99]'
+						  }`
+				} ${className} ${
 					!removeSize
 						? heightCustom
 							? heightCustom

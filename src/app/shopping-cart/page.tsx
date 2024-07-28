@@ -1,29 +1,33 @@
 'use client'
+import { useBasket } from '@/components/hooks/useBasket'
+import { useProduct } from '@/components/hooks/useProduct'
 import { DropMenu } from '@/components/layouts/DropMenu'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Section } from '@/components/ui/Section'
-import { fetcher } from '@/utils/fetcher'
+import { deletedProductInBasket } from '@/lib/reducers/Product'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useState } from 'react'
+import { AiOutlineLoading } from 'react-icons/ai'
 import { IoClose } from 'react-icons/io5'
-import useSWR, { SWRResponse } from 'swr'
+import { useDispatch } from 'react-redux'
 
-interface BasketData {
-	user: string
-	products: [
-		{
-			product: {
-				_id: string
-				description: string
-				fullDescription: string
-				price: number
-				title: string
-			}
-			qty: number
-		}
-	]
-}
+// interface BasketData {
+// 	user: string
+// 	products: [
+// 		{
+// 			product: {
+// 				_id: string
+// 				description: string
+// 				fullDescription: string
+// 				price: number
+// 				title: string
+// 			}
+// 			qty: number
+// 		}
+// 	]
+// }
 
 interface Products {
 	product: {
@@ -37,66 +41,36 @@ interface Products {
 }
 
 export default function ShoppingCart() {
+	const dispatch = useDispatch()
 	const [coupon, setCoupon] = useState('')
 
 	const [country, setCountry] = useState('SELECT A COUNTRY')
 	const [city, setCity] = useState('CITY')
 
-	// ПОЛУЧЕНИЕ ТОКЕНА НА КЛИЕНТЕ
-	const [token, setToken] = useState<string | null>()
-	useEffect(() => {
-		if (window !== undefined && localStorage !== undefined) {
-			const storedToken = localStorage.getItem('token')
-			setToken(storedToken)
-		}
-	}, [])
+	// ВКЛЮЧАЕТ ЗАГРУЗОЧНУЮ АНИМАЦИЮ
+	// const [isAction, setIsAction] = useState(false)
+	// const [productId, setProductId] = useState<null | string>(null)
 
-	// GET USER ID
-	const { data: userData } = useSWR(
-		() => ({
-			url: `${process.env.BACK_PORT}auth/${token}`,
-		}),
-		fetcher,
-		{ refreshInterval: 800 }
-	)
+	// BASKET
+	const { basketData, numberItems, allPrice, deleteProductToBasket, isAction } =
+		useBasket()
 
-	// ПОЛУЧЕНИЕ КОРЗИНЫ
-	const {
-		data: basketData,
-		error: basketError,
-		isLoading: basketIsLoading,
-	}: SWRResponse<BasketData, any, any> = useSWR(
-		() =>
-			userData
-				? {
-						url: `${process.env.BACK_PORT}basket/${userData._id}`,
-				  }
-				: null,
-		fetcher,
-		{ refreshInterval: 800 }
-	)
+	const { productId } = useProduct()
 
-	// CALCULATED FULL ITEMS && END PRICE
-	const [numberItems, setNumberItems] = useState(0)
-	const [allPrice, setAllPrice] = useState(0)
-
-	useEffect(() => {
-		let countItems = 0
-		let countAllPrice = 0
-		basketData?.products.map((product) => {
-			countItems += product.qty
-			countAllPrice += product.product.price * product.qty
-		})
-		setNumberItems(countItems)
-		setAllPrice(countAllPrice)
-	}, [basketData])
-
-	useEffect(() => {
-		if (userData && basketData) {
-			console.log('basketData', basketData)
-			// console.log('userId', userId)
-		}
-	})
+	// DELETE PRODUCT FROM BASKET
+	// const handleDeleteProductToBasket = async (idProduct: string) => {
+	// 	try {
+	// 		setProductId(idProduct)
+	// 		setIsAction(true)
+	// 		await deleteProductToBasket(idProduct)
+	// 		setTimeout(() => {
+	// 			setIsAction(false)
+	// 			setProductId(null)
+	// 		}, 1500)
+	// 	} catch (error: any) {
+	// 		console.log(error.response?.data)
+	// 	}
+	// }
 
 	return (
 		<Section>
@@ -112,17 +86,27 @@ export default function ShoppingCart() {
 					<div
 						className={`shopping-cart-scroll w-full overflow-x-hidden flex flex-col gap-[22px] md:gap-[39px] h-fit lg:h-[610px] overflow-y-hidden lg:overflow-y-auto mb-[39px]`}
 					>
-						{basketData?.products.map((basket: Products, i: number) => (
+						{basketData?.map((basket: Products, i: number) => (
 							<div
 								key={i}
-								className='pb-0 md:pb-[39px] md:border-b-[1px] border-b-[#D8D8D8]'
+								className='relative pb-0 md:pb-[39px] md:border-b-[1px] border-b-[#D8D8D8]'
 							>
+								{/* ONCLICK LOAD  */}
+								<div
+									className={`absolute size-full flex items-center  z-30 justify-center bg-[#ffffff95] mt-[-6%] ${
+										isAction && productId === basket.product._id ? '' : 'hidden'
+									}`}
+								>
+									<AiOutlineLoading className='size-[1.5vw] animate-spin' />
+								</div>
 								<div className='flex justify-between h-[136px] rounded-[12px]'>
 									<div className='flex w-full'>
 										<div className='flex items-center justify-start w-[175px]'>
-											<div className='relative size-[136px] mr-[8px] md:mr-[39px]'>
-												<Image src={'/Item2.png'} fill alt='Item' />
-											</div>
+											<Link href={`/product/${basket.product._id}`} key={i}>
+												<div className='relative size-[136px] mr-[8px] md:mr-[39px]'>
+													<Image src={'/Item2.png'} fill alt='Item' />
+												</div>
+											</Link>
 										</div>
 										<div className='flex flex-col justify-between md:flex-row  w-full'>
 											<div>
@@ -155,7 +139,13 @@ export default function ShoppingCart() {
 										</div>
 									</div>
 									{/* DELETE PRODUCT AT CART */}
-									<div className='w-[20px]'>
+									<div
+										onClick={() => {
+											dispatch(deletedProductInBasket())
+											deleteProductToBasket(basket.product._id)
+										}}
+										className='w-[20px]'
+									>
 										<IoClose className='size-[20px] cursor-pointer' />
 									</div>
 								</div>
@@ -163,7 +153,7 @@ export default function ShoppingCart() {
 						))}
 						<h2
 							className={`duration-[500] ease-in-out text-[24px] text-[#00000071] text-center ${
-								basketData?.products?.length ? 'hidden' : ''
+								basketData?.length ? 'hidden' : ''
 							}`}
 						>
 							There are no items in the cart...

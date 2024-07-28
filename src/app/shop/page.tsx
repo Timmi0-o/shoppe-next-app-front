@@ -1,9 +1,9 @@
 'use client'
+import { ShopLoading } from '@/components/layouts/Loading/ShopLoading'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Section } from '@/components/ui/Section'
 import { SideBar } from '@/components/ui/SideBar'
 import { fetcher } from '@/utils/fetcher'
-import Loading from '@/utils/Loading'
 import Image from 'next/image'
 import { useState } from 'react'
 import useSWR, { SWRResponse } from 'swr'
@@ -27,7 +27,7 @@ export default function Shop() {
 		<Section>
 			<SideBar title='Shop The Latest' titleMobile='Shop'>
 				<div className='flex flex-col md:flex-row items-start gap-[16px] md:gap-[36px] mt-[16px] md:mt-[39px]'>
-					{/* ФИЛЬТРЫ ДЛЯ ТОВАРОВ (ONLY PC) */}
+					{/* FILTERS (ONLY PC) */}
 					<div className='hidden md:flex flex-col gap-[39px]'>
 						<div className='flex justify-between items-center w-[261px] pb-[11px] border-b-[1px] border-b-[#D8D8D8]'>
 							<input
@@ -86,7 +86,7 @@ export default function Shop() {
 							</div>
 						</div>
 					</div>
-					{/* ФИЛЬТРЫ ДЛЯ ТОВАРОВ (ONLY MOBILE) */}
+					{/* FILTERS (ONLY MOBILE) */}
 					<div className='flex md:hidden items-center gap-[8px]'>
 						<div className='relative buttonActive size-[18px]'>
 							<Image src={'/filters.svg'} fill alt='filters' />
@@ -95,15 +95,17 @@ export default function Shop() {
 							Filters
 						</p>
 					</div>
-					{/* ТОВАРЫ */}
-					<div className='flex justify-center w-full'>
+					{/* SECTION PRODUCTS */}
+					<div className='flex flex-col justify-center w-full'>
+						{/* LOADING  */}
 						<div
 							className={`${isLoading ? 'block' : 'opacity-0 ml-[100%] fixed'}`}
 						>
-							<Loading />
+							<ShopLoading />
 						</div>
+						{/* PRODUCTS  */}
 						<div
-							className={`flex justify-center duration-300 ${
+							className={`flex justify-center duration-700 ease-in-out ${
 								isLoading ? 'opacity-0 mt-[100%] absolute' : 'block'
 							}`}
 						>

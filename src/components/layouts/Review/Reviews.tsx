@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import { Section } from '../../ui/Section'
+import { LatestReviewLoading } from '../Loading/LatestReviewLoading'
 
 interface Reviews {
 	feedback: string
@@ -27,6 +28,11 @@ export const Reviews = () => {
 
 	return (
 		<Section bg='bg-transparent'>
+			{/* LOADING */}
+			<div className={`${allReview ? 'hidden' : ''}`}>
+				<LatestReviewLoading />
+			</div>
+			{/* REVIEWS  */}
 			<div className='flex flex-col lg:flex-row gap-[40px] lg:gap-[85px]'>
 				{allReview?.length ? (
 					<div className='w-full lg:w-[400px] xl:w-[580px]'>
@@ -79,8 +85,9 @@ export const Reviews = () => {
 					</div>
 				)}
 			</div>
+			{/* ALL REVIEWS BUTTON  */}
 			<div
-				className={`duration-300 ease-in-out ${
+				className={`duration-300 ease-in-out lg:mr-[40px] ${
 					allReview?.length !== 0 ? '' : 'ml-[-100%] absolute opacity-0'
 				}`}
 			>
