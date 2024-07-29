@@ -45,7 +45,7 @@ export const SimilarProducts = () => {
 							<ProductCard
 								key={i}
 								propsKey={i}
-								img={'/Item2.png'}
+								img={`/Item${1 + i}.png`}
 								title={product.title}
 								price={product.price}
 								id={product._id}

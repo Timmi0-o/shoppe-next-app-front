@@ -13,22 +13,6 @@ import { AiOutlineLoading } from 'react-icons/ai'
 import { IoClose } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
 
-// interface BasketData {
-// 	user: string
-// 	products: [
-// 		{
-// 			product: {
-// 				_id: string
-// 				description: string
-// 				fullDescription: string
-// 				price: number
-// 				title: string
-// 			}
-// 			qty: number
-// 		}
-// 	]
-// }
-
 interface Products {
 	product: {
 		_id: string
@@ -47,30 +31,11 @@ export default function ShoppingCart() {
 	const [country, setCountry] = useState('SELECT A COUNTRY')
 	const [city, setCity] = useState('CITY')
 
-	// ВКЛЮЧАЕТ ЗАГРУЗОЧНУЮ АНИМАЦИЮ
-	// const [isAction, setIsAction] = useState(false)
-	// const [productId, setProductId] = useState<null | string>(null)
-
 	// BASKET
 	const { basketData, numberItems, allPrice, deleteProductToBasket, isAction } =
 		useBasket()
 
 	const { productId } = useProduct()
-
-	// DELETE PRODUCT FROM BASKET
-	// const handleDeleteProductToBasket = async (idProduct: string) => {
-	// 	try {
-	// 		setProductId(idProduct)
-	// 		setIsAction(true)
-	// 		await deleteProductToBasket(idProduct)
-	// 		setTimeout(() => {
-	// 			setIsAction(false)
-	// 			setProductId(null)
-	// 		}, 1500)
-	// 	} catch (error: any) {
-	// 		console.log(error.response?.data)
-	// 	}
-	// }
 
 	return (
 		<Section>
@@ -79,7 +44,7 @@ export default function ShoppingCart() {
 				Shopping Cart
 			</h1>
 			{/* RIGHT & LEFT COMPONENTS */}
-			<div className='flex flex-col lg:flex-row w-full mb-[200px]'>
+			<div className='flex flex-col lg:flex-row w-full mb-[75px] lg:mb-[200px]'>
 				{/* LEFT COMPONENT */}
 				<div className='flex flex-col items-end gap-[22px] md:gap-0 w-full lg:w-[500px]  xl:w-[580px]'>
 					{/* PRODUCT & BUTTON UPDATE CART */}
@@ -159,7 +124,7 @@ export default function ShoppingCart() {
 							There are no items in the cart...
 						</h2>
 					</div>
-					<div className='w-full lg:w-[168px] mb-[64px]'>
+					<div className='w-full lg:w-[168px] mb-[20px] lg:mb-[64px]'>
 						<Button title='UPDATE CART' />
 					</div>
 					{/* ВВЕСТИ КУПОН И ПРИМЕНИТЬ */}
@@ -178,9 +143,10 @@ export default function ShoppingCart() {
 				</div>
 				{/* RIGHT COMPONENT */}
 				<div className='py-[35px] mt-[39px] lg:mt-0 w-full lg:w-[350px] xl:w-[460px] ml-0 lg:ml-[100px] xl:ml-[150px] px-[10px] lg:px-0 rounded-[4px] bg-[#EFEFEF] lg:bg-transparent'>
-					<div className='w-full flex justify-between items-start mb-[44px]'>
-						<h1 className='text-[26px]'>Cart totals</h1>
-						<p className='text-[18px] text-[#00000078]'>{`${numberItems} items`}</p>
+					{/* TITLE  */}
+					<div className='w-full flex justify-between items-center lg:items-start mb-[20px] lg:mb-[44px]'>
+						<h1 className='text-[20px] lg:text-[26px]'>Cart totals</h1>
+						<p className='text-[14px] lg:text-[18px] text-[#00000078]'>{`${numberItems} items`}</p>
 					</div>
 					<div className='flex justify-between border-b-[1px] border-b-[#D8D8D8] pb-[42px] mb-[42px]'>
 						<div className='flex flex-col gap-[24px] w-[232px] text-[12px] md:text-[16px]'>
@@ -235,7 +201,7 @@ export default function ShoppingCart() {
 						<p>TOTAl</p>
 						<p>{`$ ${allPrice + 15},00`}</p>
 					</div>
-					<Button title='PROCEED TO CHECKOUT' />
+					<Button href='shopping-cart/checkout' title='PROCEED TO CHECKOUT' />
 				</div>
 			</div>
 		</Section>

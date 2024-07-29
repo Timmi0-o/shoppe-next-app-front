@@ -44,7 +44,13 @@ export const Reviews = () => {
 								</p>
 							</Link>
 						</div>
-						<div className='h-[360px] lg:h-[400px] overflow-scroll lg:overflow-hidden'>
+						<div
+							className={`duration-300 ease-in-out ${
+								allReview.length === 1
+									? 'h-[180px] lg:h-[200px]'
+									: 'h-[360px] lg:h-[400px]'
+							}  overflow-scroll lg:overflow-hidden`}
+						>
 							{allReview.slice(0, 2).map((comment: Reviews, i: number) => (
 								<div
 									key={i}
@@ -63,7 +69,7 @@ export const Reviews = () => {
 										</p>
 									</div>
 									<div className='flex gap-[4px] md:gap-[10px] mb-[18px] lg:mb-[24px]'>
-										{star.map((i) => (
+										{Array.from({ length: 5 }).map((_, i) => (
 											<FaStar
 												key={i}
 												className='size-[12px] md:size-[14px] lg:size-[18px] cursor-pointer text-[#000000]'
@@ -100,4 +106,3 @@ export const Reviews = () => {
 		</Section>
 	)
 }
-const star = [1, 2, 3, 4, 5]

@@ -80,7 +80,7 @@ export const useBasket = () => {
 				const response = await axios.delete(
 					`${process.env.BACK_PORT}basket/delete-product`,
 					{
-						data: { idUser: user._id, idProduct: idProduct },
+						data: { idUser: user?._id, idProduct: idProduct },
 					}
 				)
 				if (response) {
@@ -107,7 +107,7 @@ export const useBasket = () => {
 			const response = await axios.patch(
 				`${process.env.BACK_PORT}basket/add-product`,
 				{
-					user: user._id,
+					user: user?._id,
 					product: { productId, qty },
 				}
 			)

@@ -72,6 +72,7 @@ export const Product = () => {
 
 	// Синхронизация двух слайдеров
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null)
+
 	// КОЛИЧЕСТВО ВЫБРАННОГО ТОВАРА И НОМЕР ПОДРОБНОСТЕЙ
 	const [productNumber, setProductNumber] = useState(1)
 	const [isSwitchesActive, setIsSwitchesActive] = useState(0)
@@ -80,10 +81,10 @@ export const Product = () => {
 
 	// button title
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
+
 	// ADDED NEW ITEM TO BASKET
 	const handleAddNewItemToBasket = async () => {
 		setBtnTitle('ADDED!')
-
 		try {
 			if (productHook) {
 				const response = await addProductInBasket(
@@ -402,9 +403,9 @@ export const Product = () => {
 						</div>
 						{/* REVIEWS */}
 						<div
-							className={`flex ${
+							className={`flex duration-300 ${
 								isSwitchesActive === 2
-									? 'h-[610px] overflow-y-auto opacity-100'
+									? `h-fit overflow-y-auto opacity-100`
 									: 'h-0 z-[-1] opacity-0'
 							}`}
 						>
@@ -424,12 +425,12 @@ export const Product = () => {
 						dropLink={productHook?.fullDescription}
 					/>
 					<DropMenu
-						heightCustom='h-[200px]'
+						heightCustom='h-[175px]'
 						title='Additional information'
 						dropLink={productAdditionInfo}
 					/>
 					<DropMenu
-						heightCustom='h-[500px]'
+						heightCustom={`${allReview?.length ? 'h-[500px]' : 'h-[75px]'}`}
 						title={`Reviews(${allReview?.length})`}
 						dropLink={<Reviews />}
 					/>

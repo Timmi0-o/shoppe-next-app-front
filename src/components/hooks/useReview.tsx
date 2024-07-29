@@ -3,7 +3,7 @@ import { fetcher } from '@/utils/fetcher'
 import axios from 'axios'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import useSWR, { SWRResponse } from 'swr'
 import { useUser } from './useUser'
 
@@ -23,17 +23,17 @@ export const useReview = () => {
 		fetcher
 	)
 
-	const { data: allReview }: SWRResponse<any, any, any> = useSWR(
+	const {
+		data: allReview,
+		mutate: mutateAllReviews,
+	}: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}review/${nowPath}` },
 		fetcher
 	)
 
 	const [commentWarning, setCommentWarning] = useState<React.ReactNode>('')
 	// ОСТАВИТЬ КОММЕНТАРИЙ
-	const addUserComment = async (
-		comment: string,
-		setComment: Dispatch<SetStateAction<string>>
-	) => {
+	const addUserComment = async (comment: string) => {
 		if (!comment) {
 			return setCommentWarning(
 				<div className='text-[14px] w-full md:w-[250px] xl:w-[400px]'>
@@ -75,5 +75,6 @@ export const useReview = () => {
 		userMutate,
 		addUserComment,
 		commentWarning,
+		mutateAllReviews,
 	}
 }

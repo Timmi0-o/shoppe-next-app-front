@@ -32,8 +32,8 @@ export const ShoppingBag = ({
 	// BASKET
 	const { basketData, numberItems, allPrice, deleteProductToBasket, isAction } =
 		useBasket()
+	// PRODUCT
 	const { productId, setProductId } = useProduct()
-	console.log('productId', productId)
 
 	return (
 		<div
@@ -86,7 +86,7 @@ export const ShoppingBag = ({
 								<div
 									onMouseEnter={() => setProductId(basket?.product?._id)}
 									key={i}
-									className={`relative flex gap-[20px] border-[1px] border-red-900 ${
+									className={`relative flex gap-[20px] ${
 										i + 1 === basketData?.length ? 'pb-[44px]' : 'pb-[22px] '
 									}`}
 								>

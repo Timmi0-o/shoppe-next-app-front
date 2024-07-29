@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MouseEvent, useState } from 'react'
+import { ProductPreviewPcModal } from '../layouts/Product/ProductPreviewPcModal'
 
 interface ProductCardProps {
 	img: string
@@ -29,6 +30,15 @@ export const ProductCard = ({
 		if (isFastOption !== null) {
 			e.preventDefault()
 		}
+	}
+
+	const [isPreview, setIsPreview] = useState(false)
+
+	const handleOpenPreviewModal = (e: any) => {
+		e.preventDefault()
+		setIsPreview(true)
+		document.body.style.overflowY = 'hidden'
+		document.body.style.paddingRight = '8px'
 	}
 
 	return (
@@ -61,6 +71,11 @@ export const ProductCard = ({
 					>
 						{fastOptions.map((option, i) => (
 							<div
+								onClick={(e: any) => {
+									if (isFastOption === 1) {
+										handleOpenPreviewModal(e)
+									}
+								}}
 								onMouseEnter={() => setIsFastOption(i)}
 								onMouseLeave={() => setIsFastOption(null)}
 								key={i}
@@ -75,6 +90,12 @@ export const ProductCard = ({
 					{title}
 				</p>
 				<p className='text-[12px] sm:text-[20px] font-bold text-[#A18A68]'>{`$ ${price}.00`}</p>
+				{/* PREVIEW MODAL WINDOW  */}
+				<ProductPreviewPcModal
+					productImg={['/Item1.png', '/Item2.png', '/Item3.png', '/Item4.png']}
+					isShow={isPreview}
+					setIsShow={setIsPreview}
+				/>
 			</div>
 		</Link>
 	)

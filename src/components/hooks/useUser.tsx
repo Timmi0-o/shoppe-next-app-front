@@ -1,7 +1,13 @@
 'use client'
 import { fetcher } from '@/utils/fetcher'
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { SWRResponse } from 'swr'
+
+interface UserData {
+	_id: string
+	username: string
+	email: string
+}
 
 export const useUser = () => {
 	// ПРОВЕРКА НАЛИЧИЯ ТОКЕНА НА КЛИЕНТЕ
@@ -21,7 +27,10 @@ export const useUser = () => {
 	}
 
 	// ПРОВЕРКА ЛОГИНА
-	const { data: userData, mutate: mutateUser } = useSWR(
+	const {
+		data: userData,
+		mutate: mutateUser,
+	}: SWRResponse<UserData, any, any> = useSWR(
 		{
 			url: `${process.env.BACK_PORT}auth/${token}`,
 		},

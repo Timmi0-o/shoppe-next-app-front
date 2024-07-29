@@ -17,7 +17,7 @@ export const Rights = ({
 			className='flex items-start gap-[8px] w-full cursor-pointer mb-[26px] mt-[11px]'
 		>
 			<div
-				className={`size-[13px] lg:size-[18px] border-[1px] border-black duration-300 ease-in ${
+				className={`size-[13px] lg:size-[18px] border-[1px] border-black duration-300 ease-in rounded-[3px] ${
 					rightsState && 'bg-black'
 				}`}
 			></div>

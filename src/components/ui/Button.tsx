@@ -41,7 +41,7 @@ export const Button = ({
 
 	useEffect(() => {
 		setTimeout(() => {
-			setTitleEffect('tracking-[1px] duration-200 opacity-40')
+			setTitleEffect('tracking-[0.5px] duration-200 opacity-40')
 		}, 100)
 
 		setTimeout(() => {

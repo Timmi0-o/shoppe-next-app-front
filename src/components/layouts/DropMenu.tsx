@@ -8,6 +8,7 @@ interface DropMenuProps {
 	heightCustom?: string
 	underline?: boolean
 	list?: boolean
+	className?: string
 }
 
 export const DropMenu = ({
@@ -17,6 +18,7 @@ export const DropMenu = ({
 	heightCustom,
 	underline,
 	list,
+	className,
 }: DropMenuProps) => {
 	const [isDropActive, setIsDropActive] = useState(false)
 
@@ -32,7 +34,7 @@ export const DropMenu = ({
 				onClick={() => setIsDropActive(!isDropActive)}
 				className={`flex justify-between items-center lg:cursor-pointer ${
 					underline && 'border-b-[1px] border-b-[#D8D8D8] pb-[12px]'
-				}`}
+				} ${className}`}
 			>
 				<p className='text-[12px] md:text-[16px]'>{title}</p>
 				<div

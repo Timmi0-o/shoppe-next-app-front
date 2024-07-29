@@ -13,7 +13,7 @@ interface Product {
 }
 
 export const LatestShop = () => {
-	const { data, isLoading, error }: SWRResponse<any, any, any> = useSWR(
+	const { data, isLoading }: SWRResponse<any, any, any> = useSWR(
 		{ url: `${process.env.BACK_PORT}products` },
 		fetcher
 	)
@@ -29,6 +29,7 @@ export const LatestShop = () => {
 				<div className={`${data ? 'hidden' : ''}`}>
 					<LatestShopLoading />
 				</div>
+				{/* PRODUCTS  */}
 				<div
 					className={`flex justify-center duration-500 ease-in-out ${
 						isLoading ? 'mt-[60px] opacity-0' : 'mt-0'
@@ -39,7 +40,7 @@ export const LatestShop = () => {
 							<ProductCard
 								key={i}
 								propsKey={i}
-								img={'/Item1.png'}
+								img={`/Item3.png`}
 								title={product.title}
 								price={product.price}
 								id={product._id}

@@ -2,6 +2,7 @@
 import { useReview } from '@/components/hooks/useReview'
 import { useUser } from '@/components/hooks/useUser'
 import Loading from '@/utils/Loading'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import { Button } from '../../ui/Button'
@@ -14,17 +15,31 @@ export const PostComment = () => {
 
 	const [isPostedComment, setIsPostedComment] = useState(false)
 
+	const path = usePathname()
+
+	// ID ТЕКУЩЕГО ТОВАРА
+	const nowPath = path.split('/')[2]
+
 	// GET USER DATA
 	const { user } = useUser()
 
-	const { userReview, userMutate, addUserComment, commentWarning } = useReview()
+	const { userReview, mutateAllReviews, addUserComment, commentWarning } =
+		useReview()
 
 	// ОСТАВИТЬ КОММЕНТАРИЙ
 	const handleComment = async () => {
 		setCommentButtonTitle('Loading...')
 		setIsPostedComment(true)
-		const response = await addUserComment(comment, setComment)
+		const response = await addUserComment(comment)
 		if (!response) {
+			mutateAllReviews((prevData: any) => [
+				...prevData,
+				{
+					user: user?._id,
+					product: nowPath,
+					feedback: comment,
+				},
+			])
 			setCommentButtonTitle('Submit')
 		} else {
 			setIsPostedComment(false)
@@ -48,23 +63,27 @@ export const PostComment = () => {
 					userReview?.feedback ? 'hidden' : ''
 				} ${isPostedComment && !commentWarning ? 'ml-[100%] opacity-0' : ''} `}
 			>
-				<p className='text-[20px] leading-[26px]'>Add a Review</p>
-				<p className='text-[13px] text-[#707070] leading-[30px] mb-[46px]'>
+				<p className='text-[16px] lg:text-[20px] leading-[26px]'>
+					Add a Review
+				</p>
+				<p className='text-[12px] lg:text-[13px] text-[#707070] lg:leading-[30px] mb-[15px] lg:mb-[46px]'>
 					Your email address will not be published. Required fields are marked *
 				</p>
-				<p className='text-[14px] text-[#707070] leading-[22px] mb-[30px]'>
+				<p className='text-[12px] lg:text-[14px] text-[#707070] lg:leading-[22px] mb-[15px] lg:mb-[30px]'>
 					Your Review*
 				</p>
 				<div className='flex flex-col gap-[46px] mb-[24px]'>
 					<Input state={comment} setState={setComment} />
 				</div>
-				<p className='text-[14px] text-[#707070] mb-[13px]'>Your Rating*</p>
+				<p className='text-[12px] lg:text-[14px] text-[#707070] mb-[13px]'>
+					Your Rating*
+				</p>
 				<div className='flex gap-[10px] mb-[20px] xl:mb-[48px]'>
 					{star.map((i) => (
 						<FaStar
 							key={i}
 							color={commentRating === i ? '' : ''}
-							className={`size-[18px] cursor-pointer`}
+							className={`size-[14px] lg:size-[18px] cursor-pointer`}
 						/>
 					))}
 				</div>
@@ -81,7 +100,7 @@ export const PostComment = () => {
 					</div>
 				</div>
 			</div>
-			{/* НАПИСАННЫЙ КОММЕНТАРИЙ */}
+			{/* POSTED COMMENT */}
 			<div
 				className={`w-full lg:w-[400px] xl:w-[580px] mb-[48px] lg:mb-0 duration-300 pl-[10px] ${
 					userReview?.feedback ? '' : 'ml-[100%] fixed'

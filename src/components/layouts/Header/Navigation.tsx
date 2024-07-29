@@ -23,15 +23,14 @@ export const Navigation = ({
 	useEffect(() => {
 		if (path.includes('/product')) {
 			setIsNawActive(0)
-		}
-		if (path === '/shop') {
+		} else if (path === '/shop') {
 			setIsNawActive(0)
-		}
-		if (path === '/blog') {
+		} else if (path === '/blog') {
 			setIsNawActive(1)
-		}
-		if (path === '/blog/details') {
+		} else if (path === '/blog/details') {
 			setIsNawActive(1)
+		} else {
+			setIsNawActive(null)
 		}
 	}, [path, setIsNawActive])
 

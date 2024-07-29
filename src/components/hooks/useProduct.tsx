@@ -6,8 +6,6 @@ import useSWR, { SWRResponse } from 'swr'
 export const useProduct = () => {
 	// CURRENT PRODUCT ID
 	const path = usePathname()
-	// const productId = path.split('/')[2]
-	// console.log('path', path)
 
 	const [productId, setProductId] = useState<string>('')
 	// // console.log('productId', productId)
