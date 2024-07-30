@@ -1,6 +1,6 @@
 export const ProductLoading = () => {
 	return (
-		<div>
+		<div className='pageLoadMove'>
 			<div
 				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[36px] duration-300 ease-in-out`}
 			>

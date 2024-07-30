@@ -32,10 +32,10 @@ export const LogReg = () => {
 
 	// ЕСЛИ ЕСТЬ USER ТО ОТПРАВИТЬ НА СТРАНИЦУ С ПОЛЬЗОВАТЕЛЕМ
 	useEffect(() => {
-		if (user && user.username) {
+		if (user) {
 			router.push(`account/${user.username}`)
 		}
-	})
+	}, [user])
 
 	const login = async () => {
 		if (username === '' || password === '') {
@@ -97,7 +97,7 @@ export const LogReg = () => {
 			}
 		} catch (error: any) {
 			setButtonActive(false)
-			console.log(error.response.data.message)
+			console.log(error?.response?.data?.message)
 		}
 	}
 

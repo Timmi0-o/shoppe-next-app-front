@@ -1,7 +1,7 @@
 export const ReviewLoading = () => {
 	return (
 		<div
-			className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out`}
+			className={`pageLoadMove flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out`}
 		>
 			{/* GENERAL && SIDE SWIPER */}
 			<div className='flex md:gap-[40px] lg:gap-[15px] xl:gap-[39px]'>

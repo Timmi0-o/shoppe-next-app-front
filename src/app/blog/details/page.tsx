@@ -1,7 +1,7 @@
 'use client'
-import { Rights } from '@/components/layouts/Rights'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { Rights } from '@/components/ui/Rights'
 import { Section } from '@/components/ui/Section'
 import Image from 'next/image'
 import Link from 'next/link'

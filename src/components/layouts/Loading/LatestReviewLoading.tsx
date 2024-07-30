@@ -1,6 +1,6 @@
 export const LatestReviewLoading = () => {
 	return (
-		<div className={`w-full lg:w-[400px] xl:w-[580px]`}>
+		<div className={`pageLoadMove w-full lg:w-[400px] xl:w-[580px]`}>
 			<div className='sticky top-0 flex justify-between text-[14px] md:text-[16px] lg:text-[20px] font-normal leading-[26px] mb-[20px] lg:mb-[76px]'>
 				{/* NUMBER REVIEWS  */}
 				<div className='w-[140px] h-[20px]	bg-[#ededed] rounded-[5px] animate-pulse'></div>

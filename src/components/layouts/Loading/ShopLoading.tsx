@@ -1,6 +1,6 @@
 export const ShopLoading = () => {
 	return (
-		<div className={`flex justify-center mt-[60px]`}>
+		<div className={`pageLoadMove flex justify-center mt-[60px]`}>
 			<div className='flex sm:justify-center md:justify-normal flex-wrap gap-[8px] sm:gap-[20px]'>
 				{Array.from({ length: 5 }).map((_, i: number) => (
 					<div className='mb-[12px]' key={i}>

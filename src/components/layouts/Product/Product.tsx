@@ -79,6 +79,10 @@ export const Product = () => {
 	// КАЛИБРОВКА ЦЕНЫ ТОВАРА
 	const [allPrice, setAllPrice] = useState(productHook?.price)
 
+	useEffect(() => {
+		setAllPrice(productHook?.price)
+	}, [productHook])
+
 	// button title
 	const [btnTitle, setBtnTitle] = useState('ADD TO CART')
 
@@ -123,7 +127,7 @@ export const Product = () => {
 			</div>
 			{/* PRODUCT  */}
 			<div
-				className={`flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out ${
+				className={`pageLoadMove flex flex-col lg:flex-row gap-[20px] xl:gap-[62px] mb-[21px] lg:mb-[96px] duration-300 ease-in-out ${
 					productHook ? '' : 'hidden'
 				}`}
 			>
@@ -185,7 +189,7 @@ export const Product = () => {
 								</p>
 								<p
 									className={`duration-150 origin-left ${
-										allPrice > productHook?.price
+										(allPrice || 0) > (productHook?.price || 0)
 											? 'opacity-100 scale-1'
 											: 'opacity-0 scale-[0.7]'
 									}`}
@@ -249,9 +253,9 @@ export const Product = () => {
 											productNumber > 1 ? productNumber - 1 : productNumber
 										)
 										setAllPrice(
-											allPrice > productHook?.price
-												? allPrice - productHook?.price
-												: allPrice
+											(allPrice || 0) > (productHook?.price || 0)
+												? (allPrice || 0) - (productHook?.price || 0)
+												: allPrice || 0
 										)
 									}}
 									className={`p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300 ${
@@ -274,7 +278,11 @@ export const Product = () => {
 								<div
 									onClick={() => {
 										setProductNumber(productNumber + 1)
-										setAllPrice(allPrice + productHook?.price)
+										setAllPrice(
+											allPrice && productHook?.price
+												? allPrice + productHook?.price
+												: allPrice
+										)
 									}}
 									className={`p-[10px] border border-transparent active:border-[#00000034] cursor-pointer rounded-[4px] duration-300 ${
 										productInBasket && qty ? 'hidden' : ''

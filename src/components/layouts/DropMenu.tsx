@@ -26,7 +26,7 @@ export const DropMenu = ({
 		<div
 			className={`w-full flex flex-col gap-[10px] duration-300 ${
 				isDropActive
-					? `${heightCustom ? heightCustom : 'h-[150px]'}`
+					? `${heightCustom ? heightCustom : 'h-[150px]'} mb-[20px]`
 					: 'h-[20px]'
 			} `}
 		>

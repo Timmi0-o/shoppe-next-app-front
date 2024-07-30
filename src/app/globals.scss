@@ -145,7 +145,7 @@ body {
 	}
 
 	.pageLoadMove {
-		animation: pageMove 300ms linear;
+		animation: pageMove 300ms ease-in-out;
 	}
 
 	.contentLoadMove {

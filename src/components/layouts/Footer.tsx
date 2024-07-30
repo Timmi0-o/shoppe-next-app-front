@@ -2,8 +2,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Rights } from '../ui/Rights'
 import { Section } from '../ui/Section'
-import { Rights } from './Rights'
 
 export const Footer = () => {
 	const [rights, setRights] = useState(false)
