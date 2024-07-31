@@ -1,16 +1,20 @@
 'use client'
 import { useOrder } from '@/components/hooks/useOrder'
+import { Notification } from '@/components/layouts/Notification'
 import { Section } from '@/components/ui/Section'
-import { useState } from 'react'
+import { orderTemporaryNotificationClose } from '@/lib/reducers/Order'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function ViewOrder() {
-	const [purchasesOrder, setPurchasesOrder] = useState([
-		{ product: 'Lira Earrings', price: 64 },
-		{ product: 'Ollie Earrings', price: 10 },
-	])
-
 	const { oneOrder } = useOrder()
-	console.log('oneOrder', oneOrder)
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		setTimeout(() => {
+			dispatch(orderTemporaryNotificationClose())
+		}, 3000)
+	}, [oneOrder, dispatch])
 
 	return (
 		<Section>
@@ -114,6 +118,12 @@ export default function ViewOrder() {
 					</div>
 				</div>
 			</div>
+			<Notification
+				isActive={useSelector((state: any) => state.order.orderNotice)}
+				borderTop
+				title='We’ve received your order'
+				noticeImg='/success-shop.svg'
+			/>
 		</Section>
 	)
 }

@@ -1,5 +1,6 @@
 'use client'
 import { useBasket } from '@/components/hooks/useBasket'
+import { ProductList, useOrder } from '@/components/hooks/useOrder'
 import { useUser } from '@/components/hooks/useUser'
 import { DropMenu } from '@/components/layouts/DropMenu'
 import { Button } from '@/components/ui/Button'
@@ -12,12 +13,12 @@ import { useEffect, useState } from 'react'
 export default function Checkout() {
 	// BASKET
 	const { basketData, allPrice } = useBasket()
-
+	// USER
 	const { user } = useUser()
-
+	// ORDER
+	const { handleNewOrder } = useOrder()
 	// COUPON
 	const [coupon, setCoupon] = useState('')
-
 	// USER FULL DATA
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
@@ -39,7 +40,48 @@ export default function Checkout() {
 		setEmail(user?.email || '')
 	}, [user])
 
-	const [paySelect, setPaySelect] = useState<number | null>(0)
+	const [paySelect, setPaySelect] = useState<number>(0)
+
+	const [errors, setErrors] = useState('')
+	const handleCreateNewOrder = async () => {
+		try {
+			if (
+				!firstName ||
+				!lastName ||
+				country === 'Country' ||
+				!streetAddress ||
+				!postcodeZIP ||
+				!townCity ||
+				!phone ||
+				!email
+			) {
+				setErrors('Не все поля заполнены!')
+			} else {
+				setErrors('')
+				user &&
+					basketData &&
+					handleNewOrder({
+						user: user._id,
+						email: email,
+						paymentMethod: payVariableTitle[paySelect],
+						deliveryOptions: 'Standard delivery',
+						deliveryAddress: streetAddress,
+						contactPhone: phone,
+						shipping: 'Free shipping',
+						productList: basketData.reduce((acc: ProductList[], item) => {
+							const product = {
+								title: item.product.title,
+								totalPrice: item.qty * item.product.price,
+							}
+							acc.push(product)
+							return acc
+						}, []),
+					})
+			}
+		} catch (error: any) {
+			console.log(error?.response?.data)
+		}
+	}
 
 	return (
 		<Section>
@@ -138,6 +180,14 @@ export default function Checkout() {
 							/>
 							<Input placeholder='Phone *' state={phone} setState={setPhone} />
 							<Input placeholder='Email *' state={email} setState={setEmail} />
+							{/* ERRORS PC  */}
+							<p
+								className={`hidden md:block text-[16px] text-red-500 font-semibold duration-300 ease-in-out ${
+									errors ? '' : 'ml-[-100%] opacity-0'
+								}`}
+							>
+								{errors}
+							</p>
 							{/* AGREEMENTS  */}
 							<div>
 								<Rights
@@ -225,9 +275,20 @@ export default function Checkout() {
 								))}
 							</div>
 							<div className='mt-[24px] lg:my-[45px]'>
-								<Button title='PLACE ORDER' />
+								<Button
+									onClick={() => handleCreateNewOrder()}
+									title='PLACE ORDER'
+								/>
 							</div>
 						</div>
+						{/* ERRORS MOBILE  */}
+						<p
+							className={`block md:hidden text-[12px] text-red-500 font-semibold duration-300 ease-in-out mt-[20px] ${
+								errors ? '' : 'ml-[-100%] opacity-0'
+							}`}
+						>
+							{errors}
+						</p>
 					</div>
 				</div>
 			</div>

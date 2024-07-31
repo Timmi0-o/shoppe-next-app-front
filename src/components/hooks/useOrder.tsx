@@ -1,6 +1,12 @@
+import {
+	orderTemporaryNotificationOpen,
+	setOrderNumber,
+} from '@/lib/reducers/Order'
 import { fetcher } from '@/utils/fetcher'
+import axios from 'axios'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useSWR, { SWRResponse } from 'swr'
 import { useUser } from './useUser'
 
@@ -21,7 +27,7 @@ interface OrderProductData {
 	productList: ProductList[]
 }
 
-interface ProductList {
+export interface ProductList {
 	title: string
 	totalPrice: number
 }
@@ -33,7 +39,24 @@ interface OrdersPreview {
 	total: number
 }
 
+interface AddNewOrderData {
+	user: string
+	email: string
+	paymentMethod: string
+	deliveryOptions: string
+	deliveryAddress: string
+	contactPhone: string
+	shipping: string
+	productList: ProductList[]
+}
+
 export const useOrder = () => {
+	const path = usePathname()
+	const orderNumberOld = path.split('/')[3]
+	console.log('orderNumberOld', orderNumberOld)
+
+	const dispatch = useDispatch()
+	const router = useRouter()
 	// USER
 	const { user } = useUser()
 
@@ -65,7 +88,8 @@ export const useOrder = () => {
 	}, [allOrders])
 
 	// GET ONE ORDER
-	const orderNumber = useSelector((state: any) => state.order.orderNumber)
+	const newNumberOrder = useSelector((state: any) => state.order.orderNumber)
+	const orderNumber = orderNumberOld || newNumberOrder
 	const { data: oneOrder }: SWRResponse<OrderProductData> = useSWR(
 		() =>
 			user
@@ -74,9 +98,28 @@ export const useOrder = () => {
 		fetcher
 	)
 
+	// ADD NEW ORDER
+	const handleNewOrder = async (order: AddNewOrderData) => {
+		try {
+			const response = await axios.patch(`${process.env.BACK_PORT}order/add`, {
+				...order,
+			})
+			if (response.data) {
+				await axios.patch(`${process.env.BACK_PORT}basket/clear/${order.user}`)
+				dispatch(setOrderNumber(response?.data))
+				router.push(`/account/${user?.username}/${response?.data}`)
+				dispatch(orderTemporaryNotificationOpen())
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	return {
 		allOrders,
 		ordersPreview,
 		oneOrder,
+		handleNewOrder,
+		orderNumberOld,
 	}
 }

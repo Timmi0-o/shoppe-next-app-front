@@ -6,10 +6,11 @@ interface NotificationProps {
 	isActive?: boolean
 	noticeImg?: string
 	title: string
-	btnTitle: string
+	btnTitle?: string
 	onClick?: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void
 	href?: string
 	position?: string
+	borderTop?: boolean
 }
 
 export const Notification = ({
@@ -20,6 +21,7 @@ export const Notification = ({
 	onClick,
 	position,
 	href,
+	borderTop,
 }: NotificationProps) => {
 	const [isActiveClass, setIsActiveClass] = useState(
 		isActive !== undefined
@@ -46,6 +48,8 @@ export const Notification = ({
 	return (
 		<div
 			className={`flex items-center justify-between md:items-center md:justify-between ${
+				borderTop ? 'border-t-[2px] border-t-[#A18A68]' : ''
+			} ${
 				position ? position : 'fixed lg:absolute z-9 bottom-0 lg:top-[-100px]'
 			} h-[68px] bg-[#EFEFEF] px-[5px] sm:px-[16px] lg:px-[40px] duration-300 ease-in-out w-full ${isActiveClass}`}
 		>
@@ -57,14 +61,16 @@ export const Notification = ({
 					{title}
 				</p>
 			</div>
-			<Link onClick={(e) => handleIsNotLink(e)} href={href || '#'}>
-				<p
-					onClick={onClick}
-					className='text-[14px] md:text-[16px]  text-[#A18A68] cursor-pointer'
-				>
-					{btnTitle}
-				</p>
-			</Link>
+			{btnTitle && (
+				<Link onClick={(e) => handleIsNotLink(e)} href={href || '#'}>
+					<p
+						onClick={onClick}
+						className='text-[14px] md:text-[16px]  text-[#A18A68] cursor-pointer'
+					>
+						{btnTitle}
+					</p>
+				</Link>
+			)}
 		</div>
 	)
 }
