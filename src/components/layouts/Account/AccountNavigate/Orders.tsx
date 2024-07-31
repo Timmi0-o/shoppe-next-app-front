@@ -18,8 +18,9 @@ export const Orders = () => {
 					position='block'
 				/>
 			</div>
+			{/* PC ORDER DETAILS  */}
 			<div
-				className={`flex justify-between md:justify-normal md:flex-col gap-[24px] border-b-[1px] border-b-[#D8D8D8] duration-300 ${
+				className={`hidden md:flex justify-between md:justify-normal md:flex-col gap-[24px] border-b-[1px] border-b-[#D8D8D8] duration-300 ${
 					ordersPreview?.length ? '' : 'opacity-0 ml-[-200px] absolute'
 				}`}
 			>
@@ -59,6 +60,48 @@ export const Orders = () => {
 					</div>
 				))}
 			</div>
+			{/* MOBILE ORDER DETAILS  */}
+			{ordersPreview?.map((order, i) => (
+				<div
+					key={i}
+					className={`flex md:hidden justify-between md:justify-normal md:flex-col gap-[24px] duration-300 mb-[10px] ${
+						i + 1 < ordersPreview.length
+							? 'border-b-[1px] border-b-[#D8D8D8]'
+							: ''
+					} ${ordersPreview?.length ? '' : 'opacity-0 ml-[-200px] absolute'}`}
+				>
+					<div className='grid grid-cols-1 gap-[12px] pb-[16px] md:border-b-[1px] md:border-b-black'>
+						{orderTitle.map((title, i) => (
+							<p key={i} className='text-[12px] md:text-[16px] w-fit'>
+								{title}
+							</p>
+						))}
+					</div>
+
+					<div key={i} className='grid grid-cols-1 gap-[12px] pb-[16px]'>
+						<p className='text-[12px] md:text-[16px] text-start'>
+							{order?.number}
+						</p>
+						<p className='text-[12px] md:text-[16px] text-start'>
+							{order?.date.slice(0, 10)}
+						</p>
+						<p className='text-[12px] md:text-[16px] text-start'>
+							{order?.status}
+						</p>
+						<p className='text-[12px] md:text-[16px] text-start'>
+							{`$ ${order?.total}`}
+						</p>
+						<Link
+							onClick={() => dispatch(setOrderNumber(order.number))}
+							href={'/account/profile/view-order'}
+						>
+							<p className='text-[12px] text-[#A18A68] md:text-[16px] text-start cursor-pointer'>
+								View Order
+							</p>
+						</Link>
+					</div>
+				</div>
+			))}
 		</div>
 	)
 }
