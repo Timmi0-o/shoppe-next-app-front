@@ -1,5 +1,6 @@
 'use client'
 import { useOrder } from '@/components/hooks/useOrder'
+import { useUser } from '@/components/hooks/useUser'
 import { setOrderNumber } from '@/lib/reducers/Order'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
@@ -8,6 +9,7 @@ import { Notification } from '../../Notification'
 export const Orders = () => {
 	const { ordersPreview } = useOrder()
 	const dispatch = useDispatch()
+	const { user } = useUser()
 	return (
 		<div>
 			<div className={`${ordersPreview?.length ? 'hidden' : ''}`}>
@@ -51,7 +53,7 @@ export const Orders = () => {
 						</p>
 						<Link
 							onClick={() => dispatch(setOrderNumber(order.number))}
-							href={'/account/profile/view-order'}
+							href={`/account/${user?.username}/${order?.number}`}
 						>
 							<p className='text-[12px] text-[#A18A68] md:text-[16px] text-start cursor-pointer'>
 								View Order
@@ -93,7 +95,7 @@ export const Orders = () => {
 						</p>
 						<Link
 							onClick={() => dispatch(setOrderNumber(order.number))}
-							href={'/account/profile/view-order'}
+							href={`/account/${user?.username}/${order?.number}`}
 						>
 							<p className='text-[12px] text-[#A18A68] md:text-[16px] text-start cursor-pointer'>
 								View Order

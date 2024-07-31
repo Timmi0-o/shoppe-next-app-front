@@ -41,7 +41,7 @@ export default function ViewOrder() {
 							<div className='flex flex-col'>
 								<p>ORDER DATE</p>
 								<p className='text-[12px] md:text-[16px] text-[#707070]'>
-									{oneOrder?.date.slice(0, 10)}
+									{oneOrder?.date?.slice(0, 10)}
 								</p>
 							</div>
 						</div>
@@ -77,7 +77,7 @@ export default function ViewOrder() {
 						</div>
 						{/* ТОВАРЫ ИЗ ЗАКАЗА */}
 						<div className='flex flex-col gap-[26px] pb-[12px] border-b-[1px] border-b-[#D8D8D8]'>
-							{oneOrder?.productList.map((product, i) => (
+							{oneOrder?.productList?.map((product, i) => (
 								<div
 									className='flex justify-between items-center text-[16px]'
 									key={i}
@@ -91,7 +91,7 @@ export default function ViewOrder() {
 							<p className='text-[16px]'>SUBTOTAL</p>
 							<p>
 								$
-								{oneOrder?.productList.reduce(
+								{oneOrder?.productList?.reduce(
 									(sum, product) => sum + product.totalPrice,
 									0
 								)}
@@ -105,7 +105,7 @@ export default function ViewOrder() {
 							<p className='text-[16px]'>TOTAL</p>
 							<p>
 								$
-								{oneOrder?.productList.reduce(
+								{oneOrder?.productList?.reduce(
 									(sum, product) => sum + product.totalPrice + 15,
 									0
 								)}
