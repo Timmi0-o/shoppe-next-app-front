@@ -103,10 +103,10 @@ export default function Product() {
 									>
 										<div className='flex items-center gap-[16px] mb-[8px] lg:mb-[16px]'>
 											<p className='text-[16px] lg:text-[20px]'>
-												{comment.user.username}
+												{comment?.user?.username}
 											</p>
 											<p className='text-[14px] text-[#707070]'>
-												{comment.date.slice(0, 10)}
+												{comment?.date?.slice(0, 10)}
 											</p>
 										</div>
 										<div className='flex gap-[10px] mb-[18px] lg:mb-[24px]'>
@@ -118,7 +118,7 @@ export default function Product() {
 											))}
 										</div>
 										<p className='text-[16px] text-[#707070]'>
-											{comment.feedback}
+											{comment?.feedback}
 										</p>
 									</div>
 								))}

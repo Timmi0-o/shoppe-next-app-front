@@ -31,7 +31,7 @@ export const PostComment = () => {
 		setCommentButtonTitle('Loading...')
 		setIsPostedComment(true)
 		const response = await addUserComment(comment)
-		if (!response) {
+		if (response?.data) {
 			mutateAllReviews((prevData: any) => [
 				...prevData,
 				{
@@ -42,6 +42,10 @@ export const PostComment = () => {
 			])
 			setCommentButtonTitle('Submit')
 		} else {
+			setCommentButtonTitle('Error')
+			setTimeout(() => {
+				setCommentButtonTitle('Submit')
+			}, 1500)
 			setIsPostedComment(false)
 		}
 	}

@@ -52,18 +52,20 @@ export const useReview = () => {
 			)
 		}
 		try {
-			const response = (
-				await axios.post(`${process.env.BACK_PORT}review/create`, {
-					user: user?._id,
-					product: nowPath,
-					feedback: comment,
-				})
-			).data
+			if (user && comment) {
+				const response = (
+					await axios.post(`${process.env.BACK_PORT}review/create`, {
+						user: user?._id,
+						product: nowPath,
+						feedback: comment,
+					})
+				).data
 
-			if (response) {
-				userMutate()
+				if (response) {
+					userMutate()
+				}
+				return response
 			}
-			return response
 		} catch (error: any) {
 			console.log(error.response.data.message)
 		}

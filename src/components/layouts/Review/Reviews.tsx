@@ -65,7 +65,7 @@ export const Reviews = () => {
 											{comment?.user?.username}
 										</p>
 										<p className='text-[12px] md:text-[14px] text-[#707070]'>
-											{comment.date.slice(0, 10)}
+											{comment?.date?.slice(0, 10)}
 										</p>
 									</div>
 									<div className='flex gap-[4px] md:gap-[10px] mb-[18px] lg:mb-[24px]'>
@@ -77,7 +77,7 @@ export const Reviews = () => {
 										))}
 									</div>
 									<p className='text-[12px] md:text-[16px] text-[#707070]'>
-										{comment.feedback.slice(0, 120)}...
+										{comment?.feedback?.slice(0, 120)}...
 									</p>
 								</div>
 							))}
