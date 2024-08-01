@@ -6,6 +6,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { ProfileLoading } from '../Loading/ProfileLoading'
 import { AccountDetails } from './AccountNavigate/AccountDetails'
 import { Addresses } from './AccountNavigate/Addresses'
 import { Dashboard } from './AccountNavigate/Dashboard'
@@ -23,25 +24,11 @@ export const Profile = () => {
 			<Section>
 				{/* LOADING  */}
 				<div
-					className={`flex flex-col items-center duration-300 ${
-						!user ? 'block' : 'hidden'
+					className={`duration-300 ease-in-out ${
+						user ? 'ml-[-100%] opacity-0 -z-20 absolute' : ''
 					}`}
 				>
-					{/* USERNAME */}
-					<div className='mb-[24px] lg:mb-[64px] w-[250px] h-[43px] bg-[#ededed] rounded-[12px] animate-pulse'></div>
-					{/* NAVIGATION */}
-					<div className='flex items-center justify-start pl-[20px] gap-[10px] w-full h-[48px] lg:h-[60px] rounded-[5px] lg:rounded-[8px] mb-[50px] bg-[#ebebeb] animate-pulse'>
-						<div className='h-[30px] w-[120px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
-						<div className='h-[30px] w-[200px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
-						<div className='h-[30px] w-[80px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
-						<div className='h-[30px] w-[140px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
-						<div className='h-[30px] w-[100px] rounded-[5px] bg-[#f8f8f8] animate-pulse'></div>
-					</div>
-					{/* DASHBOARD  */}
-					<div className='flex flex-col gap-[20px] w-full'>
-						<div className='w-[650px] h-[23px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
-						<div className='w-full h-[23px] bg-[#ededed] rounded-[8px] animate-pulse'></div>
-					</div>
+					<ProfileLoading />
 				</div>
 				<div
 					className={`pageLoadMove duration-300 ${
@@ -94,13 +81,13 @@ export const Profile = () => {
 							))}
 						</Swiper>
 					</div>
-					<div className='w-full mb-[30px] lg:mb-[75px]'>
+					<div className='relative w-full mb-[30px] lg:mb-[75px]'>
 						{Object.entries(navigateData).map(([key, component], i) => (
 							<div
-								className={`duration-[400ms] ${
+								className={`duration-300 ease-in-out ${
 									isNavigateActive === i
 										? 'opacity-100'
-										: 'ml-[-600px] opacity-0 absolute '
+										: 'ml-[-100px] opacity-0 absolute top-0 left-0 scale-[0.97] -z-20'
 								}`}
 								key={i}
 							>

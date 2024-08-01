@@ -1,5 +1,6 @@
 'use client'
 import { useOrder } from '@/components/hooks/useOrder'
+import { ViewOrderLoading } from '@/components/layouts/Loading/ViewOrderLoading'
 import { Notification } from '@/components/layouts/Notification'
 import { Section } from '@/components/ui/Section'
 import { orderTemporaryNotificationClose } from '@/lib/reducers/Order'
@@ -18,7 +19,16 @@ export default function ViewOrder() {
 
 	return (
 		<Section>
-			<div className='pageLoadMove flex flex-col lg:flex-row justify-between pageLoadMove'>
+			{/* LOADING  */}
+			<div className={`${!oneOrder ? '' : 'hidden'}`}>
+				<ViewOrderLoading />
+			</div>
+			{/* ORDER  */}
+			<div
+				className={`pageLoadMove flex flex-col lg:flex-row justify-between ${
+					oneOrder ? '' : 'hidden'
+				}`}
+			>
 				{/* ДЕТАЛИ ЗАКАЗА (БАНКОВСКАЯ КАРТА, АДРЕС И Т.Д) */}
 				<div className='w-full lg:w-[400px] xl:w-[500px] mb-[60px] lg:mb-0'>
 					<h1 className='text-[26px] mb-[39px]'>Order Details</h1>
