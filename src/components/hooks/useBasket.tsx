@@ -132,5 +132,6 @@ export const useBasket = () => {
 		deleteProductToBasket,
 		isAction,
 		isBasked,
+		mutateBasket,
 	}
 }

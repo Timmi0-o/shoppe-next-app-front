@@ -1,11 +1,12 @@
 'use client'
 import { useBasket } from '@/components/hooks/useBasket'
 import { useProduct } from '@/components/hooks/useProduct'
+import { useUser } from '@/components/hooks/useUser'
 import { Button } from '@/components/ui/Button'
 import { deletedProductInBasket } from '@/lib/reducers/Product'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { GoPlus } from 'react-icons/go'
 import { HiOutlineMinus } from 'react-icons/hi'
@@ -32,8 +33,23 @@ export const ShoppingBag = ({
 	// BASKET
 	const { basketData, numberItems, allPrice, deleteProductToBasket, isAction } =
 		useBasket()
+
+	// USER
+	const { user } = useUser()
 	// PRODUCT
 	const { productId, setProductId } = useProduct()
+
+	const [basketInformation, setBasketInformation] = useState('')
+
+	useEffect(() => {
+		if (user) {
+			setBasketInformation('The basket is empty...')
+		} else {
+			setBasketInformation(
+				'To add products to the cart, log in to your profile account!'
+			)
+		}
+	}, [user])
 
 	return (
 		<div
@@ -65,15 +81,17 @@ export const ShoppingBag = ({
 				</div>
 				{/* EMPTY BASKET  */}
 				<p
-					className={`text-[24px] text-[#00000099] text-center mt-[50%] ${
-						basketData ? 'hidden' : ''
+					className={`text-[24px] text-[#00000099] text-center mt-[50%] duration-300 ease-in-out ${
+						basketData || user ? 'mt-[-20px] absolute opacity-0 -z-20' : ''
 					}`}
 				>
-					The basket is empty...
+					{basketInformation}
 				</p>
 				{/* КАРТОЧКИ С ТОВАРАМИ И КНОПКОЙ ПОКУПКИ */}
 				<div
-					className={` duration-500 ${basketData ? '' : 'ml-[100%] opacity-0'}`}
+					className={`duration-500 ease-in-out ${
+						basketData ? '' : 'ml-[30px] -z-20 absolute opacity-0'
+					}`}
 				>
 					<p className='text-[#707070] text-[14px] mb-[3px]'>
 						{numberItems} items

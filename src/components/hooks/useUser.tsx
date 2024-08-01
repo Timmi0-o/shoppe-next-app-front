@@ -18,7 +18,7 @@ export const useUser = () => {
 			const storedToken = localStorage.getItem('token')
 			setToken(storedToken)
 		}
-	}, [])
+	})
 
 	const deleteToken = () => {
 		localStorage.removeItem('token')
@@ -34,8 +34,7 @@ export const useUser = () => {
 		{
 			url: `${process.env.BACK_PORT}auth/${token}`,
 		},
-		fetcher,
-		{ refreshInterval: 0 }
+		fetcher
 	)
 
 	return {
