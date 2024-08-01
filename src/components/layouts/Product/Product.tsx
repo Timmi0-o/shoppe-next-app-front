@@ -2,6 +2,7 @@
 import { useBasket } from '@/components/hooks/useBasket'
 import { useProduct } from '@/components/hooks/useProduct'
 import { useReview } from '@/components/hooks/useReview'
+import { useUser } from '@/components/hooks/useUser'
 import { Notification } from '@/components/layouts/Notification'
 import { SimilarProducts } from '@/components/layouts/SimilarProducts'
 import { Button } from '@/components/ui/Button'
@@ -11,6 +12,7 @@ import {
 	deletedProductInBasket,
 } from '@/lib/reducers/Product'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { FaCheck, FaStar } from 'react-icons/fa'
@@ -38,6 +40,8 @@ interface Product {
 
 export const Product = () => {
 	const dispatch = useDispatch()
+	// USER
+	const { user } = useUser()
 	// GET REVIEWS DATA
 	const { allReview } = useReview()
 	// GET PRODUCT DATA
@@ -75,6 +79,7 @@ export const Product = () => {
 
 	// КОЛИЧЕСТВО ВЫБРАННОГО ТОВАРА И НОМЕР ПОДРОБНОСТЕЙ
 	const [productNumber, setProductNumber] = useState(1)
+	const [productErrors, setProductErrors] = useState<JSX.Element | string>('')
 	const [isSwitchesActive, setIsSwitchesActive] = useState(0)
 	// КАЛИБРОВКА ЦЕНЫ ТОВАРА
 	const [allPrice, setAllPrice] = useState(productHook?.price)
@@ -88,9 +93,24 @@ export const Product = () => {
 
 	// ADDED NEW ITEM TO BASKET
 	const handleAddNewItemToBasket = async () => {
-		setBtnTitle('ADDED!')
+		if (!user) {
+			setBtnTitle('ERROR!')
+			setTimeout(() => {
+				setBtnTitle('ADD TO CART')
+			}, 2000)
+			return setProductErrors(
+				<p>
+					Only registered users can add products to the cart,
+					<Link href={'/account'}>
+						<span className='text-black ml-[5px] underline'>log in!</span>
+					</Link>
+				</p>
+			)
+		} else {
+			setBtnTitle('ADDED!')
+		}
 		try {
-			if (productHook) {
+			if (productHook && !productErrors) {
 				const response = await addProductInBasket(
 					productHook._id,
 					productNumber
@@ -231,7 +251,7 @@ export const Product = () => {
 							</div>
 						</div>
 						{/* КОПКА ДОБАВИТЬ В КОРЗИНУ И (ВЫБОРА КОЛ-ВА НА PC) */}
-						<div className='flex mt-[25px] xl:mt-[49px]'>
+						<div className='relative flex mt-[25px] xl:mt-[49px]'>
 							{/* CHOICE NUMBER PRODUCTS  */}
 							<div
 								className={`relative hidden lg:flex items-center justify-center duration-300 ease-in-out ${
@@ -337,6 +357,14 @@ export const Product = () => {
 									href='/shopping-cart'
 								/>
 							</div>
+							{/* PRODUCT ERRORS  */}
+							<p
+								className={`absolute bottom-[-40px] w-full text-center text-red-500 font-bold duration-300 ease-in-out ${
+									productErrors ? '' : 'opacity-0 -z-20 ml-[60px] scale-[0.95]'
+								}`}
+							>
+								{productErrors}
+							</p>
 						</div>
 						{/* МЕТА ИНФА О ТОВАРЕ */}
 						<div className='hidden lg:block mt-[40px] xl:mt-[80px]'>
