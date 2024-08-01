@@ -42,7 +42,7 @@ export const PostComment = () => {
 			])
 			setCommentButtonTitle('Submit')
 		} else {
-			setCommentButtonTitle('Error')
+			setCommentButtonTitle('Error!')
 			setTimeout(() => {
 				setCommentButtonTitle('Submit')
 			}, 1500)
@@ -96,8 +96,10 @@ export const PostComment = () => {
 						<Button onClick={handleComment} title={commentButtonTitle} />
 					</div>
 					<div
-						className={`text-red-400 font-bold duration-300 ${
-							commentWarning ? 'opacity-100' : 'opacity-0 ml-[-100%] absolute'
+						className={`text-red-500 font-bold duration-300 w-full lg:w-[200px] xl:w-[350px] ${
+							commentWarning
+								? ''
+								: 'opacity-0 ml-[-60px] absolute -z-20 scale-[0.95]'
 						}`}
 					>
 						{commentWarning}

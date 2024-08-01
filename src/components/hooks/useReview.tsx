@@ -36,17 +36,17 @@ export const useReview = () => {
 	const addUserComment = async (comment: string) => {
 		if (!comment) {
 			return setCommentWarning(
-				<div className='text-[14px] w-full md:w-[250px] xl:w-[400px]'>
-					Комментарий не может быть пустым
+				<div className='text-[14px] md:text-[16px] font-bold'>
+					The comment cannot be empty!
 				</div>
 			)
 		}
 		if (user === undefined) {
 			return setCommentWarning(
-				<div className='text-[14px] w-full lg:w-[250px] xl:w-[400px]'>
-					Комментарии могут оставлять только зарегистрированные пользователи,
+				<div className='text-[14px] md:text-[16px] font-bold'>
+					Only registered users can leave comments,
 					<Link href={'/account'}>
-						<span className='text-black underline ml-[5px]'>войдите!</span>
+						<span className='text-black underline ml-[5px]'>come in!</span>
 					</Link>
 				</div>
 			)
